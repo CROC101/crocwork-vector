@@ -46,7 +46,7 @@ pub fn discord_button(app: &mut VectorcraftApp, ui: &mut Ui, large: bool) -> egu
         icons::paint(ui, "message-circle", ir, DISCORD);
         ui.painter().galley(egui::pos2(ir.right() + h * 0.2, at.y), galley, if resp.hovered() { t.text_strong } else { t.text });
     }
-    let resp = resp.on_hover_text(tl!("Join the crocwork community on Discord (github.com/CROC101/crocwork-vector)"));
+    let resp = resp.on_hover_text(tl!("Join the crocwork community on Discord (discord.gg/sNYsVbh3v)"));
     if resp.clicked() {
         app.open_link("help.discord");
     }
@@ -110,15 +110,15 @@ mod tests {
         assert_eq!(
             *opened.lock().unwrap(),
             [
-                "https://github.com/CROC101/crocwork-vector",
-                "https://github.com/CROC101/crocwork-vector",
-                "https://github.com/CROC101/crocwork-vector",
+                "https://discord.gg/sNYsVbh3v",
+                "https://discord.gg/sNYsVbh3v",
+                "https://discord.gg/sNYsVbh3v",
                 "https://github.com/CROC101/crocwork-vector"
             ]
         );
         // The control channel / MCP path returns the URL without opening a browser.
         let v = app.run("help.discord", serde_json::json!({})).unwrap();
-        assert_eq!(v["url"], "https://github.com/CROC101/crocwork-vector");
+        assert_eq!(v["url"], "https://discord.gg/sNYsVbh3v");
         assert_eq!(opened.lock().unwrap().len(), 4);
         let ctx = egui::Context::default();
         theme::install_fonts(&ctx);

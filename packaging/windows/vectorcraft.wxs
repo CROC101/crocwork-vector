@@ -12,7 +12,7 @@
     <Property Id="ARPPRODUCTICON" Value="VectorcraftIcon.ico" />
     <Property Id="ARPURLINFOABOUT" Value="https://github.com/CROC101/crocwork-vector" />
     <Property Id="ARPURLUPDATEINFO" Value="https://github.com/CROC101/crocwork-vector" />
-    <Property Id="ARPHELPLINK" Value="https://github.com/CROC101/crocwork-vector" />
+    <Property Id="ARPHELPLINK" Value="https://discord.gg/sNYsVbh3v" />
 
     <StandardDirectory Id="ProgramFiles6432Folder">
       <Directory Id="CraftSuiteFolder" Name="crocwork">

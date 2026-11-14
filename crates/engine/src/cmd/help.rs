@@ -7,7 +7,7 @@ use super::{CommandSpec, Result, always, cmd};
 
 /// The app's id on github.com/CROC101/crocwork-vector and GitHub.
 pub const APP_ID: &str = "vectorcraft";
-pub const DISCORD_URL: &str = "https://github.com/CROC101/crocwork-vector";
+pub const DISCORD_URL: &str = "https://discord.gg/sNYsVbh3v";
 pub const WEBSITE_URL: &str = "https://github.com/CROC101/crocwork-vector";
 
 /// This app's page on the website.
@@ -44,7 +44,7 @@ mod tests {
     #[test]
     fn links() {
         let mut s = Session::new();
-        assert_eq!(s.execute("help.discord", &json!({})).unwrap()["url"], "https://github.com/CROC101/crocwork-vector");
+        assert_eq!(s.execute("help.discord", &json!({})).unwrap()["url"], "https://discord.gg/sNYsVbh3v");
         assert_eq!(s.execute("help.appPage", &json!({})).unwrap()["url"], "https://github.com/CROC101/crocwork-vector");
         assert_eq!(s.execute("help.github", &json!({})).unwrap()["url"], "https://github.com/CROC101/crocwork-vector");
         assert_eq!(s.execute("help.links", &json!({})).unwrap()["website"], "https://github.com/CROC101/crocwork-vector");
