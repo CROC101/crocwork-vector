@@ -120,7 +120,7 @@ to the target triple, so host build scripts aren't affected.
   can never ship labelled arm64), that `vectorcraft.exe` is a GUI program (no console window) and
   that `vectorcraft-cli.exe` is a console program.
 - **Portable zip:** it ships `packaging/windows/portable.txt` beside `vectorcraft.exe`. That
-  marker (or a `crocwork Vector.portable` file) switches on portable mode, as in PhotoCraft: `ui.json`
+  marker (or a `VectorCraft.portable` file) switches on portable mode, as in PhotoCraft: `ui.json`
   and the folders next to it (Swatches, Graphic Styles, Fonts, Data Recovery, logs…) go to
   `VectorCraftData\` next to the exe instead of `%APPDATA%\crocwork Vector`. The first time
   `VectorCraftData` is created, the settings already in `%APPDATA%\crocwork Vector` are copied into it

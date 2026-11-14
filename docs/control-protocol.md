@@ -11,7 +11,7 @@ Set `VECTORCRAFT_CONFIG_DIR` to a dedicated directory for an isolated native tes
 logs, recovery and user libraries then use that root, without importing the legacy DrawCraft profile.
 An unset override preserves the usual platform paths and legacy migration; an explicitly empty override
 disables those paths. `VECTORCRAFT_NO_PREFS` continues to disable preference reads and writes.
-Without the override, a `portable.txt` or `crocwork Vector.portable` file beside the executable (as in the
+Without the override, a `portable.txt` or `VectorCraft.portable` file beside the executable (as in the
 Windows portable zip) puts that root in `VectorCraftData` next to the executable; on macOS the marker
 and the folder sit next to `VectorCraft.app`, for an AppImage next to the `.AppImage` file, and a
 Flatpak install has neither. `VECTORCRAFT_NO_PREFS` never looks for the marker or creates the folder.

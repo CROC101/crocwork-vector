@@ -20,7 +20,7 @@ use std::path::{Path, PathBuf};
 use std::sync::OnceLock;
 
 /// Files in the install folder that switch on portable mode (either one; contents are ignored).
-pub const PORTABLE_MARKERS: [&str; 2] = ["portable.txt", "crocwork Vector.portable"];
+pub const PORTABLE_MARKERS: [&str; 2] = ["portable.txt", "VectorCraft.portable"];
 /// The settings folder created in the install folder in portable mode.
 pub const PORTABLE_DATA_DIR: &str = "VectorCraftData";
 
@@ -292,7 +292,7 @@ mod tests {
     #[test]
     fn an_appimage_looks_for_the_marker_beside_the_appimage_file() {
         let mounted = Path::new("/tmp/.mount_vc/usr/bin/vectorcraft");
-        let appimage = |key: &str| if key == "APPIMAGE" { Some("/home/user/Apps/crocwork Vector.AppImage".into()) } else { environment(key) };
+        let appimage = |key: &str| if key == "APPIMAGE" { Some("/home/user/Apps/VectorCraft.AppImage".into()) } else { environment(key) };
         assert_eq!(install_dir("linux", mounted, &appimage), Some("/home/user/Apps".into()));
         assert_eq!(install_dir("linux", mounted, &environment), Some("/tmp/.mount_vc/usr/bin".into()));
         let empty = |key: &str| if key == "APPIMAGE" { Some(OsString::new()) } else { environment(key) };
