@@ -1,11 +1,11 @@
 //! `window.vectorcraft`: the control channel for the page, as promises.
 //!
 //! `request`, `execute`, `commands`, `docInspect`, `uiInspect` and `screenshot` come from
-//! `craft-web-api` (storytold/craft-libs#413), the same in every Craft app; VectorCraft adds its own
+//! `craft-web-api` (storytold/craft-libs#413), the same in every Craft app; crocwork Vector adds its own
 //! functions on the same object.
 //!
 //! The same JSON methods as the desktop control server (`docs/control-protocol.md`), so an agent
-//! driving VectorCraft in a browser tab (or an `<iframe>` in another app) uses the same commands as
+//! driving crocwork Vector in a browser tab (or an `<iframe>` in another app) uses the same commands as
 //! the CLI and the MCP server:
 //!
 //! ```js
@@ -128,7 +128,7 @@ fn send(method: &str, params: Value) -> Pin<Box<dyn Future<Output = Value>>> {
     let ticket = req.ticket();
     let sent = TX.with(|t| t.borrow().as_ref().is_some_and(|tx| tx.send(req).is_ok()));
     if !sent {
-        return Box::pin(async { json!({"ok": false, "error": "VectorCraft is not running yet"}) });
+        return Box::pin(async { json!({"ok": false, "error": "crocwork Vector is not running yet"}) });
     }
     repaint();
     let mut waiting = Waiting { reply: rx, ticket, answered: false };
@@ -155,7 +155,7 @@ fn set_fn(obj: &js_sys::Object, name: &str, f: JsValue) -> Result<(), JsValue> {
     js_sys::Reflect::set(obj, &name.into(), &f).map(|_| ())
 }
 
-/// Install `window.vectorcraft`: the crate's functions, then VectorCraft's own (`inspect` is its
+/// Install `window.vectorcraft`: the crate's functions, then crocwork Vector's own (`inspect` is its
 /// `ui.inspect`).
 pub fn install() -> Result<(), JsValue> {
     let request: Request = Rc::new(|method, params| send(&method, params));

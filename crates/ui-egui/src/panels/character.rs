@@ -1001,7 +1001,7 @@ fn font_height_reference(app: &mut VectorcraftApp, ui: &mut Ui, width: f32) {
 /// square around an "A"; Cap Height puts a bar from the baseline to the top of a capital "A"
 /// beside it; x-Height a bar from the baseline to the top of a lowercase "x"; ICF Box frames a
 /// square inset in the faint em square around an ideograph-like cross, as the ideographic
-/// character face sits inside the em box. The drawings are VectorCraft's own.
+/// character face sits inside the em box. The drawings are crocwork Vector's own.
 fn paint_font_height_icon(
     painter: &egui::Painter,
     rect: egui::Rect,

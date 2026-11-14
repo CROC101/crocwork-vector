@@ -129,7 +129,7 @@ fn page_fonts(name: &str, bytes: &[u8], path: &str, pages: &PlacedPages) -> BTre
     fonts
 }
 
-/// Collect dependencies depth-first so nested VectorCraft files are rewritten before
+/// Collect dependencies depth-first so nested crocwork Vector files are rewritten before
 /// their parents: each parent can record the final hash of the rewritten child.
 /// Cycles, excessive nesting, and unreadable children are reported, not fatal.
 struct Collector<'a> {

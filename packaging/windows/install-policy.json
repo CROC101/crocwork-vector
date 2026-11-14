@@ -1,7 +1,7 @@
 {
   "id": "vectorcraft",
-  "name": "VectorCraft",
-  "upgradeCode": "601C6437-08AE-4645-ADCC-27F036C2EA2F",
+  "name": "crocwork Vector",
+  "upgradeCode": "998273C4-54D4-57D7-B99D-7411E43F92D5",
   "sources": [
     "vectorcraft.wxs"
   ],
@@ -26,13 +26,13 @@
     ],
     [
       "-1",
-      "Software\\VectorCraft",
+      "Software\\crocwork Vector",
       "InstallDir",
       "[INSTALLFOLDER]"
     ],
     [
       "-1",
-      "Software\\VectorCraft",
+      "Software\\crocwork Vector",
       "DesktopShortcut",
       "#1"
     ]

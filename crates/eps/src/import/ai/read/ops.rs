@@ -1103,12 +1103,12 @@ fn no_guides(n: &Node, depth: usize) -> bool {
 }
 
 /// The largest Twist angle, in degrees either way, read as a live effect on an object that isn't a
-/// path or compound path with straight segments: VectorCraft's own limit. An object with a larger
+/// path or compound path with straight segments: crocwork Vector's own limit. An object with a larger
 /// Twist keeps the file's drawn look.
 const MAX_TWIST: f64 = 90.0;
 
 /// The largest Twist angle, in degrees either way, read as a live effect on a path or compound path
-/// with straight segments: VectorCraft's own limit. One with a larger Twist keeps the file's drawn
+/// with straight segments: crocwork Vector's own limit. One with a larger Twist keeps the file's drawn
 /// look.
 const MAX_STRAIGHT_TWIST: f64 = 180.0;
 

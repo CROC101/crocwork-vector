@@ -1,6 +1,6 @@
 //! Opening PSD and PSB files with their layers as layers (`document.open`'s `layers` and
 //! `hiddenLayers`): names, visibility, opacity, blend modes, groups, layer masks, clipped layers
-//! and blend modes VectorCraft lacks merged, 16-bit and PSB files, VectorCraft's own PSD export
+//! and blend modes crocwork Vector lacks merged, 16-bit and PSB files, crocwork Vector's own PSD export
 //! read back, and damaged files read without a panic.
 
 use serde_json::{Value, json};
@@ -445,7 +445,7 @@ fn clipped_layers_merge_into_the_layer_below() {
     }
 }
 
-/// A masked base merged with its clipped layers, then with a layer in a mode VectorCraft lacks,
+/// A masked base merged with its clipped layers, then with a layer in a mode crocwork Vector lacks,
 /// still hides what its mask hides.
 #[test]
 fn a_merged_base_keeps_its_mask_in_a_later_merge() {
@@ -500,7 +500,7 @@ fn a_merge_past_the_memory_allowed_leaves_the_layer_normal() {
     let (doc, warnings) = psdlayers::import(&f, false, 128, cms).unwrap().unwrap();
     let got: Vec<(&str, BlendMode)> = doc.layers.iter().map(|l| (name(l), l.blend)).collect();
     assert_eq!(got, [("Bottom", BlendMode::Normal), ("Dodge", BlendMode::Normal)]);
-    assert_eq!(warnings, ["1 layer in blend modes VectorCraft doesn't have came in as Normal: the merge needs more memory than allowed"]);
+    assert_eq!(warnings, ["1 layer in blend modes crocwork Vector doesn't have came in as Normal: the merge needs more memory than allowed"]);
     // With room for it, the merge is made.
     let (doc, _) = psdlayers::import(&f, false, 1 << 20, cms).unwrap().unwrap();
     assert_eq!(doc.layers.iter().map(|l| name(l)).collect::<Vec<_>>(), ["Bottom + Dodge"]);
@@ -514,7 +514,7 @@ fn a_merge_past_the_memory_allowed_leaves_the_layer_normal() {
     let f = file(4, 4, &layers, 8, false, false);
     let (doc, warnings) = psdlayers::import(&f, false, 300, cms).unwrap().unwrap();
     assert_eq!(doc.layers.iter().map(|l| name(l)).collect::<Vec<_>>(), ["Bottom", "Corner", "Dodge"]);
-    assert_eq!(warnings, ["1 layer in blend modes VectorCraft doesn't have came in as Normal: the merge needs more memory than allowed"]);
+    assert_eq!(warnings, ["1 layer in blend modes crocwork Vector doesn't have came in as Normal: the merge needs more memory than allowed"]);
     let (doc, _) = psdlayers::import(&f, false, 1 << 20, cms).unwrap().unwrap();
     assert_eq!(doc.layers.iter().map(|l| name(l)).collect::<Vec<_>>(), ["Bottom + Corner + Dodge"]);
     // A group below whose layers each fit, but whose canvas (4 × 4 with both 1 × 1 layers held, 288
@@ -531,7 +531,7 @@ fn a_merge_past_the_memory_allowed_leaves_the_layer_normal() {
     let got: Vec<(&str, BlendMode)> = doc.layers.iter().map(|l| (name(l), l.blend)).collect();
     assert_eq!(got, [("Pair", BlendMode::Normal), ("Dodge", BlendMode::Normal)]);
     assert_eq!(doc.layers[0].children().unwrap().iter().map(|c| name(c)).collect::<Vec<_>>(), ["Left", "Right"]);
-    assert_eq!(warnings, ["1 layer in blend modes VectorCraft doesn't have came in as Normal: the merge needs more memory than allowed"]);
+    assert_eq!(warnings, ["1 layer in blend modes crocwork Vector doesn't have came in as Normal: the merge needs more memory than allowed"]);
     let (doc, _) = psdlayers::import(&f, false, 1 << 20, cms).unwrap().unwrap();
     assert_eq!(doc.layers.iter().map(|l| name(l)).collect::<Vec<_>>(), ["Pair + Dodge"]);
     // A layer below whose pixels fit (128 bytes) but whose canvas (16 bytes a pixel, 256) doesn't
@@ -541,7 +541,7 @@ fn a_merge_past_the_memory_allowed_leaves_the_layer_normal() {
     let (doc, warnings) = psdlayers::import(&f, false, 200, cms).unwrap().unwrap();
     let got: Vec<(&str, BlendMode)> = doc.layers.iter().map(|l| (name(l), l.blend)).collect();
     assert_eq!(got, [("Big", BlendMode::Normal), ("Dodge", BlendMode::Normal)]);
-    assert_eq!(warnings, ["1 layer in blend modes VectorCraft doesn't have came in as Normal: the merge needs more memory than allowed"]);
+    assert_eq!(warnings, ["1 layer in blend modes crocwork Vector doesn't have came in as Normal: the merge needs more memory than allowed"]);
     // A clipped layer whose merge doesn't fit (the base's canvas and its transparency, 20 bytes a
     // pixel, beside the clipped layer's canvas, 16: 576 bytes, past 300) comes in unclipped.
     let layers = [layer("Base", [0, 0, 4, 4], [255, 0, 0, 255]), L { clipped: true, ..layer("Clipped", [0, 0, 4, 4], [0, 0, 255, 255]) }];
@@ -574,13 +574,13 @@ fn a_merge_that_cant_be_made_counts_only_itself() {
     assert_eq!(
         warnings,
         [
-            "layers in blend modes VectorCraft doesn't have (Linear Dodge) were merged with the layers below them",
-            "1 layer in blend modes VectorCraft doesn't have came in as Normal: the merge needs more memory than allowed",
+            "layers in blend modes crocwork Vector doesn't have (Linear Dodge) were merged with the layers below them",
+            "1 layer in blend modes crocwork Vector doesn't have came in as Normal: the merge needs more memory than allowed",
         ]
     );
 }
 
-/// Layers in modes VectorCraft lacks, one after another, merge onto the canvas the first merge made
+/// Layers in modes crocwork Vector lacks, one after another, merge onto the canvas the first merge made
 /// without copying it: 300 of them over a 64 × 64 canvas (64 KiB) open within an allowance that a
 /// copy for each would pass. Merges that need a copy of that canvas each, past the allowance, open
 /// the merged image instead.
@@ -736,7 +736,7 @@ fn layers_clipped_to_an_adjustment_layer_show_over_the_canvas() {
     assert!(r["warnings"].to_string().contains("1 adjustment layer was not applied"), "{r}");
 }
 
-/// Each blend mode VectorCraft lacks merges with the layer below by its formula, from the public
+/// Each blend mode crocwork Vector lacks merges with the layer below by its formula, from the public
 /// descriptions: <https://helpx.adobe.com/photoshop/desktop/repair-retouch/adjust-light-tone/blending-mode-descriptions.html>
 /// (Vivid Light, Pin Light, Hard Mix, Darker and Lighter Color) and
 /// <https://en.wikipedia.org/wiki/Blend_modes> (Linear Burn, Linear Dodge, Linear Light, Subtract,
@@ -841,7 +841,7 @@ fn solid_color_fills_read_every_color_model() {
     assert_eq!(warnings, ["3 fill layers were not drawn (a gradient or pattern fill, a color that can't be read, or a shape that stores no pixels)"]);
 }
 
-/// VectorCraft's own PSD export opens with the layers it wrote: groups as layers of sublayers,
+/// crocwork Vector's own PSD export opens with the layers it wrote: groups as layers of sublayers,
 /// hidden ones hidden, with their opacity and blend mode.
 #[test]
 fn psd_exports_open_with_their_layers() {
@@ -984,7 +984,7 @@ fn damaged_layers_never_panic() {
     assert!(e.as_deref().is_some_and(|e| e.contains("take more memory to read than allowed")), "{e:?}");
 }
 
-/// A layer in a mode VectorCraft lacks above a pass-through group merges with the group's layers
+/// A layer in a mode crocwork Vector lacks above a pass-through group merges with the group's layers
 /// blending onto what is below the group, as they do without the merge.
 #[test]
 fn merges_keep_pass_through_groups_blending_with_what_is_below() {

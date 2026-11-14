@@ -1,6 +1,6 @@
 # Plug-ins: the WebAssembly plug-in API (ABI v1)
 
-VectorCraft does not host native plug-ins built for other illustration apps: that needs unsafe FFI into
+crocwork Vector does not host native plug-ins built for other illustration apps: that needs unsafe FFI into
 arbitrary machine code and cannot work in the browser build. Instead, plug-ins are **WebAssembly modules** run in a
 sandbox. One `.wasm` file works on macOS, Windows, Linux and the web. The design follows PhotoCraft's plug-in API (same
 sandbox, same manifest and parameter schema), extended for vector documents.
@@ -52,7 +52,7 @@ also one a built-in format reads (an importer that lists `svg` opens an `.svg` o
 built-in format reports that format's error, and the file is not handed to an importer. The importer's objects become a
 new document whose artboard is their bounds (at least 1 pt wide and high, and within ±4,000,000 pt); the document keeps
 no path, so Save asks for a name. File › Place reads only the built-in formats, and a file only an importer reads opens
-as a new document when it is dropped on the canvas. These rules are VectorCraft's own.
+as a new document when it is dropped on the canvas. These rules are crocwork Vector's own.
 
 In the app, installed filters appear under **Object › Plug-ins**, next to **Install Plug-in…** and **Reload
 Plug-ins**; live effects under **Effect › Plug-ins** and in the Appearance panel's effect menu. A plug-in with
@@ -139,7 +139,7 @@ open it runs in is cancelled, and nothing opens then.
 ### Live effects while a document opens
 
 While the app draws a document on screen, the live-effect runs of its first view share a 2,000 ms budget
-(`vectorcraft_plugins::deferred::OPENING_BUDGET_MS`, VectorCraft's own value), measured from the first run. Each run
+(`vectorcraft_plugins::deferred::OPENING_BUDGET_MS`, crocwork Vector's own value), measured from the first run. Each run
 takes the lesser of its 5 s limit and what is left of the budget; once the budget is spent no run starts, and a result
 that comes back after it is not used. A stage left out this way, or one that times out, traps, returns output the host
 refuses or has no plug-in, draws its input art unchanged and is deferred. The status bar then says how many stages
@@ -177,7 +177,7 @@ how much there is only once the run has ended.
 
 A manifest may list what the plug-in may do in `permissions`. `doc.read`, `doc.write` and `state` follow the
 capability model proposed for PhotoCraft plug-ins
-([storytold/photocraft#662](https://github.com/storytold/photocraft/issues/662)); the other names are VectorCraft's own:
+([storytold/photocraft#662](https://github.com/storytold/photocraft/issues/662)); the other names are crocwork Vector's own:
 
 | Permission | Kinds | What it allows |
 |---|---|---|
@@ -195,7 +195,7 @@ capability model proposed for PhotoCraft plug-ins
 - A manifest without `permissions` gets the ones its kind implies, as plug-ins did before the key existed: a filter
   `doc.read`, `doc.write` and `state`; an effect `doc.read` and `effect.render`, and also `doc.write` and `state`
   when it declares [commands](#commands); an exporter `doc.read` and `export.write`; an importer `import.read`. Such a
-  plug-in installs without a prompt. This rule is VectorCraft's own. A filter whose list is empty may do none of
+  plug-in installs without a prompt. This rule is crocwork Vector's own. A filter whose list is empty may do none of
   these, and also installs without a prompt.
 - An effect, an exporter or an importer that lists permissions lists all of its implied ones (`doc.read` and
   `effect.render`; `doc.read` and `export.write`; `import.read`). An effect with commands may add `doc.write` and
@@ -210,7 +210,7 @@ capability model proposed for PhotoCraft plug-ins
   and are cut to 64 characters. Only a person can press its OK: `ui.dialog.confirm`, MCP's `answer_dialog` and injected
   input (`ui.key`, `ui.click`) are refused and the dialog stays open. Enter confirms it only when OK has the keyboard
   focus. `ui.dialog.set` can't change what it installs. OK stays disabled until the question has been on screen in the
-  focused window for half a second (VectorCraft's own value, from the delay the security guidance at
+  focused window for half a second (crocwork Vector's own value, from the delay the security guidance at
   https://chromium.googlesource.com/chromium/src/+/refs/heads/main/docs/security/security-considerations-for-browser-ui.md
   gives for dialog boxes), so a click, Enter or Space, or a press begun before then, installs nothing. The half second
   starts over for every new question, even one that reads the same, and when the window gets the focus back. Cancel
@@ -223,7 +223,7 @@ capability model proposed for PhotoCraft plug-ins
   closes it. To install the plug-in, the person chooses Object › Plug-ins › Install Plug-in… and picks the file, or
   opens it with File › Open or drops it on the window: the module is inspected again and the new question waits its
   half second. A request's `replace: true` does not skip asking about taking another module's place. A module that
-  needs no approval still installs at once from any request. This is VectorCraft's own rule.
+  needs no approval still installs at once from any request. This is crocwork Vector's own rule.
 - `plugin.install` refuses the module, naming the permissions it needs, unless this module already has a recorded grant
   (`plugin.inspect`'s `needsApproval` tells it beforehand). A request's `grant` is refused too: `plugin.install` takes
   it only with the approval the dialog gives. A `vectorcraft-cli mcp` or `run` started with `--allow-plugin-grants`
@@ -238,10 +238,10 @@ capability model proposed for PhotoCraft plug-ins
   With `--allow-plugin-grants`, pass `hash` set to the `plugin.inspect` entry's `hash` so that the module installed is
   the one the user saw.
 - The approval protects against plug-ins and automation clients (MCP, scripts and CLI requests): none of them can
-  approve a module's permissions. VectorCraft's own code records a grant only after that approval and when it loads
+  approve a module's permissions. crocwork Vector's own code records a grant only after that approval and when it loads
   `grants.json`, and installs a module that lists permissions only under a grant recorded for this very module,
   also when it loads the Additional Plug-ins Folder. The approval does not protect against native code linked into
-  VectorCraft or against another program running as the same user, which can change the files in the `Plug-ins`
+  crocwork Vector or against another program running as the same user, which can change the files in the `Plug-ins`
   folder. `grants.json` is not signed, so such a program can add a grant to it. `--allow-plugin-grants` is a choice
   the person starting a headless session makes.
 - **Replacing asks first.** When the file is another module than the plug-in installed with its id, or, with none
@@ -277,14 +277,14 @@ capability model proposed for PhotoCraft plug-ins
   the grant stops counting. The grant also stops counting when the folder held no module for that id. A
   `grants.json` larger than 1 MiB, or one that is not a JSON list, grants nothing: the new module stays in the folder,
   and `plugin.remove` removes the plug-in. A `grants.json` that can't be opened or read counts as a grant that can't be
-  removed. When VectorCraft loads the `Plug-ins` folder, it forgets any grant for an id whose stored module lists no
+  removed. When crocwork Vector loads the `Plug-ins` folder, it forgets any grant for an id whose stored module lists no
   permissions. When it can't remove that grant from `grants.json`, or can't read the file, the grant stops counting,
   including for the next load, which tries the removal again. A grant that stops counting in either of these cases
   does not count for any session in the same process that uses the same `Plug-ins` folder, by any path to it, until
   `grants.json` can be written for that plug-in, as when the plug-in is granted again. Another process on the same
   folder, for example `vectorcraft-cli` beside the app, still reads `grants.json` as it is written. A grant for the
   same id kept in another `Plug-ins` folder counts. In Safe Mode, and for a stored module that the user disabled,
-  VectorCraft does not read the module, and `grants.json` keeps the grant for its id. The Additional Plug-ins Folder
+  crocwork Vector does not read the module, and `grants.json` keeps the grant for its id. The Additional Plug-ins Folder
   and `plugin.reload` do not change the `Plug-ins` folder: when they leave a module that lists no permissions under an
   id, the process forgets its own grant for that id, and a grant kept in `grants.json` stays with the stored module it
   covers. An entry of `grants.json` that this version can't use (a permission it doesn't know, an invalid id) is
@@ -410,7 +410,7 @@ the run waits for it. A live effect runs while the art draws, so keep the entrie
 
 - A key is 1 to 64 characters from `A-Z`, `a-z`, `0-9`, `_` and `-`, and is not a Windows device name (`CON`, `PRN`,
   `AUX`, `NUL`, `COM0` to `COM9`, `LPT0` to `LPT9`, in any case). Keys differ in case: `tile` and `Tile` are two.
-- These caps are VectorCraft's own values: at most 256 settings of at most 64 KiB each, in a settings file of at most
+- These caps are crocwork Vector's own values: at most 256 settings of at most 64 KiB each, in a settings file of at most
   1 MiB; cache entries of at most 64 MiB each, at most 4,096 entries and 512 MiB per plug-in. The cache has no
   automatic eviction: a write past a cap fails with `-4`, and the plug-in or the user clears entries. A cache write
   also fails with `-4` when the `cache` folder holds more than 8,192 items; clearing the cache removes every file in
@@ -425,7 +425,7 @@ the run waits for it. A live effect runs while the art draws, so keep the entrie
   (`plugin.install` with `replace: true`, after the user agreed) keeps the storage; `plugin.remove` deletes it, and a
   run of the plug-in still going gets `-5` from every storage call after that. `plugin.remove` first renames the folder,
   adding `.removed` to its name (or `.removing` while a `.removed` folder holds settings an earlier removal kept). When
-  that fails, `plugin.remove` fails and the plug-in stays installed with its storage as it was. Before VectorCraft
+  that fails, `plugin.remove` fails and the plug-in stays installed with its storage as it was. Before crocwork Vector
   deletes a renamed folder, it writes an empty file beside it with `.delete` added to the folder's name, and removes
   that file once the folder is gone. When that file can't be written, the folder is not deleted and is treated like any
   renamed folder without a `.delete` file (see below). Files that can't be deleted stay in the renamed folder with the
@@ -468,7 +468,7 @@ the module's start function, in a run that isn't a filter's run on a document, o
   the view, runs a script, an action or a plug-in (a `plugin.*` command, or arguments naming one, such as an
   `effect.apply` of `plugin.<id>`), opens, closes or switches documents, or undoes or redoes, whatever its manifest
   lists. The same goes for a command that changes a tool's options, keeps a drag's state or adds font names for the
-  whole app, and for a command VectorCraft adds later until it has been checked for plug-in calls. Installing a
+  whole app, and for a command crocwork Vector adds later until it has been checked for plug-in calls. Installing a
   manifest that lists such a command is refused, and the error names it; `plugin.inspect` lists them as
   `refusedCommands`.
 - A call whose arguments hold a file or folder key (`path`, `paths`, `file`, `files`, `folder`, `folders`, `dir`,
@@ -480,7 +480,7 @@ the module's start function, in a run that isn't a filter's run on a document, o
   `doc.read`).
 - Without `doc.read`, every call of a listed id fails with `-6`, since a command's result describes the document.
   Without `doc.write`, a call that changes the document fails with `-6`.
-- These limits are VectorCraft's own values: at most 1,000 calls a run, 8 MiB of arguments or result a call and 64 MiB
+- These limits are crocwork Vector's own values: at most 1,000 calls a run, 8 MiB of arguments or result a call and 64 MiB
   of arguments and results a run. Each call costs 10,000 instructions of the run's budget, plus one for every 64 bytes
   of its arguments and its result, and the run checks Cancel and its time budget before and after each call.
 - A filter that calls commands runs on the app's main thread, so it can't ask for a heavy budget: a manifest with
@@ -611,7 +611,7 @@ An **importer** gets the bytes of the file being opened, as they are (not JSON),
 ```
 
 - `type`: `"path"` or `"compound"` (a compound path: `path` holds its members' subpaths, painted as one).
-- `path`: VectorCraft's own path form. Each subpath is a run of anchors; `p` is the anchor, `in` / `out` its handles
+- `path`: crocwork Vector's own path form. Each subpath is a run of anchors; `p` is the anchor, `in` / `out` its handles
   (absent: no handle), `kind` `"Smooth"` when the handles stay collinear. Coordinates are points, y down.
 - `fills`, `strokes`: the object's fills and strokes in paint order (bottom first); `null` is no paint. A stroke has its
   `paint`, `width` in points, `join` (`"miter"`, `"round"` or `"bevel"`), `cap` (`"butt"`, `"round"` or `"square"`)

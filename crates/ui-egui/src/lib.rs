@@ -1,14 +1,17 @@
-//! VectorCraft's egui frontend: an Illustrator-style UI over `vectorcraft-engine`.
+//! crocwork Vector's egui frontend: an Illustrator-style UI over `vectorcraft-engine`.
 //!
 //! The UI is thin: every action goes through [`VectorcraftApp::run`], which dispatches UI commands
 //! (view/window) here and everything else to the engine. The same entry point serves menus,
 //! shortcuts, the ⌘K palette and the control channel ([`control`]).
 #![forbid(unsafe_code)]
 
-/// VectorCraft as craft-update knows it, with its 128 px icon and accent colour: the update
+/// crocwork Vector as craft-update knows it, with its 128 px icon and accent colour: the update
 /// prompt shows both, and an AppImage's menu entry gets the icon.
 #[cfg(not(target_arch = "wasm32"))]
 pub const UPDATE_APP: craft_update::app::App = craft_update::app::App {
+    name: "crocwork Vector",
+    repo: "CROC101/crocwork-vector",
+    developer: "crocwork",
     icon_png: Some(include_bytes!("../../../assets/app-icon/hicolor/128x128/apps/ai.storyteller.vectorcraft.png")),
     accent: Some([0xe8, 0x57, 0x3f]),
     ..craft_update::suite::VECTORCRAFT
@@ -221,7 +224,7 @@ pub struct VectorcraftApp {
     /// A URL to open through egui next frame (when the host has no `open_url` service).
     pending_url: Option<String>,
     /// `VECTORCRAFT_TITLEBAR` chose this window's frame (Linux and the BSDs), so Preferences › User
-    /// Interface › System Title Bar and VectorCraft Title Bar on Every Desktop do not apply while
+    /// Interface › System Title Bar and crocwork Vector Title Bar on Every Desktop do not apply while
     /// it is set. `false` unless the host sets it.
     pub titlebar_from_env: bool,
     /// Windows and Linux: the window has no OS decorations, so the app bar is the title bar (drag,

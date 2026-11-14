@@ -8,7 +8,7 @@ use std::collections::HashMap;
 use zbus::blocking::{Connection, Proxy};
 use zbus::zvariant::{OwnedValue, Value};
 
-/// How long the portal has to return a request path for `PickColor`. VectorCraft's own limit,
+/// How long the portal has to return a request path for `PickColor`. crocwork Vector's own limit,
 /// 25 seconds as libdbus's default for a method call. The portal returns the path before it shows
 /// the sampler, so the person's time with the sampler does not count.
 const CALL_TIMEOUT: std::time::Duration = std::time::Duration::from_secs(25);

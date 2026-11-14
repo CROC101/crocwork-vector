@@ -1,4 +1,4 @@
-//! Envelopes (see [`crate::ai_editing`] for the form), written in the form VectorCraft's `.ai`
+//! Envelopes (see [`crate::ai_editing`] for the form), written in the form crocwork Vector's `.ai`
 //! reader opens as live envelopes again: on `%_` lines a group holding the grid that shapes the
 //! envelope (while its contents are edited, the contents), then that group's `/ArtDictionary` with
 //! Envelope Options as a bit word (`AIDeformOptionsKey`), Fidelity (`AIDeformFidelityKey`), Edit

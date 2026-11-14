@@ -1,4 +1,4 @@
-//! The editing data written, then read back by VectorCraft's own reader ([`crate::ai_alone`]).
+//! The editing data written, then read back by crocwork Vector's own reader ([`crate::ai_alone`]).
 
 use std::sync::Arc;
 
@@ -9481,7 +9481,7 @@ fn same_envelope_kind(want: &vectorcraft_doc::live::EnvelopeKind, got: &vectorcr
 }
 
 /// A PDF-compatible `.ai`'s editing data keeps a warp, a mesh and a top object envelope live, with
-/// Edit Contents off and on: VectorCraft's reader opens each as the same envelope, its contents,
+/// Edit Contents off and on: crocwork Vector's reader opens each as the same envelope, its contents,
 /// Fidelity, Edit Contents, Envelope Options and shape as saved, and its name, the drawn art saved
 /// with it drawing as the envelope does.
 #[test]

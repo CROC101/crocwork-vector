@@ -494,7 +494,7 @@ pub enum PlaybackSpeed {
     Pause,
 }
 
-/// The pause between steps that Pause For takes, in whole seconds: VectorCraft's own range.
+/// The pause between steps that Pause For takes, in whole seconds: crocwork Vector's own range.
 pub const PAUSE_SECONDS: std::ops::RangeInclusive<u32> = 1..=60;
 
 /// How actions play, kept with the UI preferences.
@@ -3530,7 +3530,7 @@ mod tests {
             (json!(" ".repeat(files::MAX_SET_FILE + 1)), "the action set file is larger than 8 MiB"),
             (
                 json!("{\"format\": \"vcactions\", \"version\": 7, \"name\": \"S\", \"actions\": []}"),
-                "the action set file needs a later version of VectorCraft",
+                "the action set file needs a later version of crocwork Vector",
             ),
         ] {
             assert_eq!(app.run(LOAD_SET, json!({ "data": data })).unwrap_err(), want);
@@ -3588,7 +3588,7 @@ mod tests {
     }
 
     /// Load Actions… reads an action set another app saved as text: its actions come in with the
-    /// steps with no recorded values whose label is a VectorCraft command's that takes no values and
+    /// steps with no recorded values whose label is a crocwork Vector command's that takes no values and
     /// has no dialog, a step that is off stays excluded from playback, the other steps are left out
     /// and listed, and the status bar says how many. An action plays the steps that are on.
     #[test]
@@ -3735,7 +3735,7 @@ mod tests {
         assert_eq!(app.ui.action_sets[3].actions[0].steps, [("object.group".to_string(), json!({}))]);
     }
 
-    /// A set loaded from another app's file saves to VectorCraft's own file with its excluded steps,
+    /// A set loaded from another app's file saves to crocwork Vector's own file with its excluded steps,
     /// and loads back the same.
     #[test]
     fn another_apps_set_saves_and_loads_back_with_its_excluded_steps() {
@@ -6890,7 +6890,7 @@ mod tests {
             assert_eq!(files::read_set(&old.to_string(), "Test").unwrap().actions[0].steps.len(), 1, "version {version}");
         }
         let later = json!({"format": "vcactions", "version": 7, "name": "New", "actions": []});
-        assert_eq!(files::read_set(&later.to_string(), "Test").unwrap_err(), "the action set file needs a later version of VectorCraft");
+        assert_eq!(files::read_set(&later.to_string(), "Test").unwrap_err(), "the action set file needs a later version of crocwork Vector");
         for params in [json!({"message": 5}), json!({"allowContinue": "yes"}), json!(42)] {
             let stop = json!({"command": "action.stop", "params": params});
             for step in [stop.clone(), json!({"command": "command.batch", "params": {"commands": [stop]}})] {

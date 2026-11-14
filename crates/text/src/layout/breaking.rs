@@ -572,7 +572,7 @@ pub(super) fn hangs(g: &SGlyph) -> bool {
 /// `g` starts or ends a line. Quotation marks, hyphens, full stops and commas hang whole, and
 /// asterisks, tildes, ellipses, en and em dashes, colons and semicolons hang by half (the amounts
 /// published for Roman Hanging Punctuation). A, V, W, Y, v, w and y hang by a tenth of their
-/// advance, VectorCraft's own amount for their slanted sides. Other characters, East Asian
+/// advance, crocwork Vector's own amount for their slanted sides. Other characters, East Asian
 /// punctuation (which burasagari hangs), inline graphics and the characters of a warichu block
 /// don't hang.
 pub(super) fn optical_share(g: &SGlyph) -> f64 {

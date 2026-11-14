@@ -135,7 +135,7 @@ pub(crate) fn warp_number(style: &str) -> Option<i64> {
 
 /// The Effect › Pathfinder effects by the `Command` number of their filter. `Command` 0 is Add
 /// (https://community.adobe.com/questions-652/liveeffect-xml-effect-is-added-under-the-object-795137);
-/// the numbers 1 to 11 are VectorCraft's own reader rules, learned from saved files. Trap (12) isn't
+/// the numbers 1 to 11 are crocwork Vector's own reader rules, learned from saved files. Trap (12) isn't
 /// read.
 const PATHFINDER_COMMANDS: [&str; 12] = [
     "pathfinder.add",
@@ -155,7 +155,7 @@ const PATHFINDER_COMMANDS: [&str; 12] = [
 /// The keys of an Effect › Pathfinder filter's dictionary besides `Command` and `DisplayString`,
 /// each with the kind and the one value read: its Pathfinder Options, Soft Mix's mix and the Trap
 /// settings. Every operation needs each of them at this value, even where the operation doesn't use
-/// it, except that Soft Mix reads a `Mix` from 0.01 to 1 as its Mixing Rate (VectorCraft's own
+/// it, except that Soft Mix reads a `Mix` from 0.01 to 1 as its Mixing Rate (crocwork Vector's own
 /// reader rule, learned from saved files: the rate is `Mix` times 100, within the effect's 1 to 100;
 /// a saved `Mix` outside that range keeps the drawn look).
 const PATHFINDER_OPTIONS: [(&str, Kind, f64); 12] = [
@@ -1239,7 +1239,7 @@ fn shape_effect(f: &Filter) -> Option<Effect> {
     let id = match shape {
         0.0 => "convertToShape.rectangle",
         1.0 => "convertToShape.roundedRectangle",
-        // A relative Ellipse in the file is drawn round the enlarged box, and VectorCraft's inside
+        // A relative Ellipse in the file is drawn round the enlarged box, and crocwork Vector's inside
         // it: it keeps its drawn look.
         2.0 if absolute => "convertToShape.ellipse",
         _ => return None,
@@ -1791,7 +1791,7 @@ fn style(filters: &[Filter]) -> ArtStyle {
 
 /// Whether `f` is a painted Stroke Style filter with a variable width written as one centered array,
 /// `BSCenteredWidthsArray`. A Stroke Offset filter's profile and one written as each side's widths
-/// (`BSLeftWidthsArray` and `BSRightWidthsArray`, as VectorCraft saves it) are not.
+/// (`BSLeftWidthsArray` and `BSRightWidthsArray`, as crocwork Vector saves it) are not.
 fn centered_widths(f: &Filter) -> bool {
     let each_side = f
         .arrays

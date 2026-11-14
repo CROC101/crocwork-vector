@@ -343,7 +343,7 @@ pub struct Manifest {
     /// The menu commands it adds, in menu order (a filter or a live effect only).
     #[serde(default, deserialize_with = "ordered_commands", skip_serializing_if = "Vec::is_empty")]
     pub commands: Vec<Command>,
-    /// The VectorCraft commands a run may call with `vc_call` (exact command ids, such as
+    /// The crocwork Vector commands a run may call with `vc_call` (exact command ids, such as
     /// `object.transform`): only a filter with the usual budget whose `permissions` list `commands`
     /// lists any ([`Manifest::validate`]).
     #[serde(default, skip_serializing_if = "Vec::is_empty")]

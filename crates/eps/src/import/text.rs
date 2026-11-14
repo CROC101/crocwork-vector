@@ -1003,7 +1003,7 @@ struct Mapped {
 
 /// Type in a CIDFont only named, over a predefined CMap ([`Interp::named_cid_type`]): its codes
 /// with their characters, the font it is set in, whether it runs down a column, and whether each
-/// code moves the point one em (down a column, or in a CMap VectorCraft can't read).
+/// code moves the point one em (down a column, or in a CMap crocwork Vector can't read).
 struct NamedCid {
     codes: Decoded,
     font: DictRef,
@@ -1150,7 +1150,7 @@ impl Interp<'_> {
     /// doesn't give: a Unicode CMap's codes are the characters, another CMap's are read by the CMap
     /// of that name and its character collection's CID → Unicode CMap (a code it doesn't map
     /// stands for none), set as type in the font of its CIDFont's name, vertical over a vertical
-    /// CMap (`WMode` 1). Control codes stand for no character. Type in a CMap VectorCraft can't
+    /// CMap (`WMode` 1). Control codes stand for no character. Type in a CMap crocwork Vector can't
     /// read is left out, with a warning, each of its codes moving the point one em.
     /// Inside a `cshow` procedure over such type, with the CIDFont current, the string must be the
     /// one byte the procedure was given, else a `rangecheck` error, and it stands for the code
@@ -1248,7 +1248,7 @@ impl Interp<'_> {
     }
 
     /// How strings in predefined CMap `cmap` decode (a CMap other than a Unicode CMap read once a
-    /// file); `None` when VectorCraft can't read it.
+    /// file); `None` when crocwork Vector can't read it.
     fn predefined_codes(&mut self, cmap: &str) -> Option<Rc<super::predefined_cmap::CMapCodes>> {
         if let Some(form) = super::predefined_cmap::unicode_cmap(cmap) {
             return Some(Rc::new(super::predefined_cmap::CMapCodes::Unicode(form)));
@@ -1268,7 +1268,7 @@ impl Interp<'_> {
     /// says, as [`Self::show_codes`] shows codes. `widthshow` and `awidthshow` match a code by its
     /// value (font number 0 times 256 plus the code: PLRM 3rd ed., `widthshow` in chapter 8), and
     /// `kshow`'s procedure gets the values of the two codes it runs between. Down a column, and in
-    /// a CMap VectorCraft can't read, each code moves the point one em, the default displacement
+    /// a CMap crocwork Vector can't read, each code moves the point one em, the default displacement
     /// of a CIDFont whose metrics the file doesn't give (PDF Reference 1.7, §5.6.3, `DW` and
     /// `DW2`). With `draw` [`Draw::Path`] the outlines go on the current path (`charpath`).
     fn show_named_cid(&mut self, named: &NamedCid, spacing: &Spacing, draw: Draw) -> Res {
@@ -1644,7 +1644,7 @@ const MISSING_CID_FONT: &str = "CID-keyed type in a font the file doesn't carry 
 /// bytes a code) and their characters (up to 4 bytes a character, a few characters a code).
 const DECODED_BYTES: usize = 64;
 
-/// The warning for type in a predefined CMap whose mappings VectorCraft doesn't have.
+/// The warning for type in a predefined CMap whose mappings crocwork Vector doesn't have.
 pub(super) const UNREAD_CMAP: &str = "type in a CMap that couldn't be read was left out";
 
 /// Most Type 42 fonts whose TrueType data is kept between glyphs.

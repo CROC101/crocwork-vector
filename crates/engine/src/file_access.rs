@@ -17,7 +17,7 @@
 //! Roots are in force on a thread inside [`confine`], and in the whole process after
 //! [`confine_process`] (`vectorcraft-cli mcp`, the desktop app with a control port), except inside
 //! [`unconfined`]: what the person at the keyboard does, and the app's own folders (preferences,
-//! Data Recovery, the library folders, VectorCraft's Fonts folder), which no agent names. Without
+//! Data Recovery, the library folders, crocwork Vector's Fonts folder), which no agent names. Without
 //! roots nothing is checked.
 //!
 //! A path is checked, then opened: a process that can change the folders in between (swapping in
@@ -365,7 +365,7 @@ fn windows_name_refusal(path: &str) -> Option<&'static str> {
 }
 
 /// The folders a running script's own files are read from: the files its `#include` lines name and
-/// the files it passes to `$.evalFile` (`Scope::Script`'s reads). VectorCraft's own rules: a script
+/// the files it passes to `$.evalFile` (`Scope::Script`'s reads). crocwork Vector's own rules: a script
 /// run from a file may read inside that file's folder and the folders below it, and a script given as
 /// text may read none. A path is refused when it has a `..` component, a Windows device name or
 /// stream, or names a computer on the network, or when it leads (through its links, junctions

@@ -141,7 +141,7 @@ pub(super) fn dot_quarter(g: &SGlyph) -> Option<f64> {
 }
 
 /// What a paragraph's Mojikumi set does to its characters. The five predefined sets other than
-/// Line-end Punctuation Half Width follow VectorCraft's own spacing rules, built on the help
+/// Line-end Punctuation Half Width follow crocwork Vector's own spacing rules, built on the help
 /// page's one-line description of each set
 /// (<https://helpx.adobe.com/illustrator/desktop/design-with-text/edit-format-text/use-mojikumi-for-japanese-text-composition.html>).
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]

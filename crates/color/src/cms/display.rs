@@ -13,7 +13,7 @@ use std::hash::{Hash, Hasher};
 
 use super::{Intent, ProfileKind, icc::IccProfile};
 
-/// The largest display profile read: VectorCraft's own limit. Display profiles are a few kilobytes
+/// The largest display profile read: crocwork Vector's own limit. Display profiles are a few kilobytes
 /// (matrix/shaper) to a few hundred (table-based).
 pub const MAX_PROFILE_BYTES: usize = 1 << 20;
 

@@ -10,7 +10,7 @@ use super::{
 
 /// The spread (points) of the Gaussian the Smooth tool smooths a path along its length with before
 /// refitting it, as a share of the tool's reach: a third, so each point is averaged with the stretch
-/// of path within the reach on either side of it. VectorCraft's own value.
+/// of path within the reach on either side of it. crocwork Vector's own value.
 const SMOOTH_SPREAD: f64 = 1.0 / 3.0;
 
 /// The options the Smooth tool refits with: the path smoothed along its length by a Gaussian of

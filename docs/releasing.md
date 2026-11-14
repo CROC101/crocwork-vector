@@ -1,13 +1,13 @@
-# Releasing VectorCraft
+# Releasing crocwork Vector
 
 > **Last updated:** 2026-10-12 · **Change:** minor (RPM runtime capabilities and metadata checks, #1275)
 
 Every push to the `release` branch runs `.github/workflows/release.yml`. The workflow builds
 installers for macOS, Windows, Linux (including Flatpak bundles and a RISC-V tarball) and FreeBSD, plus the web build, and creates or updates a
-**draft** GitHub Release named `VectorCraft v<version>`. Nobody sees a draft until a maintainer
+**draft** GitHub Release named `crocwork Vector v<version>`. Nobody sees a draft until a maintainer
 publishes it.
 
-User-facing names say **VectorCraft**. Files, binaries and ids stay lowercase
+User-facing names say **crocwork Vector**. Files, binaries and ids stay lowercase
 (`vectorcraft-<version>-<platform>-<arch>.<ext>`, `ai.storyteller.vectorcraft`).
 
 ## Cutting a release
@@ -21,10 +21,10 @@ User-facing names say **VectorCraft**. Files, binaries and ids stay lowercase
    ```
 
    Commit the change (`Cargo.toml` + `Cargo.lock`) through the normal review flow, as a
-   `Release: VectorCraft v0.4.0` commit whose message says what changed for users.
+   `Release: crocwork Vector v0.4.0` commit whose message says what changed for users.
 2. **Merge `main` into `release`** (or fast-forward it) and push. The workflow starts by itself.
 3. **Wait for the draft.** When every job is done (macOS notarization is the slow part), the
-   Releases page has a draft `VectorCraft v0.4.0`, targeting the pushed commit, with every
+   Releases page has a draft `crocwork Vector v0.4.0`, targeting the pushed commit, with every
    artifact and `SHA256SUMS.txt`. The notes are generated from the merged pull requests.
 4. **Check it.** Download an installer or two and read the job summaries. A `::warning::` there
    means a signing secret was missing and that artifact is unsigned.
@@ -84,7 +84,7 @@ The build option is in
   `assets/app-icon/vectorcraft.icns`. `cargo xtask bundle` fills in the same template for its
   development app.
 - **Document types:** `Info.plist.in` declares every format File › Open reads, so Finder opens
-  them with VectorCraft (double-click, Open With, a drop on the Dock icon). VectorCraft owns its own
+  them with crocwork Vector (double-click, Open With, a drop on the Dock icon). crocwork Vector owns its own
   formats and is an alternate for the others. A test keeps the list in step with the engine's
   `OPEN_EXTS`. AppKit hands the files to the app as open-document events, which
   `apps/vectorcraft/src/open_documents.rs` opens like files named on the command line.
@@ -96,7 +96,7 @@ The build option is in
   (`hdiutil create -srcfolder`, retried when a CI runner's device is busy, with an `Applications` link
   to drag onto), which is signed, notarized and stapled too; the app mounted from it must pass
   `codesign --verify --strict --deep` (#1085). Its Finder window (background, icon size and positions) comes from
-  [`packaging/macos/dmg/`](../packaging/macos/dmg/README.md), and its volume is named `VectorCraft`
+  [`packaging/macos/dmg/`](../packaging/macos/dmg/README.md), and its volume is named `crocwork Vector`
   without the version, which the window's background needs; the DMG file name keeps the version.
 - **CLI:** the universal `vectorcraft-cli` is signed the same way, zipped, and the zip is
   notarized. A bare executable can't hold a stapled ticket, so Gatekeeper looks the CLI's ticket up
@@ -120,10 +120,10 @@ to the target triple, so host build scripts aren't affected.
   can never ship labelled arm64), that `vectorcraft.exe` is a GUI program (no console window) and
   that `vectorcraft-cli.exe` is a console program.
 - **Portable zip:** it ships `packaging/windows/portable.txt` beside `vectorcraft.exe`. That
-  marker (or a `VectorCraft.portable` file) switches on portable mode, as in PhotoCraft: `ui.json`
+  marker (or a `crocwork Vector.portable` file) switches on portable mode, as in PhotoCraft: `ui.json`
   and the folders next to it (Swatches, Graphic Styles, Fonts, Data Recovery, logs…) go to
-  `VectorCraftData\` next to the exe instead of `%APPDATA%\VectorCraft`. The first time
-  `VectorCraftData` is created, the settings already in `%APPDATA%\VectorCraft` are copied into it
+  `VectorCraftData\` next to the exe instead of `%APPDATA%\crocwork Vector`. The first time
+  `VectorCraftData` is created, the settings already in `%APPDATA%\crocwork Vector` are copied into it
   (the originals stay), so someone updating a portable zip from before the marker keeps their
   settings. If that folder isn't writable the app logs a warning and uses `%APPDATA%`. Deleting
   `portable.txt` returns settings to the user profile (the `VectorCraftData` folder is left as it
@@ -135,16 +135,16 @@ to the target triple, so host build scripts aren't affected.
   executable's own folder is read-only). Flatpak isn't supported: `/app` is read-only and the
   sandbox has no folder "beside the app", so a Flatpak install always uses its own config folder.
 - `vectorcraft.wxs` (WiX) is a dual-scope package (per-user by default into
-  `%LOCALAPPDATA%\Programs\ArtCraft\VectorCraft`, per-machine into `Program Files\ArtCraft\VectorCraft` (`Program Files (x86)` for the 32-bit build),
+  `%LOCALAPPDATA%\Programs\crocwork\crocwork Vector`, per-machine into `Program Files\crocwork\crocwork Vector` (`Program Files (x86)` for the 32-bit build),
   see `packaging/windows/INSTALLATION.md`) with a Start Menu shortcut
   and an App Paths entry (Win+R `vectorcraft`). Same-version upgrades are allowed, so release
   candidates replace each other.
 - Double-clicking the MSI opens a setup wizard (WixUI_InstallDir without the licence page; the scope page appears only for a new full-UI install, not for
   maintenance, uninstall or reduced and silent runs):
   a scope page ("Only for me" or "Everyone on this computer"), Welcome, install folder (remembered for
-  upgrades in `HKLM` or `HKCU\Software\VectorCraft\InstallDir` according to scope),
+  upgrades in `HKLM` or `HKCU\Software\crocwork Vector\InstallDir` according to scope),
   Shortcuts (a ticked "Create a desktop shortcut" box), Ready, a progress page, and a Finish page
-  that says where to find the app, with a ticked "Launch VectorCraft" box. The pages name the full
+  that says where to find the app, with a ticked "Launch crocwork Vector" box. The pages name the full
   version (`vectorcraft.en-us.wxl`). `package.ps1` draws the wizard's banner and side bitmaps from
   the app icon, so no WiX stock art ships. `msiexec /qn` still installs silently, with the desktop
   shortcut unless `INSTALLDESKTOPSHORTCUT=""` is passed. Building needs the WiX UI and Util
@@ -167,11 +167,11 @@ to the target triple, so host build scripts aren't affected.
 `packaging/linux/package.sh` builds the release binaries and packages them as an AppImage, a
 `.deb` and an `.rpm` (with [nfpm](https://nfpm.goreleaser.com), from `nfpm.yaml`) and a plain
 `.tar.gz` tree (`bin/`, `share/`). The packages install both programs, the desktop entry, the
-AppStream metainfo, the MIME type for VectorCraft documents, the icons and the licence files.
+AppStream metainfo, the MIME type for crocwork Vector documents, the icons and the licence files.
 
 **Document types.** The desktop entry's `MimeType` lists every format File › Open reads but PSD,
-PSB, `.ps` PostScript, Targa, PCX, Pixar, JPEG 2000, HEIC/HEIF and HP-GL, so file managers list VectorCraft under Open With for them.
-`ai.storyteller.vectorcraft.mime.xml` declares the types that shared-mime-info lacks: VectorCraft
+PSB, `.ps` PostScript, Targa, PCX, Pixar, JPEG 2000, HEIC/HEIF and HP-GL, so file managers list crocwork Vector under Open With for them.
+`ai.storyteller.vectorcraft.mime.xml` declares the types that shared-mime-info lacks: crocwork Vector
 documents and templates, `.ait` templates and Affinity files (`application/x-affinity`). An `.af`
 file gets the Affinity type by its content, and `.afdesign` and `.afpub` files by their extension.
 A test keeps both files in step with the engine's `OPEN_EXTS`.
@@ -236,7 +236,7 @@ files for common hosts.
 ## The draft release
 
 The last job waits for every build, downloads their artifacts, writes `SHA256SUMS.txt` and creates
-the draft `VectorCraft v<version>` with notes generated from the merged pull requests. If the draft
+the draft `crocwork Vector v<version>` with notes generated from the merged pull requests. If the draft
 already exists, it replaces its assets and keeps it a draft. If that version is already published,
 the job fails and asks for a version bump (`cargo xtask version set`).
 

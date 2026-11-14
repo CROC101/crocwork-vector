@@ -44,7 +44,7 @@ pub struct LoadOptions {
     /// The encoding names in a `.ai` or EPS's editing data are read in when they aren't UTF-8
     /// (`legacyNameEncoding`).
     pub legacy_names: vectorcraft_eps::NameEncoding,
-    /// A PDF or `.ai` saved with Preserve Editing opens from the VectorCraft document it carries;
+    /// A PDF or `.ai` saved with Preserve Editing opens from the crocwork Vector document it carries;
     /// off, it opens as another app would open it, from the editing copy of its art or its pages.
     pub native: bool,
 }
@@ -134,7 +134,7 @@ impl LoadOptions {
     }
 
     /// Does the document read only part of the file, or read it differently (a page range, another
-    /// box, a password, without its hidden layers, without the VectorCraft document it carries)?
+    /// box, a password, without its hidden layers, without the crocwork Vector document it carries)?
     /// Writing it back would lose the rest, so Save doesn't (it asks for a name).
     pub fn is_partial(&self) -> bool {
         self.pages.is_some() || self.crop != CropTo::default() || self.password.is_some() || !self.layers || !self.native

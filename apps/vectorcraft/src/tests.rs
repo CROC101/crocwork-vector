@@ -164,7 +164,7 @@ fn the_system_title_bar_preference_keeps_the_window_decorations() {
     let on = ui_state_with_prefs(serde_json::json!({"systemTitleBar": true}));
     assert!(super::opted_into_system_title_bar(Some(&on)));
 
-    // The suite-wide mapping (Frame + preference -> whether VectorCraft draws its own title
+    // The suite-wide mapping (Frame + preference -> whether crocwork Vector draws its own title
     // bar). The desktop frame (macOS, Windows, X11, KDE/Wayland, …) always keeps native
     // decorations; the app frame (GNOME/Wayland, or a `VECTORCRAFT_TITLEBAR` override) draws
     // our own title bar — unless the user opted into the system title bar, which forces the
@@ -173,7 +173,7 @@ fn the_system_title_bar_preference_keeps_the_window_decorations() {
     let desktop = Frame::Desktop;
     #[cfg(not(any(target_os = "macos", target_os = "windows")))]
     {
-        assert!(super::custom_titlebar_from(&app, false), "GNOME/Wayland: VectorCraft draws its own");
+        assert!(super::custom_titlebar_from(&app, false), "GNOME/Wayland: crocwork Vector draws its own");
         assert!(!super::custom_titlebar_from(&app, true), "System Title Bar preference forces native");
         assert!(!super::custom_titlebar_from(&desktop, false), "KDE/X11/…: keep the compositor's frame");
         assert!(!super::custom_titlebar_from(&desktop, true));
@@ -191,7 +191,7 @@ fn the_system_title_bar_preference_keeps_the_window_decorations() {
     assert_eq!(super::native_options(true).viewport.decorations, Some(false));
 }
 
-/// Preferences › User Interface › VectorCraft Title Bar on Every Desktop gives the app frame where
+/// Preferences › User Interface › crocwork Vector Title Bar on Every Desktop gives the app frame where
 /// the probe chose the desktop's (KDE, X11, a window opened through XWayland); without it the probe
 /// decides, and `VECTORCRAFT_TITLEBAR` set to `app`, `system` or `desktop` takes precedence over
 /// both.
@@ -255,7 +255,7 @@ fn the_titlebar_variable_takes_precedence_over_system_title_bar() {
     assert!(!super::system_title_bar_applies(true, true));
     assert!(!super::system_title_bar_applies(false, false));
     assert!(!super::system_title_bar_applies(false, true));
-    // VECTORCRAFT_TITLEBAR=app with System Title Bar on: VectorCraft draws its own title bar.
+    // VECTORCRAFT_TITLEBAR=app with System Title Bar on: crocwork Vector draws its own title bar.
     let frame = super::start_frame(Frame::Desktop, Some(true), false, false);
     assert_eq!(super::custom_titlebar_from(&frame, super::system_title_bar_applies(true, true)), !cfg!(target_os = "macos"));
     // VECTORCRAFT_TITLEBAR=desktop with System Title Bar off keeps the desktop's frame.
@@ -346,7 +346,7 @@ fn the_macos_bundle_opens_every_readable_format() {
     assert!(!plist.contains("<key>NSDocumentClass</key>"), "not an NSDocument app: AppKit would refuse the files");
     let types = plist.matches("<key>CFBundleTypeName</key>").count();
     assert!(types > 1 && plist.matches("<key>LSHandlerRank</key>").count() == types, "every document type has a rank");
-    assert_eq!(plist.matches("<string>Owner</string>").count(), 2, "only VectorCraft documents and templates are owned");
+    assert_eq!(plist.matches("<string>Owner</string>").count(), 2, "only crocwork Vector documents and templates are owned");
 }
 
 /// The MIME types a Linux desktop gives each extension in `OPEN_EXTS` but `UNASSOCIATED_EXTS`

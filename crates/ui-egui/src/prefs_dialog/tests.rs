@@ -410,7 +410,7 @@ fn graphics_processor_preference_shows_and_persists() {
     out.shapes.iter().for_each(|c| texts(&c.shape, &mut shown));
     assert!(shown.iter().any(|t| t.starts_with("Graphics Processor")), "{shown:?}");
     assert!(shown.iter().any(|t| t == "Automatic"), "{shown:?}");
-    assert!(shown.iter().any(|t| t == "Applies the next time VectorCraft starts."), "{shown:?}");
+    assert!(shown.iter().any(|t| t == "Applies the next time crocwork Vector starts."), "{shown:?}");
     a.ui.dialog.as_mut().unwrap().fields.insert("gpuPreference".into(), json!("highPerformance"));
     assert!(!a.take_prefs_changed(), "nothing to write before OK");
     confirm(&mut a).unwrap();
@@ -445,7 +445,7 @@ fn system_title_bar_preference_shows_and_persists() {
     out.shapes.iter().for_each(|c| texts(&c.shape, &mut shown));
     let supported = cfg!(all(not(target_arch = "wasm32"), not(target_os = "macos")));
     assert_eq!(shown.iter().any(|t| t == "System Title Bar"), supported, "{shown:?}");
-    assert_eq!(shown.iter().any(|t| t == "Applies the next time VectorCraft starts."), supported, "{shown:?}");
+    assert_eq!(shown.iter().any(|t| t == "Applies the next time crocwork Vector starts."), supported, "{shown:?}");
     a.ui.dialog.as_mut().unwrap().fields.insert("systemTitleBar".into(), json!(true));
     confirm(&mut a).unwrap();
     assert!(a.session.prefs.system_title_bar);
@@ -453,7 +453,7 @@ fn system_title_bar_preference_shows_and_persists() {
     assert_eq!(saved["engine_prefs"]["systemTitleBar"], json!(true));
 }
 
-/// User Interface › VectorCraft Title Bar on Every Desktop: shown on Linux and the BSDs only, under
+/// User Interface › crocwork Vector Title Bar on Every Desktop: shown on Linux and the BSDs only, under
 /// System Title Bar with the next-launch note once, and saved under the key the desktop app reads
 /// before the window opens.
 #[test]
@@ -476,8 +476,8 @@ fn app_title_bar_preference_shows_and_persists() {
     let mut shown = vec![];
     out.shapes.iter().for_each(|c| texts(&c.shape, &mut shown));
     let supported = cfg!(not(any(target_arch = "wasm32", target_os = "macos", target_os = "windows")));
-    assert_eq!(shown.iter().any(|t| t == "VectorCraft Title Bar on Every Desktop"), supported, "{shown:?}");
-    let notes = shown.iter().filter(|t| *t == "Applies the next time VectorCraft starts.").count();
+    assert_eq!(shown.iter().any(|t| t == "crocwork Vector Title Bar on Every Desktop"), supported, "{shown:?}");
+    let notes = shown.iter().filter(|t| *t == "Applies the next time crocwork Vector starts.").count();
     assert_eq!(notes, usize::from(cfg!(all(not(target_arch = "wasm32"), not(target_os = "macos")))), "{shown:?}");
     a.ui.dialog.as_mut().unwrap().fields.insert("appTitleBar".into(), json!(true));
     confirm(&mut a).unwrap();
@@ -486,7 +486,7 @@ fn app_title_bar_preference_shows_and_persists() {
     assert_eq!(saved["engine_prefs"]["appTitleBar"], json!(true));
 }
 
-/// VectorCraft Title Bar on Every Desktop does not take clicks while System Title Bar is on or
+/// crocwork Vector Title Bar on Every Desktop does not take clicks while System Title Bar is on or
 /// VECTORCRAFT_TITLEBAR is set. With the variable set its note names the variable in place of the
 /// next-launch note, and with System Title Bar on and the variable unset a note says that System
 /// Title Bar takes precedence.
@@ -501,7 +501,7 @@ fn app_title_bar_is_dimmed_while_something_takes_precedence() {
     }
     let note = "The VECTORCRAFT_TITLEBAR environment variable chooses the title bar while it is set.";
     let system_note = "System Title Bar takes precedence over this option while it is on.";
-    let restart_note = "Applies the next time VectorCraft starts.";
+    let restart_note = "Applies the next time crocwork Vector starts.";
     let supported = cfg!(not(any(target_arch = "wasm32", target_os = "macos", target_os = "windows")));
     for (from_env, system) in [(false, false), (true, false), (false, true), (true, true)] {
         let mut a = app();
@@ -524,7 +524,7 @@ fn app_title_bar_is_dimmed_while_something_takes_precedence() {
         assert_eq!(shown.iter().filter(|t| *t == restart_note).count(), usize::from(restart_shown), "{shown:?}");
         // A click on the checkbox's label turns the preference on only when nothing takes precedence.
         let label = out.shapes.iter().find_map(|c| match &c.shape {
-            egui::Shape::Text(t) if t.galley.text() == "VectorCraft Title Bar on Every Desktop" => Some(t.visual_bounding_rect()),
+            egui::Shape::Text(t) if t.galley.text() == "crocwork Vector Title Bar on Every Desktop" => Some(t.visual_bounding_rect()),
             _ => None,
         });
         assert_eq!(label.is_some(), supported);
@@ -1098,7 +1098,7 @@ fn app_with_file_dialogs(path: &str) -> VectorcraftApp {
 #[test]
 fn export_and_import_preferences_buttons_round_trip() {
     let dir = temp_folder("prefs-file");
-    let path = dir.join("VectorCraft Preferences.json").to_string_lossy().into_owned();
+    let path = dir.join("crocwork Vector Preferences.json").to_string_lossy().into_owned();
     let mut a = app_with_file_dialogs(&path);
     a.run("file.new", json!({"width": 400, "height": 400})).unwrap();
     a.run("document.setUnits", json!({"units": "Millimeters"})).unwrap();
@@ -1142,7 +1142,7 @@ fn import_preferences_of_a_bad_file_changes_nothing() {
     open(&mut a, Some("General"));
     a.ui.dialog.as_mut().unwrap().fields.insert("keyboardIncrement".into(), json!(9));
     click_button(&mut a, "Import Preferences…");
-    assert!(a.ui.status.contains("newer version of VectorCraft"), "{}", a.ui.status);
+    assert!(a.ui.status.contains("newer version of crocwork Vector"), "{}", a.ui.status);
     assert_eq!(a.session.prefs.to_json(), before);
     assert_eq!(a.ui.dialog.as_ref().unwrap().fields["keyboardIncrement"], json!(9), "the dialog keeps its edits");
     let _ = std::fs::remove_dir_all(&dir);

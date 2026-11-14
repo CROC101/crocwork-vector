@@ -329,7 +329,7 @@ fn per_character_positions_with_middle_anchor() {
 }
 
 /// `text-anchor` aligns a line's advance, which ends after its last character's letter spacing,
-/// and VectorCraft aligns a line without that tracking: the imported lines move back by their
+/// and crocwork Vector aligns a line without that tracking: the imported lines move back by their
 /// share of it and stay where a reader draws them, and a centred or right-aligned tracked line
 /// exported and read back stays where it was (export anchors lines the same way).
 #[test]

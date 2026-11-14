@@ -9,7 +9,7 @@
 //! inch, y up) become points, through user units (SC, IP, IR) and the rotation (RO). The artboard
 //! is the bounds of what the art paints, its strokes included.
 //!
-//! VectorCraft's own rules where the device decides: before the first SP the pen is pen 1 (a
+//! crocwork Vector's own rules where the device decides: before the first SP the pen is pen 1 (a
 //! device draws nothing until SP), and the hard-clip limits are 11 × 8.5 in from the origin, so
 //! P2 lies there when the file sets no scaling points. SP0 draws nothing. Labels, symbol mode's symbols and raster
 //! images (HP RTL) aren't drawn, the input window doesn't clip, hatched fills are filled solid,

@@ -3,7 +3,7 @@
 //!
 //! Each filter has a thumbnail, and the dialog has its own preview, as the
 //! [Filter Gallery](https://helpx.adobe.com/photoshop/desktop/effects-filters/get-started-with-filters/filter-gallery.html)
-//! describes. Both are an original drawing made for VectorCraft (a small landscape), passed through
+//! describes. Both are an original drawing made for crocwork Vector (a small landscape), passed through
 //! the filter. The thumbnails use each filter's defaults. The preview uses the visible stack, or
 //! the filter being browsed when the stack is empty. The canvas preview and the one-undo OK are
 //! unchanged.

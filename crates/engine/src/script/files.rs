@@ -9,7 +9,7 @@
 //! folder, `%xx` escapes are read as UTF-8, and on Windows both `/` and `\` separate names and
 //! `/c/…` names drive C. Naming a path does not look anything up.
 //!
-//! VectorCraft's own rules:
+//! crocwork Vector's own rules:
 //!
 //! - A script reads only inside its [`ScriptScope`]: a script run from a file reads in that file's
 //!   folder and the folders below it, and a script given as text reads nothing. A path whose names

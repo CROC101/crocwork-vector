@@ -112,7 +112,7 @@
 //!   of the document defined in the setup after the patterns, in a non-printing block
 //!   (`%AI14_BeginSymbol`, `(name)`, `0 A`, `0 Xw`, `0 Ae`, the art in the symbol's space with y
 //!   down, the registration point as `AI13PatternRegistrationType` 1 to 9 from the top left, row by
-//!   row (VectorCraft's numbering, in the order the scripting reference lists the points), in the
+//!   row (crocwork Vector's numbering, in the order the scripting reference lists the points), in the
 //!   art's dictionary, `%AI10_EndSymbol`), each after those its art uses; the symbol
 //!   list after the palette (`%AI24_BeginSymbolList`, the names in the Symbols panel's order,
 //!   `%AI24_EndSymbolList`); each instance as `/SymbolInstance :`, `(name) /SymbolRef ,`, the
@@ -223,13 +223,13 @@ const ART_SIZE: u32 = 14400;
 const ART_FLAGS: &str = "0 0 0 1 0 0 1 0 0";
 /// `%AI5_TargetResolution` (§2.1.1).
 const TARGET_RESOLUTION: u32 = 800;
-/// The gridlines' gray: VectorCraft's default grid color (200 of 255).
+/// The gridlines' gray: crocwork Vector's default grid color (200 of 255).
 const GRID_GRAY: f64 = 200.0 / 255.0;
 
-/// `%%Creator`: the creator line VectorCraft writes in the header of the editing data. It names
-/// VectorCraft and the format's app, and holds no version number; the version is written on its
+/// `%%Creator`: the creator line crocwork Vector writes in the header of the editing data. It names
+/// crocwork Vector and the format's app, and holds no version number; the version is written on its
 /// own in `%%AI8_CreatorVersion` ([`CREATOR_VERSION`]).
-const CREATOR_TEXT: &str = "VectorCraft, editing data for Illustrator"; // brand-ok: the creator line VectorCraft writes
+const CREATOR_TEXT: &str = "crocwork Vector, editing data for Illustrator"; // brand-ok: the creator line crocwork Vector writes
 
 /// The first line of a PostScript file (the DSC version comment).
 const PS_HEADER: &str = "%!PS-Adobe-3.0"; // brand-ok: the PostScript header comment
@@ -631,7 +631,7 @@ fn header(doc: &Document, o: &AiEditingOptions, w: &Writer, art: Rect, first: Re
     if !views.is_empty() {
         let _ = writeln!(s, "%AI5_OpenViewLayers: {views}");
     }
-    // Gridlines and subdivisions (§2.1.1, Table 6): in back, lines, in VectorCraft's grid gray.
+    // Gridlines and subdivisions (§2.1.1, Table 6): in back, lines, in crocwork Vector's grid gray.
     let (space, subdiv) = (ps::num(doc.grid.spacing), doc.grid.subdivisions);
     let gray = ps::num(GRID_GRAY);
     let _ = writeln!(s, "%AI7_GridSettings: {space} {subdiv} {space} {subdiv} 1 0 {gray} {gray} {gray} {gray} {gray} {gray}");

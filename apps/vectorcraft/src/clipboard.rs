@@ -1189,7 +1189,7 @@ mod portable {
                         if self.logged.swap(true, Ordering::Relaxed) {
                             log::debug!("the system clipboard is still unavailable ({why}); next try in {wait:?}");
                         } else {
-                            log::warn!("the system clipboard is unavailable ({why}): Copy and Paste stay inside VectorCraft");
+                            log::warn!("the system clipboard is unavailable ({why}): Copy and Paste stay inside crocwork Vector");
                         }
                         self.failed = Some(Failed { at: now, wait });
                     }
@@ -1820,7 +1820,7 @@ mod wayland {
     /// The types text is offered under and read from, best first: `text/plain;charset=utf-8` (GTK
     /// and Qt apps), `UTF8_STRING` (X11 apps through XWayland) and `text/plain`.
     const TEXT_TYPES: [&str; 3] = ["text/plain;charset=utf-8", "UTF8_STRING", "text/plain"];
-    /// The most bytes a read takes from the app that copied (untrusted data), VectorCraft's own
+    /// The most bytes a read takes from the app that copied (untrusted data), crocwork Vector's own
     /// limit: a read of more fails.
     const MAX_BYTES: usize = 64 << 20;
     /// The most pastes of a Copy's data that are sent at once; a paste beyond them gets nothing.

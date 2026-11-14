@@ -52,7 +52,7 @@ else
   warn "macOS: APPLE_ID / APPLE_PASSWORD / APPLE_TEAM_ID incomplete; signed but not notarized"
 fi
 
-echo "==> VectorCraft $VERSION for macOS ($ARCH), identity: $IDENTITY, notarize: $NOTARIZE"
+echo "==> crocwork Vector $VERSION for macOS ($ARCH), identity: $IDENTITY, notarize: $NOTARIZE"
 
 # ---- build -------------------------------------------------------------------------------------
 if [[ "$SKIP_BUILD" = 0 ]]; then
@@ -116,8 +116,8 @@ stapler_retry() {
 echo "==> assembling $APP"
 mkdir -p "$APP/Contents/MacOS" "$APP/Contents/Resources"
 # Executable and icon carry the display name (CFBundleExecutable / CFBundleIconFile).
-cp "$WORK/bin/vectorcraft" "$APP/Contents/MacOS/VectorCraft"
-cp "$ROOT/assets/app-icon/vectorcraft.icns" "$APP/Contents/Resources/VectorCraft.icns"
+cp "$WORK/bin/vectorcraft" "$APP/Contents/MacOS/crocwork Vector"
+cp "$ROOT/assets/app-icon/vectorcraft.icns" "$APP/Contents/Resources/crocwork Vector.icns"
 sed -e "s/@VERSION@/$VERSION/g" -e "s/@SHORT_VERSION@/$SHORT_VERSION/g" \
   -e "s/@BUILD_SHA@/${VECTORCRAFT_BUILD_SHA:-unknown}/g" \
   "$HERE/Info.plist.in" >"$APP/Contents/Info.plist"
@@ -128,13 +128,13 @@ copy_docs "$APP/Contents/Resources"
 
 # Sign inside-out: nested code first, then the bundle itself (no --deep on the final signature).
 # Today the only nested code is the main executable; frameworks/helpers would be signed here too.
-sign --options runtime --entitlements "$HERE/entitlements.plist" "$APP/Contents/MacOS/VectorCraft"
+sign --options runtime --entitlements "$HERE/entitlements.plist" "$APP/Contents/MacOS/crocwork Vector"
 sign --options runtime --entitlements "$HERE/entitlements.plist" "$APP"
 codesign --verify --strict --deep --verbose=2 "$APP"
 
 if [[ "$NOTARIZE" = 1 ]]; then
-  ditto -c -k --keepParent "$APP" "$WORK/VectorCraft-notarize.zip"
-  notarize "$WORK/VectorCraft-notarize.zip"
+  ditto -c -k --keepParent "$APP" "$WORK/crocwork Vector-notarize.zip"
+  notarize "$WORK/crocwork Vector-notarize.zip"
   stapler_retry staple "$APP"
   stapler_retry validate "$APP"
   spctl --assess --type execute -vvv "$APP"
@@ -170,7 +170,7 @@ hdiutil_retry() {
     sleep $((attempt * 10))
   done
 }
-hdiutil_retry create create -srcfolder "$STAGE" -volname "VectorCraft" -fs HFS+ -format UDZO -imagekey zlib-level=9 -ov "$DMG"
+hdiutil_retry create create -srcfolder "$STAGE" -volname "crocwork Vector" -fs HFS+ -format UDZO -imagekey zlib-level=9 -ov "$DMG"
 sign "$DMG"
 codesign --verify --strict --verbose=2 "$DMG"
 # The app inside the image must still pass --strict, so a makehybrid-style regression can't ship.

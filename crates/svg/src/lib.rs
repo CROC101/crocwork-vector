@@ -1,4 +1,4 @@
-//! VectorCraft SVG import and export.
+//! crocwork Vector SVG import and export.
 //!
 //! * [`export`] / [`export_full`] write a [`Document`] as SVG 1.1 with our own writer, as set by
 //!   [`ExportOptions`] (presentation attributes, inline styles, style entities or internal CSS
@@ -48,7 +48,7 @@
 //!   (<https://helpx.adobe.com/illustrator/desktop/paint-and-fill/create-and-edit-gradients/control-perceptual-interpolation-in-gradients.html>).
 //!   On characters they are written as linear gradients through stops on the perceptual curve.
 //! * **Gradients mixed around the hue wheel** (Hue Clockwise and Hue Counterclockwise,
-//!   VectorCraft's own methods) fill or stroke objects as an `<image>` of the gradient too, at the
+//!   crocwork Vector's own methods) fill or stroke objects as an `<image>` of the gradient too, at the
 //!   document's raster effects resolution. On characters they are written as gradients through
 //!   stops on their way around the wheel.
 //! * **Symbol instances** the shared `<symbol>` would paint differently from the canvas (stained,
@@ -232,7 +232,7 @@ pub struct ExportOptions {
     pub responsive: bool,
     /// Fonts → Convert to Outlines: text becomes paths (portable, no font needed to view it).
     pub outline_text: bool,
-    /// Embed the native document (passed to [`export_full`]) in `<metadata>` so VectorCraft
+    /// Embed the native document (passed to [`export_full`]) in `<metadata>` so crocwork Vector
     /// reopens the SVG with nothing lost (see [`editing`]).
     pub preserve_editing: bool,
     /// Write `<metadata>` with the document's title, format and File Info (Dublin Core).

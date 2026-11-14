@@ -1751,7 +1751,7 @@ fn raster_samples() -> Vec<(&'static str, Vec<u8>)> {
     let gray =
         vectorcraft_testkit::tiff::Tiff { width: 5, height: 3, photometric: 1, bits: 16, extra: &[2], planar: true, ppi: None, channels: &gray };
     out.push(("planar-gray.tif", vectorcraft_testkit::tiff::tiff(&gray)));
-    // A layered PSD with transparency (as VectorCraft exports it), and a PackBits PSB by hand.
+    // A layered PSD with transparency (as crocwork Vector exports it), and a PackBits PSB by hand.
     let mut s = rich_session();
     let r = s.execute("document.export", &json!({"format": "psd", "ppi": 2})).unwrap();
     out.push(("a.psd", vectorcraft_format::base64_decode(r["dataBase64"].as_str().unwrap()).unwrap()));
@@ -2181,7 +2181,7 @@ proptest! {
 
     #[test]
     fn mutated_pdf_presets_never_panic(cut in 0usize..20_000, edits in prop::collection::vec(arb_edit(), 0..10)) {
-        let text = saved("pdf.preset.export", json!({"names": ["VectorCraft Default", "Smallest File Size", "PDF/X-4:2010"]}));
+        let text = saved("pdf.preset.export", json!({"names": ["crocwork Vector Default", "Smallest File Size", "PDF/X-4:2010"]}));
         pdf_presets("mutated pdf presets", &mutate_text(&text, cut, &edits))?;
     }
 }
@@ -2903,7 +2903,7 @@ fn arb_body() -> impl Strategy<Value = Vec<u8>> {
     ]
 }
 
-/// WMF record functions VectorCraft reads, and one it doesn't.
+/// WMF record functions crocwork Vector reads, and one it doesn't.
 const WMF_FUNCTIONS: [u16; 33] = [
     0x0324, 0x0325, 0x0538, 0x041B, 0x0418, 0x061C, 0x0817, 0x081A, 0x0830, 0x0416, 0x0415, 0x02FA, 0x02FC, 0x02FB, 0x012D, 0x01F0, 0x0521, 0x0A32,
     0x0F43, 0x0B41, 0x0940, 0x061D, 0x0213, 0x0214, 0x001E, 0x0127, 0x0106, 0x0209, 0x012E, 0x00F7, 0x01F9, 0x0142, 0x0999,
@@ -3013,7 +3013,7 @@ fn the_pict_sample_opens() {
     assert!(paths > 8 && images == 1 && texts == 1, "{paths} paths, {images} images, {texts} texts, warnings {:?}", l.warnings);
 }
 
-/// PICT opcodes VectorCraft reads, and reserved ones it skips.
+/// PICT opcodes crocwork Vector reads, and reserved ones it skips.
 const PICT_OPS: [u16; 40] = [
     0x01, 0x03, 0x04, 0x07, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x12, 0x13, 0x14, 0x1A, 0x1B, 0x20, 0x21, 0x22, 0x23, 0x28, 0x29, 0x2A, 0x2B, 0x2C, 0x30,
     0x31, 0x38, 0x41, 0x51, 0x61, 0x71, 0x81, 0x90, 0x91, 0x98, 0x99, 0x9A, 0x9B, 0xA1, 0x8200, 0x0024,
@@ -4511,7 +4511,7 @@ proptest! {
 /// The range of [`ai_written_styles_never_panic`]'s cuts and edits: past the end of [`styles_text`].
 const STYLES_FUZZ_CHARS: usize = 64_000;
 
-/// The editing data VectorCraft writes for a document with a drop shadow on a path, a gradient fill
+/// The editing data crocwork Vector writes for a document with a drop shadow on a path, a gradient fill
 /// and a width profile on others, a stroked even-odd path with an opacity mask, Pathfinder › Add on
 /// a group and a graphic style of its own with effects on one of its fills.
 fn styles_text() -> &'static str {
@@ -4621,7 +4621,7 @@ fn the_symbol_library_fuzz_data_opens_with_its_symbols() {
 /// The range of [`ai_written_brushes_never_panic`]'s cuts and edits: past the end of [`brushes_text`].
 const BRUSHES_FUZZ_CHARS: usize = 48_000;
 
-/// The editing data VectorCraft writes for a document whose brushes are a Calligraphic brush, a
+/// The editing data crocwork Vector writes for a document whose brushes are a Calligraphic brush, a
 /// Scatter brush in Tints and an Art brush in Tints (each art a wide block over a narrow one), with a
 /// path drawn with the Calligraphic brush and one with the Art brush.
 fn brushes_text() -> &'static str {

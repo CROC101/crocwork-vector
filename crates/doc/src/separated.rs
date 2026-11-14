@@ -22,10 +22,10 @@ pub const MAX_NAME: usize = 255;
 /// Most ink amounts the plates of one image hold together (512 MB).
 pub const MAX_SAMPLES: u64 = 1 << 29;
 /// How a plate's ImageDescription starts.
-const MARK: &str = "VectorCraft plate ";
+const MARK: &str = "crocwork Vector plate ";
 
 /// How the composite's ImageDescription starts when plates were read from files of their own.
-const FILES_MARK: &str = "VectorCraft plate files";
+const FILES_MARK: &str = "crocwork Vector plate files";
 
 /// A plate file of its own that a separated image was read from, as it was then: a change to it
 /// changes the image as a change to the DCS file does.
@@ -225,7 +225,7 @@ fn files_description(files: &[PlateFile]) -> String {
 }
 
 /// How the composite's ImageDescription line holding the clipping path starts.
-const CLIP_MARK: &str = "VectorCraft clip ";
+const CLIP_MARK: &str = "crocwork Vector clip ";
 
 /// Longest clipping path kept (bytes of its JSON).
 const MAX_CLIP: usize = 16 << 20;

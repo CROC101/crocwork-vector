@@ -68,7 +68,7 @@ fn fetch_json2() -> Result<PathBuf, String> {
     std::fs::create_dir_all(&base).map_err(|e| format!("create {}: {e}", base.display()))?;
     let url = format!("https://raw.githubusercontent.com/douglascrockford/JSON-js/{JSON2_COMMIT}/json2.js");
     let mut curl = Command::new("curl");
-    curl.args(["-fsSL", "--retry", "3", "-A", "VectorCraft-dev", "--max-filesize", &JSON2_MAX_BYTES.to_string(), "-o"]).arg(&file).arg(&url);
+    curl.args(["-fsSL", "--retry", "3", "-A", "crocwork Vector-dev", "--max-filesize", &JSON2_MAX_BYTES.to_string(), "-o"]).arg(&file).arg(&url);
     run(curl, &format!("curl {url}"))?;
     if !matches(&file)? {
         let got = std::fs::read(&file).map(|b| sha256::hex(&b)).unwrap_or_default();
@@ -93,7 +93,7 @@ fn fetch() -> Result<PathBuf, String> {
     if !verified(&archive)? {
         let url = format!("https://codeload.github.com/tc39/test262/tar.gz/{COMMIT}");
         let mut curl = Command::new("curl");
-        curl.args(["-fsSL", "--retry", "3", "-A", "VectorCraft-dev", "--max-filesize", &MAX_BYTES.to_string(), "-o"]).arg(&archive).arg(&url);
+        curl.args(["-fsSL", "--retry", "3", "-A", "crocwork Vector-dev", "--max-filesize", &MAX_BYTES.to_string(), "-o"]).arg(&archive).arg(&url);
         run(curl, &format!("curl {url}"))?;
         if !verified(&archive)? {
             let got = std::fs::read(&archive).map(|b| sha256::hex(&b)).unwrap_or_default();

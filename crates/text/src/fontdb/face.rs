@@ -222,7 +222,7 @@ pub struct IcfMargins {
 }
 
 /// The heights above the baseline, in ems, that Type on a Path's Align to Path runs along the
-/// path ([`FontFace::path_align_heights`]). These are VectorCraft's own values.
+/// path ([`FontFace::path_align_heights`]). These are crocwork Vector's own values.
 #[derive(Clone, Copy, Debug, Default, PartialEq)]
 pub(crate) struct PathAlignHeights {
     /// Ascender: the top of the face's em box ([`FontFace::em_box_top`]).

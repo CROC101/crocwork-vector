@@ -107,7 +107,7 @@ impl WariStyle {
 /// centered across the line on the center of the line's ideographic em box (in vertical type, the
 /// column's center line), the first line above (in vertical type, to the right). Each line is set
 /// along the block by its Alignment; Auto sets the lines as Justify with Last Line Aligned Left
-/// does. These are VectorCraft's own rules for the parts public documentation does not describe.
+/// does. These are crocwork Vector's own rules for the parts public documentation does not describe.
 /// <https://helpx.adobe.com/illustrator/using/formatting-asian-characters.html>
 pub(super) fn warichu(g: &mut [SGlyph], (vertical, whole): (bool, bool), style: impl Fn(&SGlyph) -> WariStyle) {
     let styles: Vec<WariStyle> = g.iter().map(&style).collect();

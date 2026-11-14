@@ -22,7 +22,7 @@ pub const UI_FIELDS: &[(&str, &str, &str)] = &[
 /// The Units ▸ General value Reset Preferences put in the dialog, while it is still the field's value.
 const RESET_UNITS: &str = "__resetUnits";
 
-/// Whether User Interface shows VectorCraft Title Bar on Every Desktop (`appTitleBar`): Linux and the
+/// Whether User Interface shows crocwork Vector Title Bar on Every Desktop (`appTitleBar`): Linux and the
 /// BSDs, where the desktop may draw the window's frame. macOS and Windows never read it.
 const APP_TITLE_BAR_SHOWN: bool = cfg!(not(any(target_arch = "wasm32", target_os = "macos", target_os = "windows")));
 
@@ -40,7 +40,7 @@ pub fn open(app: &mut VectorcraftApp, category: Option<&str>) {
     fields.insert("__snapToGrid".into(), json!(app.ui.view.snap_to_grid));
     fields.insert("__taskBar".into(), json!(app.ui.task_bar));
     // Read-only: whether VECTORCRAFT_TITLEBAR chose this window's frame (System Title Bar's dimmed
-    // row and VectorCraft Title Bar on Every Desktop's note).
+    // row and crocwork Vector Title Bar on Every Desktop's note).
     fields.insert("__titlebarFromEnv".into(), json!(app.titlebar_from_env));
     fields.insert("__search".into(), json!(""));
     fields.insert("__focusSearch".into(), json!(true));
@@ -533,7 +533,7 @@ fn category_fields(ui: &mut egui::Ui, app: &mut VectorcraftApp, d: &mut Dialog, 
                     // The window's decorations are chosen once, when the app starts. On Linux and the
                     // BSDs the note goes under the next row, which also applies at the next start.
                     if !APP_TITLE_BAR_SHOWN {
-                        ui.label(egui::RichText::new(tl!("Applies the next time VectorCraft starts.")).color(t.text_dim).size(11.0));
+                        ui.label(egui::RichText::new(tl!("Applies the next time crocwork Vector starts.")).color(t.text_dim).size(11.0));
                     }
                 }
             }
@@ -553,7 +553,7 @@ fn category_fields(ui: &mut egui::Ui, app: &mut VectorcraftApp, d: &mut Dialog, 
                     let note = if from_env {
                         tl!("The VECTORCRAFT_TITLEBAR environment variable chooses the title bar while it is set.")
                     } else {
-                        tl!("Applies the next time VectorCraft starts.")
+                        tl!("Applies the next time crocwork Vector starts.")
                     };
                     ui.label(egui::RichText::new(note).color(t.text_dim).size(11.0));
                 }
@@ -620,7 +620,7 @@ fn category_fields(ui: &mut egui::Ui, app: &mut VectorcraftApp, d: &mut Dialog, 
                 choice_row(ui, d, sp.key, sp.label, opts, &v);
                 if sp.key == "gpuPreference" || sp.key == "linuxDisplayServer" {
                     // The window's graphics device and display server are chosen once, when the app starts.
-                    ui.label(egui::RichText::new(tl!("Applies the next time VectorCraft starts.")).color(t.text_dim).size(11.0));
+                    ui.label(egui::RichText::new(tl!("Applies the next time crocwork Vector starts.")).color(t.text_dim).size(11.0));
                 }
                 if sp.key == "linuxDisplayServer" {
                     // Many Wayland desktops give a drawing tablet's pen to the window only through XWayland (#2028).
@@ -702,7 +702,7 @@ fn choose_folder(app: &mut VectorcraftApp, d: &mut Dialog, key: &'static str) {
 }
 
 /// The file name Export Preferences… suggests.
-const PREFS_FILE_NAME: &str = "VectorCraft Preferences.json";
+const PREFS_FILE_NAME: &str = "crocwork Vector Preferences.json";
 
 /// Export Preferences…: the applied preferences (`prefs.export`) go to a file picked in a save
 /// dialog (the web downloads it). Changes in the dialog not yet applied with OK are not in it.

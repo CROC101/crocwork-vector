@@ -409,7 +409,7 @@ pub(crate) fn keep_inseparable_pairs(text: &str, sg: &mut [SGlyph]) {
     }
 }
 
-/// Is `a` followed by `b` an inseparable pair that Bunri-Kinshi keeps on one line? VectorCraft's
+/// Is `a` followed by `b` an inseparable pair that Bunri-Kinshi keeps on one line? crocwork Vector's
 /// set is the pairs W3C JLREQ lists for its class cl-08 (https://www.w3.org/TR/jlreq/#cl-08): two
 /// em dashes, two horizontal ellipses, two two-dot leaders, and the upper half of a vertical kana
 /// repeat mark (U+3033 or U+3034) followed by its lower half (U+3035). File writers call it to

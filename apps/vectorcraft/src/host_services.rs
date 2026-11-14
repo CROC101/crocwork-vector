@@ -531,7 +531,7 @@ pub(crate) fn photocraft_candidates(home: Option<&std::path::Path>, path_var: Op
     on_path
 }
 
-/// Windows: PhotoCraft's installer puts it in `ArtCraft\PhotoCraft` under a folder of
+/// Windows: PhotoCraft's installer puts it in `crocwork\PhotoCraft` under a folder of
 /// `program_folders` (for the current user `%LOCALAPPDATA%\Programs`, for everyone Program Files)
 /// and registers its path under App Paths, which also covers a folder chosen in setup. So: the
 /// `registered` paths first, then those folders, then `on_path`.
@@ -542,7 +542,7 @@ pub(crate) fn windows_candidates(
 ) -> Vec<std::path::PathBuf> {
     let mut v = registered;
     for f in program_folders {
-        let p = f.join("ArtCraft").join("PhotoCraft").join("photocraft.exe");
+        let p = f.join("crocwork").join("PhotoCraft").join("photocraft.exe");
         if !v.contains(&p) {
             v.push(p);
         }
@@ -590,7 +590,7 @@ fn registry_default_path(hive: windows::Win32::System::Registry::HKEY, subkey: &
 }
 
 /// The path in a registry string value read as UTF-16, up to its first NUL, without surrounding
-/// spaces or quotes, like `C:\Program Files\ArtCraft\PhotoCraft\photocraft.exe`.
+/// spaces or quotes, like `C:\Program Files\crocwork\PhotoCraft\photocraft.exe`.
 #[cfg_attr(not(any(windows, test)), allow(dead_code))]
 pub(crate) fn registered_path(value: &[u16]) -> Option<std::path::PathBuf> {
     let end = value.iter().position(|&c| c == 0).unwrap_or(value.len());
@@ -697,7 +697,7 @@ mod open_with_tests {
     }
 
     /// #5327 review: on Windows PhotoCraft is looked for where its installer puts it: the path it
-    /// registers, then `ArtCraft\PhotoCraft` in the per-user and per-machine program folders, then
+    /// registers, then `crocwork\PhotoCraft` in the per-user and per-machine program folders, then
     /// the `PATH`.
     #[test]
     fn windows_looks_where_the_photocraft_installer_puts_it() {
@@ -705,7 +705,7 @@ mod open_with_tests {
         let registered = vec![PathBuf::from("D:/Tools/PhotoCraft/photocraft.exe")];
         let folders = [PathBuf::from("C:/Users/me/AppData/Local/Programs"), PathBuf::from("C:/Program Files"), PathBuf::from("C:/Program Files")];
         let on_path = vec![PathBuf::from("C:/bin/photocraft.exe")];
-        let exe = |f: &str| PathBuf::from(f).join("ArtCraft").join("PhotoCraft").join("photocraft.exe");
+        let exe = |f: &str| PathBuf::from(f).join("crocwork").join("PhotoCraft").join("photocraft.exe");
         assert_eq!(
             windows_candidates(registered, &folders, on_path),
             [
@@ -723,8 +723,8 @@ mod open_with_tests {
     fn the_registered_path_is_read_from_the_utf16_value() {
         let wide = |s: &str| s.encode_utf16().chain([0, 0]).collect::<Vec<u16>>();
         assert_eq!(
-            registered_path(&wide(r"C:\Program Files\ArtCraft\PhotoCraft\photocraft.exe")),
-            Some(std::path::PathBuf::from(r"C:\Program Files\ArtCraft\PhotoCraft\photocraft.exe"))
+            registered_path(&wide(r"C:\Program Files\crocwork\PhotoCraft\photocraft.exe")),
+            Some(std::path::PathBuf::from(r"C:\Program Files\crocwork\PhotoCraft\photocraft.exe"))
         );
         assert_eq!(
             registered_path(&wide(" \"C:\\Prögram Fïles\\Тест\\写真\\photocraft.exe\" ")),

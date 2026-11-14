@@ -2,7 +2,7 @@ use super::slots::{PERSPECTIVE_SLOTS, RECENT_FONT_IDS, RECENT_IDS, SAVED_SELECTI
 use super::submenus::{INSERT_BREAK, INSERT_SPECIAL, INSERT_WHITESPACE, PATH_EFFECTS, TYPE_SIZES, effect_menu, font_items, insert_items};
 use super::{Item, Sep, c, cp, json, sub, todos};
 
-/// The in-window and native menu tree. The in-window bar skips the VectorCraft menu (see
+/// The in-window and native menu tree. The in-window bar skips the crocwork Vector menu (see
 /// `menu_bar`); the native Mac bar is composed from the whole tree (see `native_menu`).
 /// `english_names` is Preferences › Type › Show Font Names in English (the Type → Font labels
 /// follow it; tests use the default `true`).
@@ -19,8 +19,8 @@ pub fn menu_tree_named(english_names: bool) -> Vec<(&'static str, Vec<Item>)> {
             // App menu from this entry and the other menus (About from Help, Settings from Edit,
             // Quit from File, Language and Appearance synthesized). It stays first: `from_tree`
             // gives the first menu the App role.
-            "VectorCraft",
-            vec![c("About VectorCraft", "help.about"), c("Join Our Discord", "help.discord")],
+            "crocwork Vector",
+            vec![c("About crocwork Vector", "help.about"), c("Join Our Discord", "help.discord")],
         ),
         (
             "File",
@@ -722,17 +722,17 @@ pub fn menu_tree_named(english_names: bool) -> Vec<(&'static str, Vec<Item>)> {
             "Help",
             vec![
                 c("Join Our Discord", "help.discord"),
-                c("ArtCraft Website", "help.website"),
-                c("VectorCraft on getartcraft.com", "help.appPage"),
-                c("VectorCraft on GitHub", "help.github"),
+                c("crocwork Website", "help.website"),
+                c("crocwork Vector on github.com/CROC101/crocwork-vector", "help.appPage"),
+                c("crocwork Vector on GitHub", "help.github"),
                 Sep,
                 c("Search Commands…", "help.commandPalette"),
-                todos("VectorCraft Help…", "F1"),
+                todos("crocwork Vector Help…", "F1"),
                 c("Safe Mode…", "help.safeMode"),
                 c("Copy Troubleshooting Info", "help.copyTroubleshootingInfo"),
                 Sep,
                 c("Check for Updates…", "help.checkForUpdates"),
-                c("About VectorCraft", "help.about"),
+                c("About crocwork Vector", "help.about"),
             ],
         ),
     ]

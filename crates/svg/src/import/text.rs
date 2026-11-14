@@ -1561,7 +1561,7 @@ fn lines(
 
 /// Centred and right-aligned lines of point type `obj` where a reader draws them. `text-anchor`
 /// aligns a line's advance, which ends after the letter spacing of its last character (SVG
-/// export anchors lines so); VectorCraft aligns a line without that tracking
+/// export anchors lines so); crocwork Vector aligns a line without that tracking
 /// ([`vectorcraft_text::LineInfo::trailing`]). Each such line moves back by its share of it: the
 /// type moves when every line moves alike, otherwise each paragraph's right indent takes the
 /// tracking (a line of imported point type is a paragraph). A right-to-left paragraph's lines

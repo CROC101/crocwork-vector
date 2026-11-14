@@ -12,7 +12,7 @@
 //!
 //! The concept is that of PDF's color key masking (ISO 32000-1, 8.9.6.4): samples in the chosen
 //! colors are not painted and what is behind the image shows through. Which colors match, and how
-//! near ones fade out, are VectorCraft's own rules.
+//! near ones fade out, are crocwork Vector's own rules.
 
 use std::borrow::Cow;
 

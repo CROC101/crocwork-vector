@@ -71,7 +71,7 @@ fn pages_changed_elsewhere_open_as_artwork_with_a_warning() {
 /// `pdf` with its editing file's description rewritten by another app in UTF-16BE with a byte
 /// order mark: "hash " and the hash it held, padded with spaces to its length.
 fn utf16_described(pdf: &[u8]) -> Vec<u8> {
-    let from = b"(VectorCraft editing data; page hash ";
+    let from = b"(crocwork Vector editing data; page hash ";
     let at = pdf.windows(from.len()).position(|w| w == from).unwrap_or_else(|| panic!("no description"));
     let (hash, len) = (&pdf[at + from.len()..at + from.len() + 16], from.len() + 17);
     let mut desc = b"(\xFE\xFF".to_vec();
@@ -490,7 +490,7 @@ fn a_preserve_editing_pdf_opens_with_its_halftone_radius_in_pixels() {
         let r = super::tests_svgedit::rect(&mut s, 10.0, 10.0);
         s.execute("effect.apply", &json!({"effect": "pixelate.colorHalftone", "params": {"maxRadius": 8}, "ids": [r]})).unwrap();
         if old {
-            // As VectorCraft 0.18 wrote it: the document model's version 1, the radius in points.
+            // As crocwork Vector 0.18 wrote it: the document model's version 1, the radius in points.
             std::sync::Arc::make_mut(&mut s.doc_mut().unwrap().doc).version = 1;
         }
         let pdf = b64(&s.execute("document.exportPdf", &json!({})).unwrap());
@@ -527,7 +527,7 @@ fn outline(doc: &vectorcraft_doc::Document) -> Vec<String> {
 }
 
 /// A `.ai` also carries the editing copy of its art that other apps read: opened without the
-/// VectorCraft document it carries, it gives back the same layers, groups and paths, its page
+/// crocwork Vector document it carries, it gives back the same layers, groups and paths, its page
 /// matching them. `editingData: false` leaves the copy out.
 #[test]
 fn ai_files_carry_an_editing_copy_for_other_apps() {
@@ -554,8 +554,8 @@ fn ai_files_carry_an_editing_copy_for_other_apps() {
     assert!(s.execute("document.export", &json!({"format": "ai", "editingData": "no"})).is_err());
 }
 
-/// A `.ai` whose editing copy for other apps differs from the VectorCraft document it carries (the
-/// copy leaves the live effect out) opens in VectorCraft from the VectorCraft document.
+/// A `.ai` whose editing copy for other apps differs from the crocwork Vector document it carries (the
+/// copy leaves the live effect out) opens in crocwork Vector from the crocwork Vector document.
 #[test]
 fn an_ai_file_opens_from_its_vectorcraft_document_when_the_editing_copy_differs() {
     let mut s = Session::new();

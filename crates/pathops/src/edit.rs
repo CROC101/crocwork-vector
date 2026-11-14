@@ -408,7 +408,7 @@ fn refit_part(part: &[(&Seg, usize)], opts: &SimplifyOptions, tol: f64, mut ends
 
 /// Most degrees between the line from a refitted curve's start to its end and the directions the
 /// path arrives and leaves along, for the curve to become that line: so every join next to such a
-/// line turns by at most this much. VectorCraft's own value.
+/// line turns by at most this much. crocwork Vector's own value.
 const LINE_JOIN_DEG: f64 = 0.5;
 
 /// Whether the line from `c.p0` to `c.p3` is within [`LINE_JOIN_DEG`] of `arrive`, the direction the
@@ -491,12 +491,12 @@ fn smoothing_moved(pts: &[Point], smoothed: &[Point]) -> f64 {
 }
 
 /// How far along the path, in spreads of the smoothing, [`free_end_direction`] looks from the end:
-/// as far as the Gaussian reaches. VectorCraft's own value.
+/// as far as the Gaussian reaches. crocwork Vector's own value.
 const FREE_END_SPREADS: f64 = 3.0;
 
 /// [`free_end_direction`] gives no direction when the path near the end spreads out from it more
 /// evenly than this: the ratio of the least to the most squared distance from a line through the end,
-/// over all such lines. VectorCraft's own value.
+/// over all such lines. crocwork Vector's own value.
 const FREE_END_MAX_SPREAD: f64 = 1.0 / 3.0;
 
 /// The direction the samples `pts` of an open run leave their first point along, or with `at_end`
@@ -864,7 +864,7 @@ pub fn smooth(path: &PathData, amount: f64) -> PathData {
 }
 
 /// The Smooth slider's level Auto-Smooth picks, halfway between minimum and maximum smoothing.
-/// VectorCraft's own rule: the help page says only that Auto-Smooth smooths the path automatically
+/// crocwork Vector's own rule: the help page says only that Auto-Smooth smooths the path automatically
 /// (https://helpx.adobe.com/illustrator/desktop/draw-shapes-and-paths/modify-paths/refine-path-segments-with-the-smooth-slider.html).
 /// [`smooth_level`] already scales with each path's size, so one level suits every path.
 pub const SMOOTH_AUTO_LEVEL: f64 = 50.0;
@@ -891,7 +891,7 @@ pub fn smooth_options(path: &PathData, level: f64) -> SimplifyOptions {
 
 /// Object › Path › Smooth at slider level `level`, from 0 (minimum smoothing: the path stays within
 /// 0.1 % of its longer side of where it was) to 100 (maximum). The help page names only the two
-/// ends; the rest is VectorCraft's own rule ([`smooth_options`]). Each subpath is smoothed along its
+/// ends; the rest is crocwork Vector's own rule ([`smooth_options`]). Each subpath is smoothed along its
 /// length, so that bumps and jags give way to one curve, then refitted with curves as Simplify
 /// does, keeping a corner only where the path turns back on itself. A refit never has more anchor
 /// points than the subpath had: a shape whose corners it can't round, such as a rectangle, stays as

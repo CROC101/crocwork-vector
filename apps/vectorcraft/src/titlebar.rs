@@ -34,7 +34,7 @@ pub(crate) fn adapter_summary(info: &eframe::wgpu::AdapterInfo) -> String {
 /// Windows and Linux: no OS title bar; the app bar is the title bar (`vectorcraft_ui_egui::titlebar`).
 /// macOS keeps its traffic lights over the integrated title strip.
 ///
-/// Used on macOS and Windows (where VectorCraft keeps today's frame regardless of the
+/// Used on macOS and Windows (where crocwork Vector keeps today's frame regardless of the
 /// `craft-window` probe) and by the tests; Linux and the BSDs take the decision from the probe.
 #[cfg_attr(not(any(target_os = "macos", target_os = "windows")), allow(dead_code))]
 pub(crate) const CUSTOM_TITLEBAR: bool = !cfg!(target_os = "macos");
@@ -47,8 +47,8 @@ pub(crate) fn opted_into_system_title_bar(saved: Option<&vectorcraft_ui_egui::Ui
     saved.map(|ui| ui.engine_prefs.get("systemTitleBar").and_then(serde_json::Value::as_bool).unwrap_or(false)).unwrap_or(false)
 }
 
-/// Whether the user asked for VectorCraft's own title bar in Preferences › User Interface ›
-/// VectorCraft Title Bar on Every Desktop (Linux and the BSDs). Read like
+/// Whether the user asked for crocwork Vector's own title bar in Preferences › User Interface ›
+/// crocwork Vector Title Bar on Every Desktop (Linux and the BSDs). Read like
 /// [`opted_into_system_title_bar`]; a missing or unreadable value is `false` (the default).
 pub(crate) fn opted_into_app_title_bar(saved: Option<&vectorcraft_ui_egui::UiState>) -> bool {
     saved.map(|ui| ui.engine_prefs.get("appTitleBar").and_then(serde_json::Value::as_bool).unwrap_or(false)).unwrap_or(false)
@@ -57,7 +57,7 @@ pub(crate) fn opted_into_app_title_bar(saved: Option<&vectorcraft_ui_egui::UiSta
 /// Whether the app draws the frame on this start, before the System Title Bar preference is
 /// applied ([`custom_titlebar_from`]). `probed_app` is the `craft-window` probe's answer and
 /// `overridden` its `VECTORCRAFT_TITLEBAR` override. In order: the override decides when the
-/// variable is set to `app`, `system` or `desktop`;VectorCraft Title Bar on Every Desktop (`opted_into_app`) gives the app frame; a window
+/// variable is set to `app`, `system` or `desktop`;crocwork Vector Title Bar on Every Desktop (`opted_into_app`) gives the app frame; a window
 /// that opens through XWayland (`forced_to_x11`) gets the desktop frame; otherwise the probe
 /// decides.
 pub(crate) fn app_draws_frame(probed_app: bool, overridden: Option<bool>, forced_to_x11: bool, opted_into_app: bool) -> bool {
@@ -88,7 +88,7 @@ fn probed_choice() -> &'static craft_window::Choice {
 }
 
 /// Whether `VECTORCRAFT_TITLEBAR` chose this window's frame (Linux and the BSDs), so Preferences ›
-/// User Interface › System Title Bar and VectorCraft Title Bar on Every Desktop do not apply while
+/// User Interface › System Title Bar and crocwork Vector Title Bar on Every Desktop do not apply while
 /// it is set to `app`, `system` or `desktop`. Always `false` on macOS and Windows.
 pub(crate) fn titlebar_from_env() -> bool {
     cfg!(not(any(target_os = "macos", target_os = "windows"))) && probed_choice().overridden().is_some()
@@ -108,15 +108,15 @@ pub(crate) fn system_title_bar_applies(opted_into_system: bool, from_env: bool) 
 /// ([`craft_window::Frame::Desktop`]) on macOS, Windows, X11 and any Wayland compositor with
 /// server-side decorations (KDE, Sway, Hyprland, COSMIC); the app draws it
 /// ([`craft_window::Frame::App`]) only where the compositor leaves it to the app (GNOME's Mutter),
-/// or when `VECTORCRAFT_TITLEBAR` set to `app`, `system` or `desktop` overrides the probe. VectorCraft draws its own title bar exactly
+/// or when `VECTORCRAFT_TITLEBAR` set to `app`, `system` or `desktop` overrides the probe. crocwork Vector draws its own title bar exactly
 /// when `craft-window` says the app owns the frame **and** the user has not opted into the system
 /// title bar; the preference forces the native frame back on unless `VECTORCRAFT_TITLEBAR` is set
 /// to one of those values ([`system_title_bar_applies`]).
 ///
 /// macOS and Windows keep today's behavior and are decided by [`CUSTOM_TITLEBAR`] rather than the
 /// probe: `craft-window` returns `Frame::Desktop` for both (the OS always draws a frame), but
-/// VectorCraft insets its content under the macOS traffic lights and draws its own caption buttons
-/// on Windows — an overdraw on an OS-decorated window that is VectorCraft's choice, not
+/// crocwork Vector insets its content under the macOS traffic lights and draws its own caption buttons
+/// on Windows — an overdraw on an OS-decorated window that is crocwork Vector's choice, not
 /// `craft-window`'s. Only Linux and the BSDs take the decision from the probe.
 #[cfg(not(any(target_os = "macos", target_os = "windows")))]
 pub(crate) fn custom_titlebar_from(frame: &craft_window::Frame, opted_into_system: bool) -> bool {
@@ -141,11 +141,11 @@ pub(crate) fn custom_titlebar_from(_frame: &craft_window::Frame, opted_into_syst
 /// XWayland (below). A GNOME/Wayland probe would say `Frame::App` there, but the window really runs
 /// on X11, whose window manager draws the frame — so when XWayland is being forced, keep the native
 /// frame, the same as a real X11 session. A recognized `VECTORCRAFT_TITLEBAR` override still wins,
-/// and so does VectorCraft Title Bar on Every Desktop ([`app_draws_frame`]).
+/// and so does crocwork Vector Title Bar on Every Desktop ([`app_draws_frame`]).
 pub(crate) fn custom_titlebar(saved: Option<&vectorcraft_ui_egui::UiState>) -> bool {
     let choice = probed_choice();
     let opted_into_system = system_title_bar_applies(opted_into_system_title_bar(saved), titlebar_from_env());
-    // macOS and Windows never read VectorCraft Title Bar on Every Desktop (`custom_titlebar_from`
+    // macOS and Windows never read crocwork Vector Title Bar on Every Desktop (`custom_titlebar_from`
     // ignores the frame there).
     let opted_into_app = cfg!(not(any(target_os = "macos", target_os = "windows"))) && opted_into_app_title_bar(saved);
     #[cfg(target_os = "linux")]
@@ -166,7 +166,7 @@ pub(crate) fn custom_titlebar(saved: Option<&vectorcraft_ui_egui::UiState>) -> b
 pub(crate) fn native_options(custom_titlebar: bool) -> eframe::NativeOptions {
     eframe::NativeOptions {
         viewport: egui::ViewportBuilder::default()
-            .with_title("VectorCraft")
+            .with_title("crocwork Vector")
             .with_inner_size(window::DEFAULT_SIZE)
             .with_min_inner_size(window::MIN_SIZE)
             .with_drag_and_drop(true)

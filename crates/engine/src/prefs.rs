@@ -311,7 +311,7 @@ pub struct Prefs {
     #[serde(skip_serializing_if = "Vec::is_empty")]
     pub screen_export_presets: Vec<cmd::fileio::ScreenExportPreset>,
     // File Handling (continued)
-    /// Where Save as Template and New from Template start ("" = `Documents/VectorCraft Templates`).
+    /// Where Save as Template and New from Template start ("" = `Documents/crocwork Vector Templates`).
     pub templates_folder: String,
     /// File Handling → Use System Defaults for Edit Original (#5236): Links panel › Edit Original
     /// opens a linked file in the system's default app for it; off, in the app that made it
@@ -326,7 +326,7 @@ pub struct Prefs {
     /// Preferences dialog field: resetting the preferences keeps it; `webExport.presets.*` edit it.
     #[serde(skip_serializing_if = "Vec::is_empty")]
     pub web_export_presets: Vec<cmd::webexport::WebPreset>,
-    /// The VectorCraft Options a native Save or Save As used last (Preview, Embed ICC Profiles,
+    /// The crocwork Vector Options a native Save or Save As used last (Preview, Embed ICC Profiles,
     /// Create PDF-Compatible File…; not the artboards it picked, nor Use Compression, which its
     /// preference decides): `file.formatOptions` offers them for a document not yet saved as a
     /// native file. Not a Preferences dialog field.

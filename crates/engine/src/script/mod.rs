@@ -17,7 +17,7 @@
 //! them. Ids given out in a run are never given out again for a document, also after an in-run
 //! undo or a rollback.
 //!
-//! The values here are VectorCraft's own limits: [`MAX_SOURCE_BYTES`], [`DEFAULT_FUEL`],
+//! The values here are crocwork Vector's own limits: [`MAX_SOURCE_BYTES`], [`DEFAULT_FUEL`],
 //! [`MAX_FUEL`], [`SLICE_FUEL`], [`HEAP_BYTES`], [`MAX_HOST_CALLS`], [`GROWTH_OBJECTS`],
 //! [`GROWTH_BYTES`], [`MAX_CONTINUES`], [`MAX_LOG_LINES`], [`MAX_LOG_BYTES`], [`MAX_ARGS_BYTES`],
 //! and the 64 levels, 16 MiB and 1,048,576 entries of [`vectorcraft_js::DataLimits`]'s default,
@@ -41,7 +41,7 @@
 //!
 //! A script with `#targetengine name` runs in that named engine, which the session keeps with the
 //! globals its runs leave, at most [`MAX_ENGINES`] of them with [`ENGINE_HEAP_BYTES`] of heap each
-//! (VectorCraft's own limits). A script without the line, or with `main`, gets a new realm for each
+//! (crocwork Vector's own limits). A script without the line, or with `main`, gets a new realm for each
 //! run. An engine keeps no document and no run: its host functions reach the run through a link
 //! that holds the run's host only while the run goes on. An error, a limit or a stop puts the
 //! documents back and keeps the engine's globals; an internal error drops the engine.

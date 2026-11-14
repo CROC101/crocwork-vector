@@ -181,7 +181,7 @@ struct Page {
     /// Where the page's own type is, in its pixels.
     page_type: Vec<Rect>,
     /// Where objects read with their art style lie, in its pixels: the page has Illustrator's
-    /// rendering of the style there, the layers VectorCraft's live effects, and the two aren't
+    /// rendering of the style there, the layers crocwork Vector's live effects, and the two aren't
     /// held to look alike.
     restyled: Vec<Rect>,
     /// The column and row of its pixels that its move ([`Self::region`]) took partly off its area,

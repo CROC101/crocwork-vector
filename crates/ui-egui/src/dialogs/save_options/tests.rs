@@ -73,7 +73,7 @@ fn save_as_svg_opens_svg_options_then_writes_svg() {
     // The save panel offers every save format, the document's own first.
     let pick = &picks.borrow()[0];
     let labels: Vec<&str> = pick.filters.iter().map(|f| f.0.as_str()).collect();
-    assert_eq!(labels, ["VectorCraft", "VectorCraft Template", "PDF", "SVG", "SVG Compressed", "PDF-compatible .ai", "EPS"]);
+    assert_eq!(labels, ["crocwork Vector", "crocwork Vector Template", "PDF", "SVG", "SVG Compressed", "PDF-compatible .ai", "EPS"]);
     assert_eq!(pick.name, "Untitled-1.vectorcraft");
     let d = dialog(&app);
     assert_eq!((d.kind.as_str(), d.str("path").as_str(), d.str("mode").as_str()), ("svgOptions", "art.svg", "save"));
@@ -230,7 +230,7 @@ fn save_a_copy_and_template_suggest_their_names() {
     assert_eq!(pick.folder.as_deref().map(std::path::Path::new), Some(folder.as_path()));
     assert_eq!(
         pick.filters,
-        crate::FilePick::filters([("VectorCraft Template", &["vctemplate"][..]), ("PDF-compatible .ait template", &["ait"][..])])
+        crate::FilePick::filters([("crocwork Vector Template", &["vctemplate"][..]), ("PDF-compatible .ait template", &["ait"][..])])
     );
     assert_eq!(written.borrow()[1].0, "copy.vctemplate", "the picked name, its extension replaced with the template's");
 }
@@ -250,7 +250,7 @@ fn save_as_template_writes_ait_when_it_is_picked() {
     let (mut app, written) = web();
     app.run("file.saveAsTemplate", json!({})).unwrap();
     assert_eq!((heading(dialog(&app)).as_str(), dialog(&app).str("format").as_str()), ("Save as Template", "template"));
-    assert_eq!(template_labels(), ["VectorCraft Template", "PDF-compatible .ait template"]);
+    assert_eq!(template_labels(), ["crocwork Vector Template", "PDF-compatible .ait template"]);
     frame(&mut app, false);
     let mut d = app.ui.dialog.take().unwrap();
     switch_format(&mut app, &mut d, "ait");
@@ -558,18 +558,18 @@ fn eps_save_transparency_follows_the_color_preview() {
     assert!(text.lines().any(|l| l == "Gone"), "{text}");
 }
 
-/// #4931: a native file's Version is a menu of the versions VectorCraft writes, the current one
+/// #4931: a native file's Version is a menu of the versions crocwork Vector writes, the current one
 /// first and chosen, each named by the releases that read it. An older version without
 /// compression saves plain, whatever Use Compression held.
 #[test]
 fn native_version_is_a_menu_of_the_versions_vectorcraft_writes() {
     let listed: Vec<u32> = NATIVE_VERSIONS.iter().map(|(n, _)| *n).collect();
     let writable: Vec<u32> = (vectorcraft_format::MIN_VERSION..=vectorcraft_format::VERSION).rev().collect();
-    assert_eq!(listed, writable, "every version VectorCraft writes, newest first");
+    assert_eq!(listed, writable, "every version crocwork Vector writes, newest first");
     let (mut app, written, _) = desktop("art.vectorcraft");
     assert_eq!(app.run("file.saveAs", json!({})).unwrap()["pending"], KIND);
     let text = crate::tests_labels::painted_text(&mut app, |app, ui| super::super::show(app, ui.ctx()));
-    assert!(text.contains("VectorCraft 0.8 and later (version 4)"), "{text}");
+    assert!(text.contains("crocwork Vector 0.8 and later (version 4)"), "{text}");
     assert_eq!(native_version_of(dialog(&app)), vectorcraft_format::VERSION);
     let d = app.ui.dialog.as_mut().unwrap();
     d.fields.insert("version".into(), json!(2));
@@ -594,7 +594,7 @@ fn a_refused_save_says_so_in_an_alert() {
     let d = dialog(&app);
     assert_eq!(
         (d.kind.as_str(), d.str("message").as_str(), d.str("detail").as_str()),
-        (crate::dialogs::confirm::MESSAGE, "Can't save “art.vectorcraft”.", "can't save version 55: VectorCraft writes versions 1 to 4")
+        (crate::dialogs::confirm::MESSAGE, "Can't save “art.vectorcraft”.", "can't save version 55: crocwork Vector writes versions 1 to 4")
     );
     assert!(written.borrow().is_empty());
     let st = app.session.active().unwrap();

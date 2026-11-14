@@ -359,7 +359,7 @@ mod tests {
 
     /// The listing gives each command with a schema an `inputSchema`, the form an MCP tool's input
     /// schema takes: the same schema with the root `type` `"object"`, and every other keyword kept,
-    /// nested parameters, required names, defaults and VectorCraft's own fields included. A command
+    /// nested parameters, required names, defaults and crocwork Vector's own fields included. A command
     /// with no schema lists neither.
     #[test]
     fn engine_commands_list_an_input_schema_with_an_object_root() {

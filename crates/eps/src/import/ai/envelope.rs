@@ -43,7 +43,7 @@ use crate::import::native::compare::{MAX_DIFFERENCE, MAX_SOLID_DIFFERENCE, compa
 /// The plugin that writes envelopes.
 pub(crate) const PLUGIN: &str = "Adobe Deform Plugin"; // brand-ok: the plugin name the files use
 /// The note for an envelope that keeps its drawn art.
-pub(crate) const DRAWN: &str = "an envelope VectorCraft couldn't read as a live envelope comes in as its drawn art";
+pub(crate) const DRAWN: &str = "an envelope crocwork Vector couldn't read as a live envelope comes in as its drawn art";
 /// The note for an envelope of type, which keeps its drawn art with its type hidden (unless the
 /// text document gives the type nothing, which a note of its own then says).
 pub(crate) const TYPE_DRAWN: &str = "type in an envelope comes in as the envelope's drawn art, not as editable type";
@@ -210,7 +210,7 @@ const PAINTED_SLACK: f64 = 1e-4;
 /// visual bounds. Those are exact for miter joins (a tip counts where the miter limit keeps it) and
 /// round joins, and an upper bound for bevel joins, miters the limit cuts, width profiles and
 /// square-capped dashes; a contour of zero length, which paints nothing, doesn't count. Effects on
-/// the type object itself are left out: VectorCraft applies them after the envelope bends the type.
+/// the type object itself are left out: crocwork Vector applies them after the envelope bends the type.
 /// `None` when nothing in it has bounds.
 fn painted_outlines(outlines: &Node) -> Option<Rect> {
     outlines.children().into_iter().flatten().fold(None, |acc, piece| {
@@ -811,7 +811,7 @@ impl WarpedType {
         for n in before.iter_mut().chain(inner.iter_mut()) {
             put_type(n, &texts);
         }
-        // A warp that VectorCraft's own warp doesn't draw as its drawn art may still draw as the
+        // A warp that crocwork Vector's own warp doesn't draw as its drawn art may still draw as the
         // grid the file saves for it: then it opens as a mesh envelope on that grid.
         let on_grid = if is_warp(&obj) { live_on_saved_grid(&obj, before.clone(), inner.clone()) } else { None };
         // With Distort Appearance, a file's envelope may map its type from its glyphs grown by half

@@ -60,7 +60,7 @@ pages describe it.
   by another face gives its whole outline. Faces turned away from the viewer are included where the effect draws
   them (Draw Hidden Faces and the Wireframe surface of Extrude & Bevel (Classic)). Geometry effects after a 3D
   effect, on the object or on a fill or stroke, reshape the edges as they reshape the drawn art. Shadows are not
-  part of the wireframe. The paths have a 0.5 pt black stroke with round joins and no fill, which is VectorCraft's
+  part of the wireframe. The paths have a 0.5 pt black stroke with round joins and no fill, which is crocwork Vector's
   own choice. The group keeps the object's place, id, name, opacity, blending mode, opacity mask, attributes
   and text wrap and is selected; objects without a visible 3D effect do not change. It is one undo step, and an error changes nothing
   when no selected object has a visible 3D effect.
@@ -163,7 +163,7 @@ The rest is our reading:
 - A stroke whose outline takes more than 65,536 points, or whose solid takes more than 163,840 faces, is left out,
   and the fill's solid still draws.
 - The solids of one Extrude & Bevel or Inflate effect keep up to 163,840 faces together: the fill's and every
-  stroke's, and on a group or layer every member's (VectorCraft's own limit). The solids are built in order, and
+  stroke's, and on a group or layer every member's (crocwork Vector's own limit). The solids are built in order, and
   once their faces pass it no later solid is built: the object draws its source art, and applying or editing the
   effect, Export 3D Object and **Expand as Wireframes** report that the 3D surface is too complex. A stroke left
   out for its own limits does not count.
@@ -202,7 +202,7 @@ group, a blend or a symbol instance, alone or inside a group or layer. The help 
 objects, groups or layers ([Apply and modify effects](https://helpx.adobe.com/illustrator/desktop/special-effects-styles/apply-filter-effects/apply-and-modify-effects.html)),
 that a clipping mask hides everything outside its shape ([Clipping masks](https://helpx.adobe.com/illustrator/using/clipping-masks.html)),
 and that a blend is treated as one object ([Blending objects](https://helpx.adobe.com/illustrator/using/blending-objects.html)).
-How the solid is built from each is VectorCraft's own rule: it is built from what the object shows, as a group's
+How the solid is built from each is crocwork Vector's own rule: it is built from what the object shows, as a group's
 solids are ([Groups](#groups)), turned about one shared axis.
 
 - A clipping group (or a layer with a clipping mask) builds from its art inside the clipping path: each shape's fill
@@ -226,7 +226,7 @@ solids are ([Groups](#groups)), turned about one shared axis.
   own and neither the image nor a group holding it inside the clipping group has effects. A clipping path hides
   everything outside its shape ([the help page](https://helpx.adobe.com/illustrator/using/clipping-masks.html)). An
   image that the clips show any part of is refused. Resolving one effect's art cuts image frames to clipping paths at
-  most 1,024 times (VectorCraft's own limit); past that, the art is refused.
+  most 1,024 times (crocwork Vector's own limit); past that, the art is refused.
 
 ## Rotate
 
@@ -268,7 +268,7 @@ remain available; the list shows **Custom** whenever the effective lighting matc
 presets, including when there is more than one light. An equivalent explicit single light is
 recognized too. Reset all returns to Standard. Preview, Cancel and Undo work as for other options.
 
-These are original VectorCraft settings based on the public preset names and directions. Adobe's
+These are original crocwork Vector settings based on the public preset names and directions. Adobe's
 documentation does not publish numeric rigs; the values are not copied from its software or files
 and are not claimed to reproduce its presets exactly. Standard retains the existing default.
 
@@ -346,7 +346,7 @@ Our reading:
 The public [Map artworks on 3D object](https://helpx.adobe.com/illustrator/desktop/special-effects-styles/create-3d-graphics/map-artwork-on-3d-objects.html)
 page describes graphics: art kept with the document and placed on single surfaces of a 3D object, and the
 [3D and Materials panel options](https://helpx.adobe.com/illustrator/desktop/special-effects-styles/create-3d-graphics/3d-materials-panel-options.html)
-page lists Graphics and Add Materials and Graphics on the Materials tab. VectorCraft maps graphics onto
+page lists Graphics and Add Materials and Graphics on the Materials tab. crocwork Vector maps graphics onto
 Extrude & Bevel's front and back caps, the plane of the Plane type (Rotate), and the swept side of Revolve, which the
 public page's example of a label on a bottle describes.
 
@@ -367,7 +367,7 @@ public page's example of a label on a bottle describes.
   and while a geometry effect (such as Transform) comes after the 3D effect. A press on the canvas while its
   context menu is open only closes the menu and does not grab a handle.
 
-These rules are VectorCraft's own:
+These rules are crocwork Vector's own:
 
 - A graphic is drawn on the visible face of each of the object's solids (a fill's, and a stroke's outline),
   turned, foreshortened by the perspective and twisted and tapered with the face, and clipped to it. It is shaded
@@ -458,7 +458,7 @@ out, perspective). No Adobe software, assets, presets or bevel shapes were used.
 - Curves are followed within 1/2000 of the shape's size (at least 0.05 pt), so a small curve takes a few points
   and a large one up to 32. Extrude & Bevel and Inflate take up to 65,536 outline points and 163,840 faces for each
   solid (a stroke's outline is counted on its own), and Rotate (which only turns the outline) takes 65,536 points.
-  These limits are VectorCraft's own values. Before any point is sampled, Extrude & Bevel counts the faces its walls,
+  These limits are crocwork Vector's own values. Before any point is sampled, Extrude & Bevel counts the faces its walls,
   bevels and caps need, and Inflate counts the faces of its sides; when they do not fit, every curve of the shape
   takes fewer pieces, down to 4 (a curve that needs fewer takes fewer). A shape that does not fit at 4 pieces a
   curve is refused because the 3D surface is too complex. Inflate counts the faces of its front and back as it
@@ -473,7 +473,7 @@ out, perspective). No Adobe software, assets, presets or bevel shapes were used.
   sampled outline within the sampling tolerance above, one curve for each sampled edge through its two sampled
   points, so the cap and the walls next to it draw the edge they share as the same curves. The edges between two bevel steps or two wall slices, a
   piece of curve that does not fit after 8 halvings, an edge of a twisted wall cut into pieces, and the curves
-  past 1,048,576 for one solid stay straight. The tolerances and limits are VectorCraft's own values. Inflate's
+  past 1,048,576 for one solid stay straight. The tolerances and limits are crocwork Vector's own values. Inflate's
   faces are polygons.
 - Inflate also limits the work of filling its grid, which grows with the outline's points times the grid cells its
   outline crosses. An outline of tens of thousands of points that crosses nearly every cell (a comb of 4,000 teeth

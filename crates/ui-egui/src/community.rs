@@ -46,7 +46,7 @@ pub fn discord_button(app: &mut VectorcraftApp, ui: &mut Ui, large: bool) -> egu
         icons::paint(ui, "message-circle", ir, DISCORD);
         ui.painter().galley(egui::pos2(ir.right() + h * 0.2, at.y), galley, if resp.hovered() { t.text_strong } else { t.text });
     }
-    let resp = resp.on_hover_text(tl!("Join the ArtCraft community on Discord (discord.gg/artcraft)"));
+    let resp = resp.on_hover_text(tl!("Join the crocwork community on Discord (github.com/CROC101/crocwork-vector)"));
     if resp.clicked() {
         app.open_link("help.discord");
     }
@@ -88,8 +88,8 @@ fn links_in(app: &mut VectorcraftApp, ui: &mut Ui, centered: bool) {
     ui.add_space(8.0);
     let l = app.session.execute("help.links", &serde_json::json!({})).unwrap_or_default();
     let s = |k: &str| l[k].as_str().unwrap_or("").to_string();
-    link(app, ui, "globe", tl!("ArtCraft website"), "help.website", &s("website"), centered);
-    link(app, ui, "external-link", tl!("VectorCraft on getartcraft.com"), "help.appPage", &s("appPage"), centered);
+    link(app, ui, "globe", tl!("crocwork website"), "help.website", &s("website"), centered);
+    link(app, ui, "external-link", tl!("crocwork Vector on github.com/CROC101/crocwork-vector"), "help.appPage", &s("appPage"), centered);
     link(app, ui, "git-branch", tl!("Source code on GitHub"), "help.github", &s("github"), centered);
 }
 
@@ -110,15 +110,15 @@ mod tests {
         assert_eq!(
             *opened.lock().unwrap(),
             [
-                "https://discord.gg/artcraft",
-                "https://getartcraft.com",
-                "https://getartcraft.com/apps/vectorcraft",
-                "https://github.com/storytold/vectorcraft"
+                "https://github.com/CROC101/crocwork-vector",
+                "https://github.com/CROC101/crocwork-vector",
+                "https://github.com/CROC101/crocwork-vector",
+                "https://github.com/CROC101/crocwork-vector"
             ]
         );
         // The control channel / MCP path returns the URL without opening a browser.
         let v = app.run("help.discord", serde_json::json!({})).unwrap();
-        assert_eq!(v["url"], "https://discord.gg/artcraft");
+        assert_eq!(v["url"], "https://github.com/CROC101/crocwork-vector");
         assert_eq!(opened.lock().unwrap().len(), 4);
         let ctx = egui::Context::default();
         theme::install_fonts(&ctx);

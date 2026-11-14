@@ -2816,7 +2816,7 @@ pub(crate) fn transform_placed_within(n: &mut Node, m: Affine, copies: usize, ma
     copy_placed(n, m, copies, vectorcraft_doc::Scaling::default(), &mut room);
 }
 
-/// Rows and columns of the pieces a Warp effect cuts an image into (VectorCraft's own number).
+/// Rows and columns of the pieces a Warp effect cuts an image into (crocwork Vector's own number).
 pub(crate) const WARP_IMAGE_CELLS: usize = 10;
 
 /// A Warp effect's point map, shared by the images it bends.

@@ -86,7 +86,7 @@ impl ClipboardRead {
 pub type ClipboardProbeFactory = Box<dyn FnOnce() -> Box<dyn SystemClipboard> + Send>;
 
 /// How long quitting waits for the probe's thread ([`ClipboardProbeFactory`]) to drop its handle
-/// before the app drops its own: 27 s, VectorCraft's own bound. A host's handle should finish a
+/// before the app drops its own: 27 s, crocwork Vector's own bound. A host's handle should finish a
 /// look and its own teardown within it, or the app's handle may not be the last one dropped; a
 /// handle that never lets go still lets the app quit after this wait.
 pub const CLIPBOARD_PROBE_STOP_WAIT: std::time::Duration = std::time::Duration::from_secs(27);
@@ -175,7 +175,7 @@ impl VectorcraftApp {
     /// ([`Self::write_formats_before_text_input`]). Once they are written, the status bar shows
     /// the first of the PNG's and PDF's warnings.
     pub(crate) fn publish_clipboard(&mut self) {
-        // Ruler guides copied alone stay in VectorCraft, but the Copy still replaces what the
+        // Ruler guides copied alone stay in crocwork Vector, but the Copy still replaces what the
         // system clipboard held: it is emptied, so the next Paste takes the guides rather than
         // what another app copied before, and what another app copies after still wins (#3226).
         if !self.session.clipboard.has_art() {

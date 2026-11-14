@@ -206,7 +206,7 @@ fn glyphs_and_artboards_flyouts_keep_user_sizes() {
 
 /// An icon flyout's top edge and its free top corner (the canvas-side one) resize it upward:
 /// the bottom and the icon-column edge stay, and the new top is kept when the flyout closes
-/// and reopens and in a saved layout. The docking action that saves it is one VectorCraft
+/// and reopens and in a saved layout. The docking action that saves it is one crocwork Vector
 /// accepts (#1094).
 #[test]
 fn an_icon_flyout_grows_upward_from_its_top_edge_and_free_corner() {

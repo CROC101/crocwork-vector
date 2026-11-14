@@ -1,4 +1,4 @@
-//! VectorCraft desktop app.
+//! crocwork Vector desktop app.
 //!
 //! Usage: `vectorcraft [--control <port> [--automation-read-root <dir>]... [--automation-write-root <dir>]...]
 //! [--in-window-menus] [--new-instance] [--safe-mode] [--] [files…]`, `vectorcraft --version`, `vectorcraft --help` (or `-h`)
@@ -6,7 +6,7 @@
 //! Any other argument starting with '-' (not `-` alone) is an error; after `--`, every argument is
 //! a file.
 //!
-//! Files given while VectorCraft already runs open in that window, unless `--new-instance` is given
+//! Files given while crocwork Vector already runs open in that window, unless `--new-instance` is given
 //! (Windows and Linux; `single_instance`).
 //!
 //! `--in-window-menus` (or `VECTORCRAFT_IN_WINDOW_MENUS=1`) keeps the menus inside the window on
@@ -142,7 +142,7 @@ struct App {
 const USAGE: &str = "\
 Usage: vectorcraft [options] [files…]
 
-Opens the VectorCraft desktop app with the given files.
+Opens the crocwork Vector desktop app with the given files.
 
 Options:
   --control <port>               Start the localhost JSON-lines control server on <port>
@@ -153,10 +153,10 @@ Options:
                                  (may be given more than once)
   --in-window-menus              Keep the menus inside the window on macOS
                                  (or VECTORCRAFT_IN_WINDOW_MENUS=1)
-  --new-instance                 Open the files in a new window even when VectorCraft
+  --new-instance                 Open the files in a new window even when crocwork Vector
                                  already runs (Windows and Linux)
   --safe-mode                    Start without plug-ins: none loads or runs until
-                                 VectorCraft starts normally (Help › Safe Mode); the
+                                 crocwork Vector starts normally (Help › Safe Mode); the
                                  files open in a new window, as with --new-instance
   --version                     Print the version and exit
   -h, --help                     Print this help and exit
@@ -272,7 +272,7 @@ fn main() -> std::process::ExitCode {
     };
     // Before desktop services, so every start-up warning is recorded (`logging`).
     let logger = logging::install();
-    // Files opened from the file manager while VectorCraft runs open in its window (#4892). Before
+    // Files opened from the file manager while crocwork Vector runs open in its window (#4892). Before
     // the log file is attached: a launch that hands its files over leaves the running app's log be.
     #[cfg(not(target_os = "macos"))]
     match single_instance::start(control_port.is_some(), new_instance, safe_mode_flag, &files) {
@@ -290,7 +290,7 @@ fn main() -> std::process::ExitCode {
     system_fonts::install();
     #[cfg(target_os = "macos")]
     mac_fonts::install();
-    // VectorCraft's own Fonts folder, which text.addFontFiles copies fonts into.
+    // crocwork Vector's own Fonts folder, which text.addFontFiles copies fonts into.
     prefs_dir::install_fonts();
     // The log file lives in the settings directory, next to the preferences; opened after the
     // arguments, so `--version` leaves no file behind. Records logged until now are written to it
@@ -299,7 +299,7 @@ fn main() -> std::process::ExitCode {
     if let Some(logger) = logger {
         match log_dir().filter(|_| prefs_enabled()) {
             Some(dir) => match logger.attach_dir(&dir) {
-                Ok(path) => log::info!("VectorCraft {}, log file {}", env!("CARGO_PKG_VERSION"), path.display()),
+                Ok(path) => log::info!("crocwork Vector {}, log file {}", env!("CARGO_PKG_VERSION"), path.display()),
                 // Standard error only by now (`attach_dir` gave up on the file); unlike `eprintln!`, never panics.
                 Err(e) => log::warn!("no log file: {e}"),
             },
@@ -462,11 +462,11 @@ fn main() -> std::process::ExitCode {
     let run = |options: eframe::NativeOptions, app_creator: eframe::AppCreator<'_>| {
         #[cfg(target_os = "linux")]
         {
-            linux_stylus::run_native("VectorCraft", options, app_creator)
+            linux_stylus::run_native("crocwork Vector", options, app_creator)
         }
         #[cfg(not(target_os = "linux"))]
         {
-            eframe::run_native("VectorCraft", options, app_creator)
+            eframe::run_native("crocwork Vector", options, app_creator)
         }
     };
     let outcome = vectorcraft_engine::guard::catch_panic(|| {
@@ -545,15 +545,15 @@ fn main() -> std::process::ExitCode {
                             ""
                         };
                         app.status(format!(
-                            "The graphics processor tried first couldn't show the window, so VectorCraft started again on {summary}{hint}"
+                            "The graphics processor tried first couldn't show the window, so crocwork Vector started again on {summary}{hint}"
                         ));
                     } else if let Some(crash) = &crash {
                         app.status(match crash {
                             gpu::Crash::Adapter { name, .. } => format!(
-                                "The last start of VectorCraft ended on {name} before its window appeared, so it started on {summary}. To try that graphics processor again, change Preferences › Performance › Graphics Processor or start with WGPU_BACKEND set"
+                                "The last start of crocwork Vector ended on {name} before its window appeared, so it started on {summary}. To try that graphics processor again, change Preferences › Performance › Graphics Processor or start with WGPU_BACKEND set"
                             ),
                             gpu::Crash::Listing => format!(
-                                "The last start of VectorCraft ended while it listed the graphics processors, so it started on {summary} with OpenGL alone. To try the other graphics backends again, change Preferences › Performance › Graphics Processor or start with WGPU_BACKEND set"
+                                "The last start of crocwork Vector ended while it listed the graphics processors, so it started on {summary} with OpenGL alone. To try the other graphics backends again, change Preferences › Performance › Graphics Processor or start with WGPU_BACKEND set"
                             ),
                         });
                     }
@@ -656,7 +656,7 @@ fn main() -> std::process::ExitCode {
     match outcome {
         Ok(()) => std::process::ExitCode::SUCCESS,
         Err(e) => {
-            log::error!("VectorCraft stopped: {e}");
+            log::error!("crocwork Vector stopped: {e}");
             std::process::ExitCode::FAILURE
         }
     }

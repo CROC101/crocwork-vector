@@ -7,7 +7,7 @@
 //! refuse them), and `#target` and `#strict off` are accepted. The same lines are read in a file
 //! `$.evalFile` runs.
 //!
-//! VectorCraft's own rules:
+//! crocwork Vector's own rules:
 //!
 //! - A line counts only at the start of a line (blanks before it), outside strings and comments, as
 //!   the lexer reads it, and each file must be a whole script on its own.

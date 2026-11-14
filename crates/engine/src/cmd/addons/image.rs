@@ -3,7 +3,7 @@
 //! common color along an image's edges, the average of its four corners, or colors the caller
 //! picks. It is cleared where it reaches in from an edge, or wherever it is. The work is done here,
 //! on the pixels; nothing is sent anywhere. Color Mask ([`mask`]) hides colors matched the same
-//! way while the image keeps its pixels. They are VectorCraft additions. Its submenu (Object ›
+//! way while the image keeps its pixels. They are crocwork Vector additions. Its submenu (Object ›
 //! Plug-ins › Image Tools) and dialogs are the UI's.
 
 mod mask;

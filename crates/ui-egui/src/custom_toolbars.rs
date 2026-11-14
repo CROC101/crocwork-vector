@@ -2,7 +2,7 @@
 //! for a name and makes a blank toolbar that floats on its own; the ••• button at its foot opens the
 //! All Tools drawer beside it, and tools dragged from the drawer fill it (`edit_toolbar`, with the
 //! `toolbar` param of its commands). The + button above it opens Add Tool…, a menu of every tool
-//! where a click adds the tool at the end, and whose Remove Tool items take tools out: VectorCraft's
+//! where a click adds the tool at the end, and whose Remove Tool items take tools out: crocwork Vector's
 //! own way to fill a toolbar without a drag. Its title bar moves it, its × hides it and its double
 //! arrow shows its tools in one column or two. Each toolbar is listed under Window › Toolbars, where its
 //! item shows or hides it, and is kept with the workspace it was made in (`Workspace::toolbars`).
@@ -17,7 +17,7 @@
 //! show only their title bars, which the mouse wheel scrolls through when even they do not fit, so
 //! none covers another). Dragging a docked toolbar's
 //! title bar out of it floats it under the pointer, as Float Toolbar does where it floated last
-//! (`window.toolbar.float`); Escape during the drag puts it back. These are VectorCraft's own rules.
+//! (`window.toolbar.float`); Escape during the drag puts it back. These are crocwork Vector's own rules.
 //!
 //! Behavior from the public documentation:
 //! <https://helpx.adobe.com/illustrator/using/tools.html> (Create and manage toolbars: New Toolbar

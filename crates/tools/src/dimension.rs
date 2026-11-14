@@ -76,7 +76,7 @@ pub struct DimensionTool {
 }
 
 /// What a linear dimension between `a` and `b` measures with the pointer at `p` while it is
-/// placed (VectorCraft's own rule). Beside the points, where the nearest point of the line
+/// placed (crocwork Vector's own rule). Beside the points, where the nearest point of the line
 /// through them lies between them, the dimension is aligned: it measures the distance between
 /// them. Past either point it measures along an axis. The line through the points and the
 /// perpendicular at that point bound a quarter on each side; the pointer's quarter holds either

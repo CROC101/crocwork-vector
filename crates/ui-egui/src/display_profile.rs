@@ -27,9 +27,9 @@ pub struct Reading {
 pub enum Found {
     /// The display's ICC profile, and where it was read from.
     Profile { icc: Vec<u8>, from: String },
-    /// The system converts the window to the display: VectorCraft converts nothing. The reason.
+    /// The system converts the window to the display: crocwork Vector converts nothing. The reason.
     System(String),
-    /// The display has no profile VectorCraft can read: the canvas stays sRGB. The reason.
+    /// The display has no profile crocwork Vector can read: the canvas stays sRGB. The reason.
     NoProfile(String),
 }
 

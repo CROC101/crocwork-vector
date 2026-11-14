@@ -11,7 +11,7 @@ Set `VECTORCRAFT_CONFIG_DIR` to a dedicated directory for an isolated native tes
 logs, recovery and user libraries then use that root, without importing the legacy DrawCraft profile.
 An unset override preserves the usual platform paths and legacy migration; an explicitly empty override
 disables those paths. `VECTORCRAFT_NO_PREFS` continues to disable preference reads and writes.
-Without the override, a `portable.txt` or `VectorCraft.portable` file beside the executable (as in the
+Without the override, a `portable.txt` or `crocwork Vector.portable` file beside the executable (as in the
 Windows portable zip) puts that root in `VectorCraftData` next to the executable; on macOS the marker
 and the folder sit next to `VectorCraft.app`, for an AppImage next to the `.AppImage` file, and a
 Flatpak install has neither. `VECTORCRAFT_NO_PREFS` never looks for the marker or creates the folder.
@@ -83,7 +83,7 @@ and window captures. The person at the keyboard is not: files opened from the co
 file dialog, and everything done with the mouse and keyboard, work as usual. The preferences that move
 folders the app reads or writes on its own (Additional Fonts Folder, Additional Plug-ins Folder, Data
 Recovery's folder, the Templates folder) can only be pointed inside the roots by automation. The app's own folders
-(preferences, Data Recovery, the library folders, VectorCraft's Fonts folder) are not confined, since no
+(preferences, Data Recovery, the library folders, crocwork Vector's Fonts folder) are not confined, since no
 agent names a path there. A path is checked, then opened: another program that swaps in a link between
 the two can still win that race.
 
@@ -126,7 +126,7 @@ the two can still win that race.
 | `engine.execute` `file.exportSelection` | `{multiple?}` | File › Export Selection…: collects the selected objects as one asset (`assets.add`; one per object with `multiple: true`) and opens `exportForScreens` on its Assets tab with just them checked → `{assets}`. `document.exportSelection` still exports the selection in one go, without the dialog |
 | CSS Properties panel | `window.panel {panel: "cssProperties"}`; `engine.execute` `css.copy` / `css.exportFile` | the panel shows `css.selection` of the selection (after Generate CSS, while nothing is selected, `css.generate`); its menu holds the options the commands take (`units`, `position`, `dimensions`, `unnamed`, `rasterize`). `css.copy {scope?, …options}` copies the CSS to the clipboard → `{css, rules}`; `css.exportFile {path?, scope?, …options}` writes `css.export` to `path` (else a picked file; the web downloads it) with the pictures of rasterized art next to it → `{path, rules, images, warnings}`, and the status bar shows `warnings` as Export As shows an export's notes |
 
-| `ui.dialog.*` on `importPdf` | `{field: "page" \| "allPages" \| "range" \| "cropTo" \| "password", value}` | opening (`app.open`, `file.open`) a PDF, `.ai` or `.ait` with a password, or one with several pages unless it is a `.ai` or `.ait` with its editing data or carries its VectorCraft document (those open whole), or placing (`file.place` without `page`) any of them with several pages or a password, opens the Import PDF dialog (`mode`: `open` or `place`; `pageCount`). While `__locked` is true, set `password` and `ui.dialog.confirm` to unlock it (a one-page file then opens or is placed). Then set `allPages: false` and `range` ("2-3, 5") to open some pages, or `page` to place one, and `cropTo` (`bounding`, `art`, `crop`, `trim`, `bleed`, `media`); `ui.dialog.confirm` opens or places them (placing keeps the other `file.place` params, such as `link`, `template` and `at`, in `__place`). `document.open {pages, cropTo, password}` and `file.place {page, crop, password}` do the same without the dialog |
+| `ui.dialog.*` on `importPdf` | `{field: "page" \| "allPages" \| "range" \| "cropTo" \| "password", value}` | opening (`app.open`, `file.open`) a PDF, `.ai` or `.ait` with a password, or one with several pages unless it is a `.ai` or `.ait` with its editing data or carries its crocwork Vector document (those open whole), or placing (`file.place` without `page`) any of them with several pages or a password, opens the Import PDF dialog (`mode`: `open` or `place`; `pageCount`). While `__locked` is true, set `password` and `ui.dialog.confirm` to unlock it (a one-page file then opens or is placed). Then set `allPages: false` and `range` ("2-3, 5") to open some pages, or `page` to place one, and `cropTo` (`bounding`, `art`, `crop`, `trim`, `bleed`, `media`); `ui.dialog.confirm` opens or places them (placing keeps the other `file.place` params, such as `link`, `template` and `at`, in `__place`). `document.open {pages, cropTo, password}` and `file.place {page, crop, password}` do the same without the dialog |
 
 Swatch editors: `engine.execute` with `ui.swatchOptions {name}` opens the `swatchOptions` dialog for a colour swatch
 (fields `name`, `spot`, `global`, `mode`: `gray`/`rgb`/`hsb`/`lab`/`cmyk`/`web`, `color`: `"#rrggbb"` or a colour object,
@@ -151,7 +151,7 @@ fill or stroke (fields as in `swatchOptions` plus `group`; a gradient or pattern
 
 The Color Picker is a dialog too: `engine.execute {command: "ui.colorPicker", params: {stroke?, color?}}` opens it for the fill (or stroke) proxy; `ui.dialog.set {field: "hex", value: "00FF00"}` (or `color`, `channel`, `webOnly`, `swatches`) then `ui.dialog.confirm` applies the colour through `paint.setFill` / `paint.setStroke`.
 
-Sample Color from Screen: `ui.sampleScreenColor {stroke?, picker?}` shows the system's color sampler (macOS; Linux through the XDG desktop portal's [PickColor](https://flatpak.github.io/xdg-desktop-portal/docs/doc-org.freedesktop.portal.Screenshot.html); browsers with an EyeDropper) and returns `null` at once. When the person at the computer clicks a color anywhere on the screen, it runs `paint.setFill` (or `paint.setStroke`) with that color as one undo step, or with `picker: true` sets the open Color Picker's `color`; a cancel (Escape on macOS and in browsers) leaves the colors as they were. The sampled display sRGB color is converted into the working RGB space. `ui.inspect` reports `screenSampler: true` until the sampler answers. On Linux, a session without a portal that has PickColor, a portal that does not return from the call within 25 seconds (VectorCraft's own limit) or leaves the bus before it answers, and a portal that ends the request in another way each put a message in the status bar and end the wait, so the sampler can be shown again. A portal that returns from the call and then neither answers nor leaves the bus keeps the sampler open. Without a sampler (Windows, FreeBSD, DragonFly BSD, NetBSD, OpenBSD, other browsers) the call returns an error. To read a color from VectorCraft's own window without a person, call `ui.screenshot`.
+Sample Color from Screen: `ui.sampleScreenColor {stroke?, picker?}` shows the system's color sampler (macOS; Linux through the XDG desktop portal's [PickColor](https://flatpak.github.io/xdg-desktop-portal/docs/doc-org.freedesktop.portal.Screenshot.html); browsers with an EyeDropper) and returns `null` at once. When the person at the computer clicks a color anywhere on the screen, it runs `paint.setFill` (or `paint.setStroke`) with that color as one undo step, or with `picker: true` sets the open Color Picker's `color`; a cancel (Escape on macOS and in browsers) leaves the colors as they were. The sampled display sRGB color is converted into the working RGB space. `ui.inspect` reports `screenSampler: true` until the sampler answers. On Linux, a session without a portal that has PickColor, a portal that does not return from the call within 25 seconds (crocwork Vector's own limit) or leaves the bus before it answers, and a portal that ends the request in another way each put a message in the status bar and end the wait, so the sampler can be shown again. A portal that returns from the call and then neither answers nor leaves the bus keeps the sampler open. Without a sampler (Windows, FreeBSD, DragonFly BSD, NetBSD, OpenBSD, other browsers) the call returns an error. To read a color from crocwork Vector's own window without a person, call `ui.screenshot`.
 
 Graphic styles: `ui.graphicStyleOptions {name}` opens the `graphicStyleOptions` dialog (field `name`) for a style and
 `ui.dialog.confirm` renames it with `graphicStyle.rename` (a name another style has returns an error and keeps the
@@ -322,7 +322,7 @@ Symbol libraries open in the same panels: `window.symbolLibrary {library}` (`lib
 null` closes them). Clicking a symbol there runs `symbol.addFromLibrary {library, name}`, adding it to the document's
 Symbols in one undo step; Shift/Cmd-clicks select symbols for Add to Symbols, and a symbol dragged onto the canvas runs
 it with `place: true` and the drop point as `x`, `y`. `window.symbolLibrary.other {path?}` loads the symbols of any
-document VectorCraft opens (a saved symbol library is a `.vectorcraft` document) and opens them there. The User
+document crocwork Vector opens (a saved symbol library is a `.vectorcraft` document) and opens them there. The User
 Defined libraries are `window.userSymbolLibrary1`…`10` in Window → Symbol Libraries. `ui.saveSymbolLibrary {names?}`
 (Save Symbols…, the Symbols panel's Save Symbol Library…) opens the `saveSymbolLibrary` dialog (fields `name`, `user`:
 save to the user library folder, `selectedOnly` with `names`); `ui.dialog.confirm` runs `symbol.saveLibrary` (to a
@@ -334,7 +334,7 @@ Brushes in one undo step, with `apply: true` when paths are selected (they take 
 Apply Brush when the document has the brush already and the click only applies it);
 Shift/Cmd-clicks select brushes for Add to Brushes. A brush dragged onto a path runs it with `apply: true` and that
 path as `ids`, and one dragged onto the Brushes panel runs it without. `window.brushLibrary.other {path?}` loads the
-brushes of any document VectorCraft opens (a saved brush library is a `.vectorcraft` document) and opens them there.
+brushes of any document crocwork Vector opens (a saved brush library is a `.vectorcraft` document) and opens them there.
 The User Defined libraries are `window.userBrushLibrary1`…`10` in Window → Brush Libraries. `ui.saveBrushLibrary
 {names?}` (Save Brushes…, the Brushes panel's Save Brush Library…) opens the `saveBrushLibrary` dialog (fields
 `name`, `user`: save to the user library folder, `selectedOnly` with `names`); `ui.dialog.confirm` runs
@@ -350,11 +350,11 @@ caption buttons (Minimize, Maximize/Restore, Close) sit at the bar's right end, 
 not commands, so drive them with `ui.click` if needed. Close runs `app.quit` (the same `saveChanges` questions for
 modified documents), and empty bar space and the 5 pt window edges move and resize the window. Preferences › User
 Interface › System Title Bar (`systemTitleBar`, read when the app starts) gives the window its OS decorations back
-instead: the OS title then shows the active document (`*name — VectorCraft` with unsaved changes) and the app bar
+instead: the OS title then shows the active document (`*name — crocwork Vector` with unsaved changes) and the app bar
 drops its brand mark. On Linux the app bar also drops its brand mark whenever the desktop draws the window's frame, with
 System Title Bar on or off. On macOS the window buttons are centred on the app bar; the web build is unchanged.
 
-On Linux and the BSDs, Preferences › User Interface › VectorCraft Title Bar on Every Desktop (`appTitleBar`, read
+On Linux and the BSDs, Preferences › User Interface › crocwork Vector Title Bar on Every Desktop (`appTitleBar`, read
 when the app starts, off by default) turns off the desktop's frame and uses the app bar as the title bar in the
 sessions where the desktop would draw the frame: X11 sessions, Wayland compositors that draw server-side decorations
 such as KDE Plasma, and a window opened through XWayland. System Title Bar and `VECTORCRAFT_TITLEBAR` (`app`, or
@@ -766,7 +766,7 @@ reads, and answers a control request with an error unless the file is a placed d
 The preference `editOriginalSystemDefaults` (Preferences › File Handling › Use System Defaults for Edit Original, on
 by default, #5236) opens the file in the system's default app for it; off, in the app that made it: a raster image in
 PhotoCraft, looked for only where it installs (the Applications folders on macOS; on Windows the path its installer
-registers under App Paths, then `ArtCraft\PhotoCraft` in the per-user and per-machine program folders, then the `PATH`;
+registers under App Paths, then `crocwork\PhotoCraft` in the per-user and per-machine program folders, then the `PATH`;
 the `PATH` elsewhere), and any other file, or a raster image without PhotoCraft installed, in the system's default app.
 
 Package: File → Package… (`ui.packageDialog`) opens the `package` dialog for a saved document (a document never saved
@@ -806,7 +806,7 @@ for the next launch. While copies are written in the background `ui.inspect` lis
 ("Saving recovery data for <name>").
 
 Native save options: File → Save As to a native or `.ai` file opens the `saveOptions` dialog after the save panel
-(heading "VectorCraft Options" or "PDF-compatible .ai Options"). Fields: `separateArtboards`, `all` (true: every
+(heading "crocwork Vector Options" or "PDF-compatible .ai Options"). Fields: `separateArtboards`, `all` (true: every
 artboard; false: `range`, such as "1-3, 5"), `includeLinked`, `embedProfiles`, `pdfCompatible`, `compress`, and for
 native files `version` and `preview`. A bad range keeps the dialog open; `ui.dialog.confirm` writes the file and the
 artboards' files. A `.ai` file's `aiVersion` comes first: `"pdf"` (the default) or `"7"` (legacy, heading "Legacy .ai
@@ -1042,7 +1042,7 @@ Commands (`panel` and every panel parameter take a panel id in any case or its d
 | `window.panel.iconic` | `{panel, iconic?}` | collapses the panel's dock column to icons, or expands it |
 | `window.panel.layout`, `ui.dock` | `{action}` | one craft-ui `Action`, externally tagged, e.g. `{"MoveFloating":{"panel":"swatches","rect":[44,66,360,450]}}` or `{"ResizeSplit":{"path":[],"size":{"Ratio":0.35}}}`; `ui.dock` also takes craft-ui's `{operation, …}` |
 
-Parameters from VectorCraft's own docking, on `window.panel.float` and `window.panel.dock`:
+Parameters from crocwork Vector's own docking, on `window.panel.float` and `window.panel.dock`:
 
 - `onto`: as a tab of the group holding that panel. On `float` that group must float; on `dock` it is `anchor`.
 - `above`, `below`: as a group of its own above or below the group holding that panel, in its floating window or
@@ -1090,7 +1090,7 @@ main window's shortcuts; modal dialogs block them.
 ## In the browser: `window.vectorcraft`
 
 The web build has no TCP server (a page can't listen on a socket), so it offers the same methods to the
-page itself, as promises on `window.vectorcraft` (`apps/vectorcraft-web/src/api.rs`). An agent driving VectorCraft in a
+page itself, as promises on `window.vectorcraft` (`apps/vectorcraft-web/src/api.rs`). An agent driving crocwork Vector in a
 browser tab, or a host app showing it in an `<iframe>`, uses the commands it would send to the desktop
 app:
 
@@ -1109,7 +1109,7 @@ app:
 Errors reject with an `Error` carrying the method's message. Requests run on the UI's next frame, so a
 hidden tab (whose frames the browser pauses) answers when it is shown again.
 
-`request`, `execute`, `commands`, `docInspect`, `uiInspect` and `screenshot` come from [`craft-web-api`](https://github.com/storytold/craft-libs/tree/main/crates/web-api) (storytold/craft-libs#413), the same shape in every Craft app. A call the app does not answer within 30 seconds rejects, and the app drops it unrun if it had not started it. `openFile`, `captureDownloads`, `files`, `readFile` and `inspect` are VectorCraft's own.
+`request`, `execute`, `commands`, `docInspect`, `uiInspect` and `screenshot` come from [`craft-web-api`](https://github.com/storytold/craft-libs/tree/main/crates/web-api) (storytold/craft-libs#413), the same shape in every Craft app. A call the app does not answer within 30 seconds rejects, and the app drops it unrun if it had not started it. `openFile`, `captureDownloads`, `files`, `readFile` and `inspect` are crocwork Vector's own.
 
 ## Revision history
 

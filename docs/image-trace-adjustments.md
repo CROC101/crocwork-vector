@@ -29,7 +29,7 @@ after expanding, the tracing settings are no longer available. **Release** resto
 **Auto Color** (the Automatic palette) counts flat art's colours by area, and also keeps colours too
 rare for that count when they are distinct and drawn as regions of their own (a stem, a highlight, a
 white beside a cream), at most six; scattered specks of a colour add none. Adobe does not document how
-its own palettes are chosen; this is VectorCraft's own method (see
+its own palettes are chosen; this is crocwork Vector's own method (see
 [image-trace-quality.md](image-trace-quality.md#auto-color-keeps-rare-colours)).
 
 **Keep Colors.** `"keepColors": ["#rrggbb", …]` in the params of `imageTrace.make` or
@@ -87,14 +87,14 @@ pixels and 16,384 pixels on a side. A raster export shows the line as the canvas
 Type Optimized anti-aliasing, or when it uses Art Optimized and is larger than either limit.
 Overlapping stacks the colors instead: a lower color continues under the edge of the color above it,
 and no background shows along that edge. With Fills and without Create Strokes, Overlapping also
-follows a fill rule of VectorCraft's own: each shape is filled whole, and the area of other colors
+follows a fill rule of crocwork Vector's own: each shape is filled whole, and the area of other colors
 that a shape encloses is traced again as shapes of its own and stacked above it. Each enclosed
 outline is then fitted once. The [Image Trace presets](https://helpx.adobe.com/illustrator/desktop/manage-objects/traces-mockups-symbols/image-trace-presets.html)
 page describes Overlapping as stacking shapes where it can and overlapping their edges elsewhere. A
 shape keeps a hole where the enclosed area holds a transparent pixel or a color that Ignore Color or
 Keep Colors leaves out. A hole smaller than Noise is filled with the shape's own color, as before.
 The pixels of an area inside other areas are scanned once more for each area around it, within a
-work budget of VectorCraft's own: four times the image's pixels (counted as at least 65,536) times
+work budget of crocwork Vector's own: four times the image's pixels (counted as at least 65,536) times
 its colors, with each area costing its bounding box times the colors in it. An area that costs more
 than what is left of the budget keeps its holes and is not charged, so a smaller area after it can
 still be filled.
@@ -133,7 +133,7 @@ one undo step, as before. A new trace of the same object replaces one still runn
 image or settings changed meanwhile changes nothing, and the status bar says to trace it again.
 `imageTrace.make` and `imageTrace.makeAndExpand` from MCP, scripts and the control channel trace at
 once and return their result, as every trace on the web does.
-These controls use VectorCraft's existing tracing algorithm. Parameter effects follow its
+These controls use crocwork Vector's existing tracing algorithm. Parameter effects follow its
 implementation; they do not claim pixel-identical results with another application.
 The terminology and general control behavior are described in the
 [public Image Trace panel documentation](https://helpx.adobe.com/illustrator/desktop/manage-objects/traces-mockups-symbols/image-trace-panel-options.html).

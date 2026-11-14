@@ -5,7 +5,7 @@
 use super::{Key, VectorcraftApp};
 
 /// A key let go this many seconds or more after its press returns to the tool active before it.
-/// VectorCraft's own value.
+/// crocwork Vector's own value.
 pub(crate) const HOLD_SECONDS: f64 = 0.25;
 
 /// A tool shortcut's key held down since it chose its tool.

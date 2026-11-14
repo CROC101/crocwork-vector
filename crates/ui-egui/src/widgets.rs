@@ -79,7 +79,7 @@ pub(crate) use wheel_stream::WHEEL_STREAM_GAP;
 pub(crate) use wheel_stream::{ArmedWheelField, WheelStream, WheelStreamOwner, taken_from_raw_id};
 
 /// A widget id salt that needs only [`std::hash::Hash`]. egui 0.37's [`egui::AsIdSalt`] also
-/// requires `Debug` for its debug-only id-source registry; VectorCraft's public field helpers do
+/// requires `Debug` for its debug-only id-source registry; crocwork Vector's public field helpers do
 /// not need a `Debug` bound merely to salt a widget id, and never make an accessible name from it.
 #[derive(Clone, Copy)]
 struct HashOnly<T>(T);

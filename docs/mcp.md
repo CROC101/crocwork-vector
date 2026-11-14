@@ -1,10 +1,10 @@
-# VectorCraft MCP server
+# crocwork Vector MCP server
 
 > **Last updated:** 2026-11-13 · **Change:** Snap to Point with Smart Guides off draws no Smart Guides labels or lines, #7250; no response-shape change. Previously: Envelopes: a top object's side whose pieces are all one curve split at anchors follows that curve's parameter (#7097); existing response shapes retained.
 
 `vectorcraft-cli mcp` runs a [Model Context Protocol](https://modelcontextprotocol.io) server on stdio
 (newline-delimited JSON-RPC 2.0; see [Protocol](#protocol) for version negotiation). Agents use it to
-draw, inspect and look at VectorCraft documents.
+draw, inspect and look at crocwork Vector documents.
 
 It has two backends:
 
@@ -72,13 +72,13 @@ The release packages ship `vectorcraft-cli` alongside the desktop app, so no bui
 
 | Install | CLI |
 |---|---|
-| Windows (MSI) | `%LOCALAPPDATA%\Programs\ArtCraft\VectorCraft\vectorcraft-cli.exe` by default (`C:\Program Files\ArtCraft\VectorCraft\vectorcraft-cli.exe` for an all-users install, under `Program Files (x86)` instead for the 32-bit build, or wherever you installed it otherwise), not on `PATH` |
+| Windows (MSI) | `%LOCALAPPDATA%\Programs\crocwork\crocwork Vector\vectorcraft-cli.exe` by default (`C:\Program Files\crocwork\crocwork Vector\vectorcraft-cli.exe` for an all-users install, under `Program Files (x86)` instead for the 32-bit build, or wherever you installed it otherwise), not on `PATH` |
 | Linux (deb, rpm) | `/usr/bin/vectorcraft-cli` |
 | macOS | the separate `vectorcraft-cli-<version>-macos-<arch>.zip` release asset (the `.app` holds only the desktop app) |
 
 ```sh
 # Windows (PowerShell), default install folder
-claude mcp add vectorcraft -- "$env:LOCALAPPDATA\Programs\ArtCraft\VectorCraft\vectorcraft-cli.exe" mcp
+claude mcp add vectorcraft -- "$env:LOCALAPPDATA\Programs\crocwork\crocwork Vector\vectorcraft-cli.exe" mcp
 # Linux, or macOS with the CLI unzipped onto PATH
 claude mcp add vectorcraft -- vectorcraft-cli mcp
 ```
@@ -86,10 +86,10 @@ claude mcp add vectorcraft -- vectorcraft-cli mcp
 For a live session, start the installed app with the control port before the MCP client starts the server:
 
 ```sh
-# macOS: quit VectorCraft first, since `open -a` passes no arguments to an app that is already running
-open -a VectorCraft --args --control 7979
+# macOS: quit crocwork Vector first, since `open -a` passes no arguments to an app that is already running
+open -a crocwork Vector --args --control 7979
 # Windows (PowerShell), default install folder
-& "$env:LOCALAPPDATA\Programs\ArtCraft\VectorCraft\vectorcraft.exe" --control 7979
+& "$env:LOCALAPPDATA\Programs\crocwork\crocwork Vector\vectorcraft.exe" --control 7979
 # Linux (deb, rpm)
 vectorcraft --control 7979
 ```
@@ -97,7 +97,7 @@ vectorcraft --control 7979
 The Dock, Start menu and desktop launchers start the app without `--control`, so the app opens no control
 port unless `VECTORCRAFT_CONTROL_PORT` is set. `vectorcraft-cli mcp` with no flag tries `127.0.0.1:7979`
 once, when it starts: a server that started before the app stays headless until the MCP client restarts
-it. `open -a` and PowerShell's `&` return before the app opens the port, so wait until the VectorCraft
+it. `open -a` and PowerShell's `&` return before the app opens the port, so wait until the crocwork Vector
 window is open before you start the MCP client. With `--connect`, a server that finds no app stops and
 prints `vectorcraft-cli: cannot connect to 127.0.0.1:7979: ` followed by the system's connection error, for
 example `connection timed out`.
@@ -215,7 +215,7 @@ the suite) keep the agent to the folders you give it:
   roots (with their `size` and `match`), a sought link's `path` outside them, and `folder` when the folder searched
   is outside them; `error` then gives the reason without the path (for example `the folder can't be read`). The
   rows keep their `name`, `ids`, family, style and status, and the counts stay. `text.addFontFiles` gives
-  `folder: null` when VectorCraft's Fonts folder is outside the read roots, and only the file name in `copied` and
+  `folder: null` when crocwork Vector's Fonts folder is outside the read roots, and only the file name in `copied` and
   `kept` `to` and in `skipped` `file` for a path outside them; the fonts are still copied.
 - `prefs.get`, `prefs.list`, `prefs.set` and `prefs.reset` show a folder preference outside the read roots
   (`fontsFolder`, `pluginsFolder`, `scratchPrimary`, `scratchSecondary`, `recoveryFolder`, `templatesFolder`) as
@@ -278,7 +278,7 @@ the suite) keep the agent to the folders you give it:
   `automation path rejected: outside the write root /work/project/out: poster.vectorcraft`.
 - The preferences that move folders the app reads or writes on its own (`fontsFolder`,
   `pluginsFolder`, `recoveryFolder`, `templatesFolder`) can only be set inside the roots. The app's own folders
-  (preferences, Data Recovery, the User Defined library folders, VectorCraft's Fonts folder) are not
+  (preferences, Data Recovery, the User Defined library folders, crocwork Vector's Fonts folder) are not
   confined: no agent names a path there.
 - The roots must be existing folders; a missing one stops the server with an error. Each flag takes one
   folder per use (`--flag <dir>` or `--flag=<dir>`) and may be used again for more.
@@ -566,7 +566,7 @@ Paint values (`fill`, `stroke`) accept `"#rrggbb"`, `"none"`, `[r,g,b]` (0..1), 
 or a full `paint.setFill` params object (`{"gradient": …}`, `{"swatch": "name"}`).
 A color read this way (a fill or stroke color, a swatch's, an artboard's or new type's color, and the other colors
 commands read in these forms) that is given as a hex color with an alpha part (`#rrggbbaa` or `#rgba`, with or without
-the `#`) is an error and changes nothing, as VectorCraft's own rule. The `color` of Drop Shadow, Inner Glow, Outer Glow
+the `#`) is an error and changes nothing, as crocwork Vector's own rule. The `color` of Drop Shadow, Inner Glow, Outer Glow
 and Shift to Color is read differently and takes `#rrggbbaa`, as described below.
 For `draw_shape` and `draw_path`, omitted paint fields inherit the current [new-art appearance](#new-art). Both
 also style the new object in the same call: `dash` (lengths, or null for solid), `cap`
@@ -613,7 +613,7 @@ waits. The picked sRGB color is converted into the working RGB space and becomes
 active proxy in one undo step; `stroke: true` picks the stroke, and `picker: true` sends the color to the open
 Color Picker. A cancel leaves the colors as they were. On Linux, a session without a portal that has PickColor
 shows "this system has no screen color sampler" in the status bar, a portal that does not return from the call
-within 25 seconds (VectorCraft's own limit) or leaves the bus before it answers shows "the screen color sampler
+within 25 seconds (crocwork Vector's own limit) or leaves the bus before it answers shows "the screen color sampler
 did not answer", and a portal that ends the request in another way shows "the screen color sampler failed"; each
 ends the wait, so the sampler can be shown again. Windows, the BSDs and headless sessions have no screen color
 sampler.
@@ -637,7 +637,7 @@ sampler.
 | `open_panel` | `{panel}` | Remote only. `panel` is a panel id (`layers`, `swatches`, `colorGuide`, …, as `window.panel` takes) or its display label (`"Color Guide"`), in any case. |
 | `screenshot` | `{path?, scale?, artboard?, window?, max_side?, traceViews?}` | Returns MCP image content (`image/png`, base64) plus a text block. Renders the artboard with the pixels of a PNG `export` with `background: "white"` at the same scale; `traceViews:true` draws Image Trace objects in the view set with `imageTrace.setView`, as in the app's window; `window:true` captures the app window (remote only), as `ui_screenshot` does, and `max_side` (1–4096, window captures only) scales the returned image down as described for `ui_screenshot`. With `path` the backend (the headless session or the app) writes the PNG there too; a window capture written there keeps its full size with `max_side`. An app that does not send the image back writes a window capture without `path` to a file in a new folder inside the system's temporary folder (on Unix only the user can open it); the server reads the file and then removes the folder, also when the capture or the read fails. |
 | `open_file` | `{path, importer?, params?}` | Opens any readable file as a new active document: `.vectorcraft`/`.drawcraft`, `.vctemplate`, `.svg`/`.svgz`, `.pdf`/`.ai`, `.ait`, `.eps`/`.epsf`, `.ps`, `.dxf`, `.emf`, `.wmf`, PICT (`.pct`/`.pic`/`.pict`, and a version 2 picture of any extension), HP-GL (`.plt`/`.hpgl`/`.hgl`/`.hpg`, and a file of an extension no other format reads that starts with plotter instructions), PNG (`.png`/`.pns`), JPEG, GIF, WebP, TIFF, BMP (`.bmp`/`.dib`/`.rle`), Targa (`.tga`/`.vda`/`.icb`/`.vst`), PCX, Pixar (`.pxr`), JPEG 2000 (`.jpf`/`.jpx`/`.jp2`/`.j2k`/`.j2c`/`.jpc`), HEIC/HEIF (`.heic`/`.heif`), JPEG XL (`.jxl`), PSD (`.psd`/`.pdd`)/PSB (an image opens as a document of its pixel size; a PSD or PSB file with its layers as layers, or as its merged image through `run_command document.open` with `layers: false`; a JPEG XL file as its first frame). Templates (`.vctemplate`, `.ait`) open as a new untitled document. PDF, `.ai` and SVG files saved with Preserve Editing reopen as the document they carry. The reply is `document.open`'s: its `warnings` say what didn't come in as it was (an EPS whose PostScript can't be read opens as its preview, and the warning names the PostScript error, the operator and the procedure). A file of an extension only an installed importer plug-in lists opens with that importer ([Plug-ins](#plug-ins)); `importer: "plugin.<id>"` opens the file with the importer it names, which must list the file's extension, also one a built-in format reads (in the app, as File › Open With does), and `params` gives that importer's parameters (their defaults when omitted). `run_command document.formats` lists the formats. |
-| `save_file` | `{path?, compress?, version?, preview?, precision?, options?}` | Runs `document.save`: the document's own file in its own format (native `.vectorcraft` unless it was opened from or saved as SVG, PDF or a restorable `.ai`; then `warnings` say what that format loses). A path's extension picks the format (`.vectorcraft`, `.vctemplate`, `.pdf`, `.svg`, `.svgz`, `.ai`: a PDF carrying the native document, which reopens editable; `.eps`: by default one file whose bounding box fits the visible art, the first artboard when no art shows; `options.useArtboards: true` makes the chosen artboard the page and, with two or more chosen, the file at the path is the central file of the visible art and each artboard is also written to `<name>_<artboard>.eps` beside it, listed in the reply's `files`). For a native file, `compress: true` gzips it (default: the `useCompression` preference, Preferences › File Handling › Use Compression), `version` (1 to 4) writes it for an older VectorCraft (1 and 2 are never compressed, and `version: 2` with `compress: true` is an error), `preview: true` embeds a PNG of the first artboard, and `precision` (0 to 9) rounds path anchors and handles to that many decimal places for that save only (colors, transforms and type stay exact). `options` passes the format's save options as `run_command document.formats` lists them. When `compress`, `version`, `preview` or `precision` is given both at the top level and in `options` with different values, the call is an error (`` `compress: true` and `options.compress: false` disagree: give the option once ``) and nothing is written. A key in `options` that no save format takes is an error, and nothing is written (see Parameter keys). The save drops each option the written format doesn't read. The reply's `warnings` then name each such option given (for example `` `compress` was not used: SVG files don't read it `` for an `.svg` path, and `` `options.preview` was not used: … `` for a key in `options`; a `.ai` file reads `compress` but not `version`, `preview` or `precision`). For a `.ai` file, these warnings name the kind of `.ai` written: a legacy .ai (version 7) for `aiVersion: "7"`, a non-PDF-compatible .ai for `pdfCompatible: false`, and a PDF-compatible .ai otherwise, including a save that reuses the options the document was last saved with. `run_command document.save` and the other save commands refuse any option given beside the path and in `options` with different values, and give the same warnings for a top-level `compress`, `version`, `preview` or `precision` and for each key in `options` that the format doesn't read. The headless session and the app receive the same `app.save` params, and the app is also sent `wait: true`: the call returns once the file is written, or with the error (such as a path outside the write root), even with Background Save on. When the save asks first (the question before replacing a file that opened with losses, or on macOS and Linux the file dialog for an untitled document without `path`), the reply is `{pending}` or `"cancelled"` as before, and the save that runs after the answer uses the Background Save preference. Location refusals return `READ_ONLY_LOCATION: <reason>` without a fallback panel for automation; see [Save location errors](#save-location-errors). |
+| `save_file` | `{path?, compress?, version?, preview?, precision?, options?}` | Runs `document.save`: the document's own file in its own format (native `.vectorcraft` unless it was opened from or saved as SVG, PDF or a restorable `.ai`; then `warnings` say what that format loses). A path's extension picks the format (`.vectorcraft`, `.vctemplate`, `.pdf`, `.svg`, `.svgz`, `.ai`: a PDF carrying the native document, which reopens editable; `.eps`: by default one file whose bounding box fits the visible art, the first artboard when no art shows; `options.useArtboards: true` makes the chosen artboard the page and, with two or more chosen, the file at the path is the central file of the visible art and each artboard is also written to `<name>_<artboard>.eps` beside it, listed in the reply's `files`). For a native file, `compress: true` gzips it (default: the `useCompression` preference, Preferences › File Handling › Use Compression), `version` (1 to 4) writes it for an older crocwork Vector (1 and 2 are never compressed, and `version: 2` with `compress: true` is an error), `preview: true` embeds a PNG of the first artboard, and `precision` (0 to 9) rounds path anchors and handles to that many decimal places for that save only (colors, transforms and type stay exact). `options` passes the format's save options as `run_command document.formats` lists them. When `compress`, `version`, `preview` or `precision` is given both at the top level and in `options` with different values, the call is an error (`` `compress: true` and `options.compress: false` disagree: give the option once ``) and nothing is written. A key in `options` that no save format takes is an error, and nothing is written (see Parameter keys). The save drops each option the written format doesn't read. The reply's `warnings` then name each such option given (for example `` `compress` was not used: SVG files don't read it `` for an `.svg` path, and `` `options.preview` was not used: … `` for a key in `options`; a `.ai` file reads `compress` but not `version`, `preview` or `precision`). For a `.ai` file, these warnings name the kind of `.ai` written: a legacy .ai (version 7) for `aiVersion: "7"`, a non-PDF-compatible .ai for `pdfCompatible: false`, and a PDF-compatible .ai otherwise, including a save that reuses the options the document was last saved with. `run_command document.save` and the other save commands refuse any option given beside the path and in `options` with different values, and give the same warnings for a top-level `compress`, `version`, `preview` or `precision` and for each key in `options` that the format doesn't read. The headless session and the app receive the same `app.save` params, and the app is also sent `wait: true`: the call returns once the file is written, or with the error (such as a path outside the write root), even with Background Save on. When the save asks first (the question before replacing a file that opened with losses, or on macOS and Linux the file dialog for an untitled document without `path`), the reply is `{pending}` or `"cancelled"` as before, and the save that runs after the answer uses the Background Save preference. Location refusals return `READ_ONLY_LOCATION: <reason>` without a fallback panel for automation; see [Save location errors](#save-location-errors). |
 | `export` | `{path?, format?, scale?, artboard?, range?, selection?, outlineText?, options?}` | `svg`, `svgz`, `pdf`, `ai` (the PDF-compatible `.ai` that Save writes, which carries the document when every artboard is written in order), `eps`, `dxf`, `emf`, `wmf`, `hpgl` (a `.plt` plot file for plotters and cutters), `png`, `jpg`, `webp`, `gif`, `png8` (an indexed `.png`), `tiff`, `bmp`, `tga`, `psd` (layered), `txt` (the document's text), `vectorcraft` or `template` (a native template). The tool's `format` enum and `document.formats` list them, generated from the engine's format table. When `format` is omitted, it comes from the path's extension. PDF and `.ai` write one page per artboard: all of them, or `artboard` (0-based) / `range` (`"1-3, 5"`, 1-based). SVG and SVGZ write one file per chosen artboard. EPS writes one file of the visible art; with `artboard`, `range`, `options.artboards` or `options: {"useArtboards": true}` it writes one file per chosen artboard, after a central file of the visible art when there are two or more, and `useArtboards: false` keeps the one file. Rasters, DXF, EMF, WMF and HP-GL write one artboard, or one file per chosen artboard with `options: {"useArtboards": true}`. Rasters also take `options: {"rect": [x, y, width, height]}` (page points, y down): that area of the page at the given `ppi`/`scale`, without an artboard and without changing the document; it is refused with `artboard`, `artboards`, `range` or `useArtboards`, with a non-positive or non-finite size, and for non-raster formats. `options` carries more format options (e.g. `{"quality": 80}` for JPEG). `selection: true` exports the selected objects cropped to their bounds (the reply adds their `bounds`, and reports `format` and the encoder's `warnings` as a whole-document export does); `outlineText: true` writes SVG text as paths. Template layers are left out, live effects are kept, and exporting `vectorcraft` never changes the document's path. Without `path` the bytes come back as `dataBase64`. Both backends run the same `document.export` call. |
 | `add_text` | `{text, x?, y?, width?, height?, fit?, fitMinPercent?, path?, mode?, pathEffect?, size?, font?, color?, justify?, vertical?}` | Point type at (x, y) (`justify`: `left`, `center` or `right` starts, centres or ends each line on x); area type with `width`/`height` (`fit`: `none`, `autoHeight`, `shrinkText`, as `text.areaOptions`); or `path` + `mode` (`area`/`onPath`) to flow text in or along a path, with `pathEffect` (`rainbow`, `skew`, `3dRibbon`, `stairStep`, `gravity`; SVG export writes type on a path with any effect other than `rainbow` as outlines, with a warning); `justify` (also `auto`, `justifyAll`) aligns the paragraphs of every kind, as `text.setStyle` does later. `vertical: true` uses the existing vertical writing mode for every kind (default `false`, horizontal). Returns `{id}`, with `overflow: true` when the text doesn't fit its frame or path. |
 | `apply_effect` | `{effect?, params?, ids?}` | Appends a live effect. Without `effect`, returns the effect catalogue with parameters and defaults. |
@@ -914,7 +914,7 @@ with a warning. Type names its faces by numeric `font-weight` (600 for Semibold 
 embedded or not. `variableData: true` (SVG Options › Include Variable Data) writes the document's text variables and
 data sets as a `variableSets` element in the layout `variable.loadLibrary` reads, so the SVG works as a data merge
 template ([help](https://helpx.adobe.com/illustrator/desktop/automate-visualize-data/automate-actions/merge-data.html)).
-Each text variable names its bound type object by the element's id, `docRef="id('…')"` (VectorCraft's own form); an
+Each text variable names its bound type object by the element's id, `docRef="id('…')"` (crocwork Vector's own form); an
 unnamed object, or any object with `objectIds: "minimal"`, is given an id for it. A variable bound to several type
 objects names the first by object id. Variables of other kinds, text variables whose names aren't XML names, and data
 sets whose names are blank, have white space at either end, hold characters XML can't hold or repeat a name are left
@@ -954,7 +954,7 @@ lists what the file leaves out of the document or writes differently first. The 
 option not applied or applied another way while the art reaches the file as it looks, or something an option turns
 off, such as `includeImages: false` in DXF. Each kind keeps the order the writers give it. A document saved as SVG or PDF
 remembers its options, so the next save reuses them; a document not yet saved as a native file is offered the
-VectorCraft Options the last native Save or Save As used (not its artboards, nor Use Compression). A PDF opened with `pages`, `cropTo` or `password` is only part
+crocwork Vector Options the last native Save or Save As used (not its artboards, nor Use Compression). A PDF opened with `pages`, `cropTo` or `password` is only part
 of the file, so Save asks for a new name instead of writing it back.
 `file.documentColorMode {mode, convert?, intent?, grays?}` switches the document color mode, converting the colors of
 the art (opacity masks, effect colors and the series paints and label styles that graphs keep included), symbols,
@@ -988,7 +988,7 @@ can't be read becomes a placeholder in its box, named in `warnings` and `missing
 
 Native files: `run_command document.save {compress: true}` writes a gzip-compressed `.vectorcraft` (the
 `useCompression` preference makes that the default for saves; compressed files open like any other, told apart by
-their content). `version: 2` or `1` writes a file older VectorCraft versions open (format name `drawcraft`, never
+their content). `version: 2` or `1` writes a file older crocwork Vector versions open (format name `drawcraft`, never
 compressed), and `preview: true` embeds a PNG of the first artboard, at most 256 px on its longer side.
 `precision: 4` (0 to 9) rounds the anchors and handles of paths to that many decimal places (in the layers, symbols,
 graph designs, patterns, opacity masks and brushes); colors, transforms, opacity and type are written exactly.
@@ -1037,7 +1037,7 @@ SVG writes one file per artboard of a `range`); `useArtboards: false` exports th
 its effects paint, the effects of groups, type and images included. `artboard.fitToArt` measures the art the same
 way. `document.exportPdf {useArtboards: false}` writes that one page as well, and ignores `artboard`, `artboards` and
 `range`. A PDF of that page, from either command, carries no Preserve Editing data; when Preserve Editing is on (as it
-is in VectorCraft Default), the export comes back with a warning that says so. A `.ai` export with
+is in crocwork Vector Default), the export comes back with a warning that says so. A `.ai` export with
 `useArtboards: false` writes that one page too, without the native document and without the editing copy for other
 apps (`editingData`), and always comes back with the warning `Preserve editing was left out: an .ai file of the art's
 bounds would replace the document's artboards when reopened`; with `pdfCompatible: false` it is refused, whatever
@@ -1241,7 +1241,7 @@ paints under its layers, which isn't art). `layers: false` gives one layer per p
 {"name":"run_command","arguments":{"command":"document.open","params":{"path":"/tmp/map.pdf","textAs":"outlines","layers":false}}}
 ```
 
-Preserve Editing (`preserveEditing`, on in the `VectorCraft Default` preset) embeds the native document in the PDF as
+Preserve Editing (`preserveEditing`, on in the `crocwork Vector Default` preset) embeds the native document in the PDF as
 an embedded file (`vectorcraft-editing.vectorcraft`; files named `drawcraft-editing.drawcraft` are read too) with a
 hash of the pages it was written with. `open_file` / `document.open` of such a PDF, `.ai` or `.ait` (no `pages` picked) restores the
 document exactly (`restored: true`); when another app changed the pages, or the data can't be read, the artwork is
@@ -1346,7 +1346,7 @@ another form gives a warning:
 
 Spread (the Gradient panel's menu, beside a Repeats field) says what a linear, radial, conic or diamond gradient
 paints past the ends of its stops. `pad` (the default) carries the first and last colors on. `repeat` and `reflect`
-run the stops `repeats` times along the vector (1 to 100, VectorCraft's own limit; default 1) and keep going past
+run the stops `repeats` times along the vector (1 to 100, crocwork Vector's own limit; default 1) and keep going past
 both ends of it, `repeat` starting the stops again each time and `reflect` running every other run backwards. A
 radial or diamond gradient repeats in rings or squares out from its center (an off-center radial's rings grow about
 its focal point), and a conic one repeats around the turn. A freeform gradient has no ends, so a `spread` other
@@ -1403,7 +1403,7 @@ stops whose other stops are all paper white or written in CMYK or gray, that is 
 does not have too many stops (a diamond as four such shadings). An export that converts colors to a CMYK destination profile writes RGB and Lab stops in CMYK, and so does a
 CMYK document unless the export converts colors to an RGB destination profile. PDF writes tints of one spot ink as a Separation shading in that ink, and spot inks mixed with other spot, CMYK
 or gray inks as a DeviceN shading.
-`hue-clockwise` and `hue-counterclockwise` (VectorCraft's own methods) mix a linear, radial, conic or diamond
+`hue-clockwise` and `hue-counterclockwise` (crocwork Vector's own methods) mix a linear, radial, conic or diamond
 gradient's colors around the hue wheel: hue, saturation and brightness each change evenly from one stop to the next.
 With `hue-clockwise` the hue angle falls (red, magenta, blue, cyan, green, yellow, red), which is clockwise on the
 app's color wheels, and with `hue-counterclockwise` it rises. The angle keeps one direction between two stops, as the
@@ -1895,7 +1895,7 @@ command has a summary, and `deprecated: true` when the command is deprecated. Th
 `enum` for a list of names; `items` for the values of a list; `prefixItems`, `items: false` and `minItems: 2` for a
 point; `anyOf` and `minItems: 3` for a color, which is a string, a list of at least three numbers or an object;
 `description` for a parameter's doc text; `default` for a default the engine fills in; and `deprecated: true` for a
-deprecated parameter. VectorCraft's own fields are `x-since` (the API level that added the command or the parameter), `x-deprecatedSince`, `x-lenient`,
+deprecated parameter. crocwork Vector's own fields are `x-since` (the API level that added the command or the parameter), `x-deprecatedSince`, `x-lenient`,
 `x-unit`, `x-kind` (`id`, `color` or `point`), `x-default` (a default the command works out, such as `toggle`),
 `x-cost`, `x-writes` (`nothing`, `session`, `preferences` or `document`) and `x-returns`. A parameter that reads null
 as left out is an `anyOf` with `{"type": "null"}`. Null params read as `{}`, so a schema with no required parameter has
@@ -2061,7 +2061,7 @@ app through the global object `vc`, and writes to the Script Console and runs ot
   `$.evalFile` ran, also when a function that file defined is called after `$.evalFile` returned. It is empty in code
   from a script given as `source`. In code that `eval` or `Function` compiled it is the file being run, which is the
   file `$.evalFile` is running while it runs. `$.includePath` is the current `#includepath` list, separated by `;`. `$.engineName` is
-  the name `#targetengine` gave the engine the script runs in (`VectorCraft` without the line) and is read-only.
+  the name `#targetengine` gave the engine the script runs in (`crocwork Vector` without the line) and is read-only.
 - `alert(message[, title, errorIcon])`, `confirm(message[, noAsDflt, title])` and `prompt(message, preset[, title])`
   open a dialog, described below. `vc.api.has("dialogs")` is true.
 - `vc.args` gives a read-only copy of the `args` object each time it is read.
@@ -2071,7 +2071,7 @@ Before any of the script runs, its preprocessor lines are read. The help page
 https://extendscript.docsforadobe.dev/extendscript-tools-features/preprocessor-directives/ describes these lines, and
 https://extendscript.docsforadobe.dev/extendscript-tools-features/dollar-object/ describes `$.evalFile`, `$.fileName`
 and `$.includePath`. A line counts when it starts with `#` or `//@`, after blanks only, outside strings and comments.
-VectorCraft reads them by these rules of its own:
+crocwork Vector reads them by these rules of its own:
 
 - `#include "file"` and `//@include "file"` put the text of that file in place of the line. A value with spaces or
   punctuation goes in single or double quotes. The file is looked for beside the file that includes it, then in each
@@ -2084,7 +2084,7 @@ VectorCraft reads them by these rules of its own:
   included file does not rename the run.
 - `#target` takes any value and does not change how the script runs.
 - `#strict on` turns on the checks the dollar-object help page gives for `$.strict`: an assignment to a read-only
-  property throws a `TypeError`, and so does adding a property to an object that takes no new ones. By VectorCraft's
+  property throws a `TypeError`, and so does adding a property to an object that takes no new ones. By crocwork Vector's
   own rules, an assignment to a property with only a getter is checked as a read-only one, and the objects that take
   no new properties are those that are not extensible: objects passed to `Object.preventExtensions`, `Object.seal` or
   `Object.freeze`, and the frozen `vc` and `$` objects. Other objects take new properties as before. The rest of ES5
@@ -2097,7 +2097,7 @@ VectorCraft reads them by these rules of its own:
 - `#targetengine name` and `//@targetengine name` run the script in the named engine. The help page above describes
   the line: the engine it names lasts for the application session, and a later script that names it sees the globals
   and functions earlier ones left. A script without the line, and `#targetengine main`, get a new engine for each
-  run, as before. The rest are VectorCraft's own rules, described under Script engines below.
+  run, as before. The rest are crocwork Vector's own rules, described under Script engines below.
 - `#engine` ends the run with an unsupported-directive error, and any other `#name` with an unknown-directive error.
   A `//@` line with another name is a comment.
 - A script run from a file reads its included files and the files `$.evalFile` runs only in that file's folder and
@@ -2112,17 +2112,17 @@ VectorCraft reads them by these rules of its own:
 `$` also has the other members the Dollar object page lists, besides `$.evalFile`, `$.fileName` and `$.includePath`
 above. Each run
 starts with its own `$`: what a script changes there lasts until the run ends. The values and rules below are
-VectorCraft's own, and `vc.api.has("dollar")` is true where they are available:
+crocwork Vector's own, and `vc.api.has("dollar")` is true where they are available:
 
-| Member | In VectorCraft |
+| Member | In crocwork Vector |
 |--------|----------------|
-| `about()` | `"VectorCraft script engine <version>"`; no window opens |
+| `about()` | `"crocwork Vector script engine <version>"`; no window opens |
 | `appEncoding` | `"UTF-8"`; setting `"UTF-8"` is accepted, any other encoding throws a `RangeError` |
 | `bp()`, `colorPicker()` | throw an `Error`: scripts have no debugger and cannot show a dialog |
-| `build`, `version` | VectorCraft's version |
+| `build`, `version` | crocwork Vector's version |
 | `buildDate` | `null` |
 | `decimalPoint` | `","` for a locale whose language writes a decimal comma (such as `de`, `fr`, `ru`), otherwise `"."` |
-| `engineName` | `"VectorCraft"` |
+| `engineName` | `"crocwork Vector"` |
 | `error` | the last `Error` object the run threw, caught or not, or `null` before one |
 | `flags` | `0`, or `512` while localization is on; only `0` and `512` can be set, and setting `512` turns `$.localize` on |
 | `gc()` | does nothing; the interpreter collects its own garbage |
@@ -2154,7 +2154,7 @@ date, a regular expression, an error, a host object such as `vc`, an array with 
 object whose prototype is not `Object.prototype`, a property that is not enumerable, or an object that contains
 itself throws a `TypeError`. So does a property that is not writable or not configurable, an object or array after
 `Object.preventExtensions`, `Object.seal` or `Object.freeze`, and an array whose `length` is read-only, since the text
-would make each of them writable, configurable and extensible again (VectorCraft's own rule). A value deeper than 64 levels, with more than 1,048,576 entries or with text longer than 16,777,216
+would make each of them writable, configurable and extensible again (crocwork Vector's own rule). A value deeper than 64 levels, with more than 1,048,576 entries or with text longer than 16,777,216
 characters throws a `RangeError`.
 
 The run is one transaction. When the script ends, each document it changed gets one undo step named Run Script. A
@@ -2183,7 +2183,7 @@ has unsaved changes.
 
 A named engine (`#targetengine`) keeps its globals and functions between the runs that name it, until it is dropped
 or the session ends. Engines stay on the thread that made them: a session used on another thread starts there with
-no engines, and the engines it left are dropped when their own thread next uses engines. These are VectorCraft's own rules:
+no engines, and the engines it left are dropped when their own thread next uses engines. These are crocwork Vector's own rules:
 
 - The name is either a name of ASCII letters, digits and `_` that does not start with a digit, or a name in single or
   double quotes of 1 to 64 bytes of UTF-8 without control characters. Names are matched as written: `Session` and
@@ -2222,7 +2222,7 @@ no engines, and the engines it left are dropped when their own thread next uses 
 - A script cannot run `script.engines` or `script.engine.drop`.
 - The web build has no named engines: a run that names one other than `main` ends with an error before any of it runs.
 
-VectorCraft sets these limits itself:
+crocwork Vector sets these limits itself:
 
 | Limit | Value |
 |-------|-------|
@@ -2339,7 +2339,7 @@ script reads files with them:
   denied`, `Script file does not exist` or `Script file is not open`. A count or a position that is not a finite
   number, or a negative count, throws a `RangeError`.
 
-VectorCraft reads files by these rules of its own:
+crocwork Vector reads files by these rules of its own:
 
 - A script run from a file reads only in that file's folder and the folders below it, as its includes are read, and
   a script given as `source` reads no files. When automation read roots are set, as for a run over MCP or the command
@@ -2397,8 +2397,8 @@ vectorcraft-cli run --cmd script.run --params '{"source": "$.writeln(\"layers: \
 ```
 
 File › Scripts lists the scripts of the `Scripts` folder next to the preferences: `~/Library/Application
-Support/VectorCraft/Scripts` on macOS, `%APPDATA%\VectorCraft\Scripts` on Windows, and
-`$XDG_CONFIG_HOME/vectorcraft/Scripts` or `~/.config/vectorcraft/Scripts` on Linux and BSD. VectorCraft does not make
+Support/crocwork Vector/Scripts` on macOS, `%APPDATA%\crocwork Vector\Scripts` on Windows, and
+`$XDG_CONFIG_HOME/vectorcraft/Scripts` or `~/.config/vectorcraft/Scripts` on Linux and BSD. crocwork Vector does not make
 the folder: create it, and put `.js` or `.jsx` files in it. Each file is a menu item named after the file without its
 extension, and each subfolder is a submenu that holds the scripts in it. The help page
 https://helpx.adobe.com/illustrator/desktop/automate-visualize-data/automate-actions/install-and-run-scripts.html and
@@ -2406,11 +2406,11 @@ the page https://ai-scripting.docsforadobe.dev/introduction/executingScripts/ de
 way. The listed scripts come first in the menu, above Check Script… and Other Script…. Choosing one runs the file as
 `script.run` runs a file, without the warning that Other Script… shows.
 
-The rest of this section is VectorCraft's own rules:
+The rest of this section is crocwork Vector's own rules:
 
 - The folder is read when the app starts, each time its window becomes the active one, each time the File menu opens
   where the menus are in the window (Windows, Linux and BSD), and each time a menu of the macOS menu bar opens. A
-  script added while VectorCraft runs is listed after the next of these; in the macOS menu bar it shows the next time
+  script added while crocwork Vector runs is listed after the next of these; in the macOS menu bar it shows the next time
   the menu opens. A read takes names only, never a script's text, and runs off the UI thread, one read at a
   time.
 - Each level is sorted by label without regard to case, with scripts and subfolders mixed. A script whose label
@@ -2424,7 +2424,7 @@ The rest of this section is VectorCraft's own rules:
   most 250 ms. A label longer than 128 characters is cut, and control and bidirectional formatting characters in a
   name are shown as `\u{…}` escapes. When a read stops at a limit or cannot read a subfolder, the menu keeps what it
   found and shows `Some scripts were not listed`. The menu also shows that note, and leaves the rows out, when a
-  read finds new names after the menus have shown 16,384 different script and folder names since VectorCraft started.
+  read finds new names after the menus have shown 16,384 different script and folder names since crocwork Vector started.
   When the folder is there and cannot be read, the menu shows
   `The Scripts folder cannot be read`.
 - A listed file is checked again when it is chosen. A file that is gone, is no longer a `.js` or `.jsx` file under
@@ -2765,7 +2765,7 @@ dropped.
 The Navigator panel menu's Panel Options… opens the `navigatorPanelOptions` dialog (fields `color`, `solidDashes`),
 and `ui.navigatorPanelOptions {color?, solidDashes?}` sets the options without it → `{color, solidDashes}`; with
 neither key it opens the dialog. `color` is the color the panel's view box is drawn in: `#rrggbb` or a preset name.
-The presets are VectorCraft's own list: Light Red (`#ff3030`, the default), then the layer colors ("Light Blue",
+The presets are crocwork Vector's own list: Light Red (`#ff3030`, the default), then the layer colors ("Light Blue",
 "Red", "Green" and the rest). `solidDashes` (Draw Dashed Lines as Solid Lines, off by default) makes the panel's
 thumbnail draw dashed strokes without their dashes; the canvas, printing and exports keep the dashes. Both are kept
 with the UI state. A `color` that is not a color, or a `solidDashes` that is not true or false, is an error and
@@ -2783,7 +2783,7 @@ docks it between those panels and the canvas instead (`on: true`), back at the w
 toggles it (`on` omitted or null), and answers the new state. Any other value of `on` is an error and changes
 nothing. With the setting on, a floating Tools panel docks when it is dropped on the canvas's left edge as well as
 on the window's left edge, and `window.panel.dock {panel: "tools"}` docks it beside the canvas. A floating Tools
-panel stays floating when the setting changes. The setting is VectorCraft's own layout option, off by default; it is
+panel stays floating when the setting changes. The setting is crocwork Vector's own layout option, off by default; it is
 kept with the workspace, and built-in workspaces and workspaces saved without it keep Tools at the window's edge.
 
 ```json
@@ -2820,7 +2820,7 @@ docks it at the end of that edge's stack; the target lights up while the title b
 docked toolbar's title bar out of its lane floats it under the pointer. Escape, or the window losing focus, during
 the drag puts the toolbar back where it was. Hiding a docked toolbar keeps its place, renaming it keeps its place, a
 copy made with Manage Toolbars' + floats, and deleting one closes up the stack. Placement is kept with the workspace.
-Toolbars saved before docking existed load floating. The lanes, the edge targets and the stacking are VectorCraft's
+Toolbars saved before docking existed load floating. The lanes, the edge targets and the stacking are crocwork Vector's
 own layout rules.
 
 ```json
@@ -2831,7 +2831,7 @@ own layout rules.
 
 Window › Learn and the Explore tutorials button beside the search icon at the right end of the app bar show and hide
 the Learn panel. Its For you tab holds a Get started section with a Quick skill guide card; choosing the card opens
-the Skills tab. The Skills tab lists VectorCraft's own skills, each with its number of tutorials and an empty progress
+the Skills tab. The Skills tab lists crocwork Vector's own skills, each with its number of tutorials and an empty progress
 ring. Choosing a skill lists its tutorials, choosing a tutorial shows its numbered steps, and Back goes up one level.
 The tutorial text is English. `window.learn {show?}` shows the panel (`show: true`), hides it (`show: false`) or
 toggles it (`show` omitted or null), and answers whether it shows; Window › Learn and Explore tutorials run it.
@@ -2844,13 +2844,13 @@ skills, with no skill and no tutorial open, as the Quick skill guide card and Ba
 tutorial's steps → `{skill, tutorial, title, steps: [text]}`. A missing, non-string or unknown `tutorial` is an error
 and changes nothing.
 
-Under a tutorial's steps, View more opens the tutorial's practice sample, a small drawing of VectorCraft's own with the
+Under a tutorial's steps, View more opens the tutorial's practice sample, a small drawing of crocwork Vector's own with the
 art its steps work on, as a new untitled document that becomes the active one; Save asks where to save it. Once the
 sample is open, Finish tutorial marks the tutorial finished. A finished tutorial shows Next Up with the title of the
 next tutorial in the same skill, which Next Up shows without opening its sample. A skill's last tutorial, finished,
 says so and shows Back to skills instead; Next Up never moves to another skill. Which tutorials are finished is kept
-while the app runs, and the skill rings and counts do not show it yet. These are VectorCraft's own rules; the help
-page also plays a short video, which VectorCraft does not have. `learn.openSample {tutorial}` runs View more →
+while the app runs, and the skill rings and counts do not show it yet. These are crocwork Vector's own rules; the help
+page also plays a short video, which crocwork Vector does not have. `learn.openSample {tutorial}` runs View more →
 `{tutorial, index, title}` of the new document, and moves the Learn view to that tutorial; each call opens another
 copy and leaves the open documents as they are. `learn.finish {tutorial}` runs Finish tutorial →
 `{tutorial, finished: true, next}`, where `next` is the next tutorial's id in the skill, or null after the skill's
@@ -2878,7 +2878,7 @@ first shows; Escape or the next locate removes it. The reply is `{tool, location
 `flyout`, `strip`, `allTools` or `unavailable`, and `toolbar` names the toolbar made with New Toolbar that holds the
 tool (null for the Tools panel's). While Presentation Mode or Tab hides the toolbars, the reply is `unavailable` with
 a `reason`, and nothing changes. A missing, non-string or unknown `tool` is an error and changes nothing. The mark,
-its 3 seconds, the flyout, strip and All Tools behavior and the hidden-toolbar replies are VectorCraft's own rules;
+its 3 seconds, the flyout, strip and All Tools behavior and the hidden-toolbar replies are crocwork Vector's own rules;
 the help page (https://helpx.adobe.com/illustrator/desktop/get-started/learn-the-basics/learn-skills-quick-skill-guide.html)
 describes selecting a tool's name in a step to find the tool.
 
@@ -2943,7 +2943,7 @@ same way and is made where it is released over the canvas (with the Artboard too
 active artboard), a guide dropped off the canvas onto its ruler is deleted, and hidden guides (View › Guides › Hide
 Guides) can't be picked. An artboard guide is picked, drawn and snapped to across its artboard only.
 Preferences › Guides & Grid › Artboard Guides with Cmd/Ctrl + Ruler Drag (`cmdRulerDragArtboardGuides`, off by
-default) is VectorCraft's own option. With it on, Cmd/Ctrl held when a drag leaves a ruler makes the guide an artboard
+default) is crocwork Vector's own option. With it on, Cmd/Ctrl held when a drag leaves a ruler makes the guide an artboard
 guide of the active artboard, with any tool but the Artboard tool, and with the Artboard tool a canvas guide. The key
 is read when the drag starts, so letting it go during the drag keeps the kind of guide. Such an artboard guide shows,
 and is made, only where it lies within the active artboard: a vertical guide between its left and right edges, a
@@ -2984,7 +2984,7 @@ already walks Image Trace. Short agent entry points:
   name they are given, as `symbol.options` trims `newName`; a blank one gives "New Symbol" or "<name> copy".
 - Reset Transformation (the Symbols panel menu, and Reset on the Control bar while symbol instances are selected):
   `symbol.instance.resetTransform {ids?}` gives the selected symbol instances, in groups too, their symbol's own
-  scale again, without rotation, shear or reflection, as one undo step. VectorCraft's own rules: each instance keeps
+  scale again, without rotation, shear or reflection, as one undo step. crocwork Vector's own rules: each instance keeps
   the center of its bounding box in place; other objects, instances in perspective and instances already at their
   symbol's scale are left as they are, and no undo step is added when nothing changes; an id that names no object, or
   objects without a symbol instance, is an error. It returns `{ids}`, the instances it changed. The menu item and the
@@ -2997,10 +2997,10 @@ already walks Image Trace. Short agent entry points:
   compound paths, type, groups and layers take both. A symbol instance takes a solid color or `none` as its fill,
   which stains its art, and no gradient or pattern fill and no stroke. An image takes a fill or stroke only when that
   fill or stroke has a Convert to Shape or Outline Object effect. A guide, blend, envelope, Repeat, Intertwine group,
-  gradient mesh or placed document takes neither. A refused fill or stroke (VectorCraft's own rule) gives an error
+  gradient mesh or placed document takes neither. A refused fill or stroke (crocwork Vector's own rule) gives an error
   that names the key and the object, and nothing of the call is applied; `opacity`, `blend` and `null` are taken for
   every object, so a stored change can be taken back. `opacity` is 0..100 and `blend` a blend mode name; `null` gives
-  one back to the symbol. It is refused for a static symbol and for a path that names no object. On the canvas (VectorCraft's own rule), a Direct Selection click on an instance of a
+  one back to the symbol. It is refused for a static symbol and for a path that names no object. On the canvas (crocwork Vector's own rule), a Direct Selection click on an instance of a
   dynamic symbol selects the path, compound path or type object of its art under the pointer and outlines it
   (`symbol.instance.selectPart {id, path}`; Alt or Shift selects the instance whole). While it is selected,
   `paint.setFill` and `paint.setStroke` (solid, none, gradient or pattern) and `paint.invert` and `paint.complement`
@@ -3122,7 +3122,7 @@ already walks Image Trace. Short agent entry points:
   `variable.loadLibrary` that would delete or define a variable (below) fail with "variables are locked";
   `variable.bind`, `variable.unbind` and the `dataset.*` commands still run (except a `dataset.import` whose header
   would define a variable, below), and `variable.list` reports `locked`. A variable that an opened `.ai` declares
-  without a kind VectorCraft reads is listed with `kind: "unknown"`: it takes no values, and `variable.bind`
+  without a kind crocwork Vector reads is listed with `kind: "unknown"`: it takes no values, and `variable.bind`
   refuses it. When an opened `.ai`'s layers are read, the objects it binds to its text, visibility and image
   variables come in bound when they are of the variable's kind, locked and hidden objects included, and
   `variable.list` counts them in `bindings`.
@@ -3306,7 +3306,7 @@ already walks Image Trace. Short agent entry points:
   `{set, action, step}`. Without them it goes into the recording in progress, after the steps recorded so far, and
   returns `{recording: true}`. `message` is the text playback shows (default: none), and `allowContinue` (default:
   false) offers Continue in the message box. An action with an empty message still waits at the stop, which is
-  VectorCraft's own rule. A stop in an action becomes the panel's selected step, and its action and set become the
+  crocwork Vector's own rule. A stop in an action becomes the panel's selected step, and its action and set become the
   selected ones. An index past the last set, action or step, a param of another type, params that are not an
   object, no action and no recording, or a stop that would give the action more than 10,000 steps or its set's file
   more than 8 MiB is an error, and then nothing changes. The limits count the steps that the recording in progress
@@ -3323,7 +3323,7 @@ already walks Image Trace. Short agent entry points:
   keeps the `to` its click sends at insertion (`key` while the selection has a key object or key guide, `artboard` for one selected
   object or with Align to Artboard, else `selection`), so a later Align To choice does not change it, and a step that
   aligns to the key object fails in playback when the selection has no key then. With anchor points selected the click
-  sends no `to`, and neither does the step. These are VectorCraft's own rules. A
+  sends no `to`, and neither does the step. These are crocwork Vector's own rules. A
   View menu step plays as `ui.action.play` describes. With `set` and `action`, the
   step goes into that action, after step `step`, else after its last step, becomes the panel's selected step, and the
   command returns `{set, action, step}`. Without them it goes into the recording in progress and returns
@@ -3353,7 +3353,7 @@ already walks Image Trace. Short agent entry points:
   is an error, and the selection stays as it was. So a Select Path step finds its path in the document it was stored
   from, and in another document only an object with the same id and the same fingerprint. A selection change alone adds
   no undo step. In an Accelerated playback the error undoes the steps before it, and at Step by Step and Pause For it
-  ends the playback after them. Returns `{count, ids}`. These rules are VectorCraft's own.
+  ends the playback after them. Returns `{count, ids}`. These rules are crocwork Vector's own.
 - Actions: `ui.action.insertSelectObject {set?, action?, step?, note, caseSensitive?, wholeWord?}` inserts a Select
   Object step without running it. The step is `select.byNote {note, caseSensitive, wholeWord}`: during playback it
   selects the objects whose Attributes note matches `note`, and the steps after it act on them. `note` loses its
@@ -3366,7 +3366,7 @@ already walks Image Trace. Short agent entry points:
   played stay. The panel's row for the step reads `Select Object: <note>`. The panel menu's Select Object… opens the
   `actionSelectObject` dialog, Set Selection (`note`, `caseSensitive`, `wholeWord`, `set`, `action`, `step`), whose OK
   runs this; OK is off while the note is empty. The two options, the 1,024-byte limit and stopping when nothing is
-  found are VectorCraft's own rules.
+  found are crocwork Vector's own rules.
 - Select: `select.byNote {note, caseSensitive?, wholeWord?}` selects the objects whose Attributes note
   (`attributes.set {note}`) holds `note` without its leading and trailing spaces, and returns `{count, ids}`. By default
   the text may be anywhere in the note and in any letter case. `caseSensitive: true` asks for the same letter case, and
@@ -3403,7 +3403,7 @@ already walks Image Trace. Short agent entry points:
 - Actions: `ui.action.playbackOptions {speed?, seconds?}` sets how the Actions panel plays actions and returns
   `{speed, seconds}`. `speed` is `accelerated` (the default: every step at once), `step` (one step at a time, with the
   window drawn after each step before the next runs) or `pause` (a pause of `seconds` between steps). `seconds` is a
-  whole number from 1 to 60, VectorCraft's own range, and stays set while another speed is chosen. A param left out
+  whole number from 1 to 60, crocwork Vector's own range, and stays set while another speed is chosen. A param left out
   keeps its value. Any other `speed` or `seconds` is an error, and then nothing changes. The setting is kept with the UI
   preferences. The panel menu's Playback Options… opens the `actionPlayback` dialog (`speed`, `seconds`), whose OK runs
   this. Batch… (`action.batch`) plays every step at once whatever the setting.
@@ -3730,9 +3730,9 @@ limits the plane to a square about the foot of the object's center, four times t
 at 100%. No shadow is drawn when `shade` is false, when the first light's intensity is 0, or when it does not
 reach the plane (a light behind the object for a shadow behind it); a fill, stroke or group member at 0% opacity
 casts none. Values out of range, another `shadowPosition` and a `shadow` that is not a boolean are refused before
-the document changes. A shadow is cast from at most 327,680 faces, the solids of one object together (VectorCraft's
+the document changes. A shadow is cast from at most 327,680 faces, the solids of one object together (crocwork Vector's
 own limit); past that, a command is refused with "The 3D shadow is too complex; turn Shadows off or simplify the
-art", and a loaded file draws the source path, as it does for a solid past its limits. The color, the opacity and how Distance and Bounds scale are VectorCraft's own; the public
+art", and a loaded file draws the source path, as it does for a solid past its limits. The color, the opacity and how Distance and Bounds scale are crocwork Vector's own; the public
 documentation names the controls and their ranges
 ([3D and Materials panel options](https://helpx.adobe.com/illustrator/desktop/special-effects-styles/create-3d-graphics/3d-materials-panel-options.html)).
 The settings are saved in the native file; SVG and PDF exports draw the shadow, and `effect.expandAppearance` keeps
@@ -3777,9 +3777,9 @@ The graphics are the `graphics` parameter of `threeD.extrude`, `threeD.rotate` a
 edits: an array of up to 64 `{symbol, face, x, y, scale, rotation}` objects, drawn on the face turned,
 foreshortened and shaded with it and clipped to it ([Map artworks on 3D object](https://helpx.adobe.com/illustrator/desktop/special-effects-styles/create-3d-graphics/map-artwork-on-3d-objects.html)).
 Revolve takes graphics on its swept side and shades them with the object's light ([the archived reference, page 185](https://web.archive.org/web/20210601162814/https://helpx.adobe.com/pdf/illustrator_reference.pdf#page=185));
-how a graphic wraps around the side is VectorCraft's own rule.
+how a graphic wraps around the side is crocwork Vector's own rule.
 A graphic naming a symbol the document does not have is refused, unless the effect already holds a graphic of it.
-The drawing rules are VectorCraft's own; see [three-d.md](three-d.md#graphics).
+The drawing rules are crocwork Vector's own; see [three-d.md](three-d.md#graphics).
 
 ```json
 {"name":"run_command","arguments":{"command":"threeD.mapGraphic","params":{"symbol":"Graphic","face":"front","x":10,"scale":80,"rotation":15}}}
@@ -3794,7 +3794,7 @@ the faces the effect draws for the object as it is turned and projected now
 ([three-d.md](three-d.md#3d-and-materials-panel)). Each edge appears once; edges that meet end to end form one
 path, closed where it comes back to its start, and curved edges stay curves. Geometry effects after a 3D effect,
 on the object or on a fill or stroke, reshape its edges as they reshape the drawn surface. The paths have a 0.5 pt
-black stroke with round joins and no fill (VectorCraft's own choice). The group keeps the object's place, id, name,
+black stroke with round joins and no fill (crocwork Vector's own choice). The group keeps the object's place, id, name,
 visibility, lock, opacity, blending mode, knockout, opacity mask, attributes, slice and text wrap, and the groups
 are selected.
 A layer in `ids` stays a layer: its members are replaced by the edges, which are selected, and its ruler guides and paths made into guides stay. A path inside a compound path in `ids` stands for the compound path. Objects without a visible 3D effect do not change. It is one undo step and
@@ -3829,7 +3829,7 @@ All three take `rotationX/Y/Z` (degrees, -180..180, default the Off-Axis Front p
 `perspectiveAngle` and the lighting parameters as Revolve. See [three-d.md](three-d.md) for the Position presets,
 the scope and what differs from the public documentation.
 `threeD.extrude` and `threeD.inflate` take up to 65,536 outline points and build up to 163,840 faces for each solid
-(VectorCraft's own limits); with more faces than that, each curve takes fewer pieces, down to 4. A shape past the
+(crocwork Vector's own limits); with more faces than that, each curve takes fewer pieces, down to 4. A shape past the
 points returns "The shape is too complex for a 3D effect", and one whose faces do not fit at 4 pieces a curve returns
 "The 3D surface is too complex; simplify the shape". `threeD.inflate` also returns the surface error when its outline
 has so many points across so many of its grid's cells that filling the grid would pass its work limit. `threeD.rotate`
@@ -3855,7 +3855,7 @@ is tall), `bevelInside` (false adds the bevel around the shape, true carves it i
   paint is kept and only the highlight lightens it). `drawHiddenFaces` also draws the faces turned away from the
   viewer, behind the others.
 
-The defaults are VectorCraft's own. An unknown parameter, a number out of range, a flag that is not true or false, or
+The defaults are crocwork Vector's own. An unknown parameter, a number out of range, a flag that is not true or false, or
 an unknown surface or shading color is refused with an error and the document is not changed.
 
 ```json
@@ -3876,7 +3876,7 @@ or layer, whose members turn about one shared axis, or on a fill or stroke. The 
 dialog ([Create 3D objects](https://helpx.adobe.com/illustrator/desktop/special-effects-styles/create-3d-graphics/create-3d-objects.html))
 and its Angle (0 to 360), Cap, Offset (0 to 1000) and Left Edge or Right Edge settings
 ([Revolve options](https://helpx.adobe.com/pdf/cs6/illustrator_reference.pdf#page=283));
-the defaults are VectorCraft's own. An unknown parameter (`segments` included), a number out of range, a flag that
+the defaults are crocwork Vector's own. An unknown parameter (`segments` included), a number out of range, a flag that
 is not true or false, another `edge`, surface or shading color is refused with an error and the document is not
 changed.
 
@@ -3899,7 +3899,7 @@ the Position presets, rotations from -180 to 180 and Perspective from 0 to 160
 ([Set 3D rotation position options](https://help.adobe.com/archive/en_US/illustrator/cs5/illustrator_cs5_help.pdf#page=270)),
 and No Shading and Diffuse Shading as the only surfaces for an object that uses only this effect
 ([Surface shading options](https://help.adobe.com/archive/en_US/illustrator/cs5/illustrator_cs5_help.pdf#page=271)).
-The defaults and the shading are VectorCraft's own. An unknown parameter (`highlightSize` and `drawHiddenFaces`
+The defaults and the shading are crocwork Vector's own. An unknown parameter (`highlightSize` and `drawHiddenFaces`
 included), a number out of range, a flag that is not true or false, a surface other than `none` or `diffuse`, or
 another shading color is refused with an error and the document is not changed.
 
@@ -4024,7 +4024,7 @@ clips, it reads only what shows inside the clipping path or the mask art, and a 
 marquee touches is read whole. The symbol instances read place at most 16,000,000 objects in all, as on the canvas,
 and an instance whose art would pass that is left out. The pixels read inside clip groups are tested against at most
 4,000,000 clipping-path elements in all; the picks of an image inside clip groups that would pass that are left out. Hidden or fully transparent objects and fill or stroke items are left out, and locked
-objects are read. As VectorCraft's own rule, each object read weighs the same, shared among its colors (an image's
+objects are read. As crocwork Vector's own rule, each object read weighs the same, shared among its colors (an image's
 among its pixels; the vector art a symbol instance places counts as one object, and each image it places counts on
 its own), and similar colors merge (k-means in Lab) into at most `colors` (1 to 64, default 5), each shown by its
 most used color in its own model. Picks that touch no art return no colors. In the Recolor Artwork dialog the picks are the `themePicks` field: the rows that aren't
@@ -4041,7 +4041,7 @@ the row that `recolor.apply` recolors it with (rows with a new color first, an e
 the first row that lists it), and otherwise for the first other row that is not excluded and lists it. A current
 color that no art uses counts nothing. Without `weights` the
 rows come back unchanged. `weights` holds one number of 0 or more per row; an excluded row's weight is ignored, and
-at least one other row needs a weight above 0. As VectorCraft's own rule, current colors then move one at a time
+at least one other row needs a weight above 0. As crocwork Vector's own rule, current colors then move one at a time
 between the rows that are not excluded and have a new color (`to`), as long as a move brings each row's share of the uses nearer its share of the
 weights. Of those moves, it takes first the color nearest in Lab to the first color of the row it goes to, compared
 with the row it leaves. A row keeps its first color, and the tints of one global swatch in a row move together. A
@@ -4109,14 +4109,14 @@ covers a pixel at least half opaque counts as at least half opaque, so opaque li
 the outline. The outline is traced the first time it is needed and kept for as long as the image's pixels are loaded.
 After the pixels are gone, it is dropped when another outline is traced or within the next 256 outline lookups. When
 the image's pixels change (`links.update` reading the linked file), the canvas draws the outline of the new pixels.
-These are VectorCraft's own rules. The image's Contents row stands for the image; `appearance.addFill` and
+These are crocwork Vector's own rules. The image's Contents row stands for the image; `appearance.addFill` and
 `appearance.addStroke` put a new item right below that row, so it paints under the image. SVG, PDF, EPS and the other
 vector exports write those items as paths, and `effect.expandAppearance` turns them into objects in a group with the
 image.
 Use Preview Bounds measures an image by its frame and the shapes its own fills and strokes paint.
 A Warp effect (`warp.arc` … `warp.twist`) on an image, or on a group that holds one, bends the image's pixels with its
 frame: after the last effect in the list, the image is cut into 10 × 10 cells of two triangles, each a clipped piece of
-the image under its own affine map. The cell count is VectorCraft's own. Effects after the Warp reshape only the frame,
+the image under its own affine map. The cell count is crocwork Vector's own. Effects after the Warp reshape only the frame,
 a second Warp bends the same pieces, and a Transform effect moves them. A placed gradient on a group that holds the
 image follows the group's bounds as the pieces draw them. The pieces keep the
 image's fill color when it colorizes a grayscale image, and so do the pieces an envelope cuts. Under any geometry
@@ -4143,7 +4143,7 @@ no names the whole library; swatches the document already has (same name and pai
 and not added again. `apply: "fill"|"stroke"` also applies the first one, in the same undo step (what clicking a
 swatch in the library panel does). The pattern libraries Geometric Patterns (`geometric-patterns`), Grit Textures
 (`grit-textures`: seamless black grain, grit, sand, speckle, stipple, scratch and fleck tiles) and Optical Effects
-(`optical-effects`: VectorCraft's own black wave, ring, warped-check, pinched-stripe, chevron and lens tiles),
+(`optical-effects`: crocwork Vector's own black wave, ring, warped-check, pinched-stripe, chevron and lens tiles),
 category `patterns`, hold pattern swatches drawn in code; adding one also adds its pattern, as pasting art painted with it does
 (the same pattern the document has is reused, and a name another pattern or swatch has gets a number).
 `swatch.resetDefaults {replace?}` brings back the missing default swatches.
@@ -4209,7 +4209,7 @@ Painted and Sketched (`painted-sketched`) holds Washed Blue, Bristle Ochre, Past
 Contour, Wet Ink and Fine Pen. Each is a solid fill (Bristle Ochre and Ink Contour add a 1 pt stroke) under one object
 effect that repaints fill and stroke together: `artistic.watercolor`, `artistic.dryBrush`, `artistic.roughPastels`,
 `sketch.charcoal`, `brushStrokes.inkOutlines`, `brushStrokes.sumiE` and `sketch.graphicPen`, in that order. The
-colors and effect settings are VectorCraft's own. These are raster effects, so the document's raster effects
+colors and effect settings are crocwork Vector's own. These are raster effects, so the document's raster effects
 resolution sets how fine they draw.
 
 ```json
@@ -4245,7 +4245,7 @@ what dragging a symbol out of the library panel onto the canvas does.
 `symbol.saveLibrary {path?, names?, name?, user?}` writes the document's symbols as a symbol library: a `.vectorcraft`
 document holding only them and what they use; without `path` it returns `{dataBase64}`, and `user: true` saves into
 the user library folder (category `user`, User Defined). `symbol.loadLibrary {path? | data? | dataBase64?, name?}`
-loads the symbols of any document VectorCraft opens as a library to add from (a `.ai` or EPS whose editing data holds
+loads the symbols of any document crocwork Vector opens as a library to add from (a `.ai` or EPS whose editing data holds
 symbols and no layers gives the symbols it defines, in the order of its symbol list); a file it can't read is an
 error.
 
@@ -4272,7 +4272,7 @@ path, does.
 `brush.saveLibrary {path?, names?, name?, user?}` writes the document's brushes as a brush library: a `.vectorcraft`
 document holding only them and what their art uses; without `path` it returns `{dataBase64}`, and `user: true`
 saves into the user library folder (category `user`, User Defined). `brush.loadLibrary {path? | data? |
-dataBase64?, name?}` loads the brushes of any document VectorCraft opens as a library to add from; a file it can't
+dataBase64?, name?}` loads the brushes of any document crocwork Vector opens as a library to add from; a file it can't
 read is an error.
 
 ## Library panels
@@ -4709,7 +4709,7 @@ is outlined; type that has no fills or strokes of its own and whose only effects
 type, with the image under it. A group's or layer's own fills and strokes become objects among its members, and its
 members are expanded too. A symbol instance whose topmost fill or topmost stroke is visible, has an opacity above 0
 and has a geometry effect becomes a group of its art: that fill's effects reshape the filled shapes of the art and that
-stroke's effects reshape its stroked shapes, which keep their colors, as the canvas draws them (VectorCraft's own
+stroke's effects reshape its stroked shapes, which keep their colors, as the canvas draws them (crocwork Vector's own
 rule); the instance's other fills and strokes are dropped. The result is `{ids}`; when an image in the art can't be decoded, the images made from
 raster effects do not show it, and the result also carries the `warning` that Flatten Transparency gives.
 A path's strokes stay strokes, as the
@@ -4812,12 +4812,12 @@ the `…Open` rings…) and marks (`Bar`, `DoubleBar`, `DotOnBar`, `Slash`, `Dou
 Custom arrowheads come from the arrowheads file, `Arrowheads.vectorcraft` next to the preferences (none on the web or
 in runs with `VECTORCRAFT_NO_PREFS`). `stroke.arrowheads.edit` (Stroke panel menu › Edit Arrowheads…) opens it, and
 first creates it with one example head when it is missing. Each symbol in the file is one head, named after the
-symbol and listed after the built-in heads in both arrowhead menus. These rules are VectorCraft's own: a head points
+symbol and listed after the built-in heads in both arrowhead menus. These rules are crocwork Vector's own: a head points
 right, the symbol's registration point is its tip, and the art's height is drawn as wide as the built-in heads (four
 head weights). The visible fills and the outlined visible strokes of its paths, compound paths and groups, and its
 gradient meshes, make the head, with geometry effects applied and clip groups clipped, and the line stops halfway along its length. A head is
 one solid shape in the stroke's paint: art at 0 % opacity is left out, and other opacities, blend modes and opacity
-masks do not change the shape. The file is read when the app starts and again from disk each time VectorCraft saves it;
+masks do not change the shape. The file is read when the app starts and again from disk each time crocwork Vector saves it;
 `stroke.arrowheads.reload` reads it again. A file larger than 64 MB, or whose document or images unpack to more than 64 MB, is
 not read, at most 256 symbols are read, and a symbol that paints nothing, reaches more than 64 head weights from its
 tip, has more than 65,536 anchors in its art or in the shapes it paints, has shapes that cannot be combined into one,
@@ -5021,7 +5021,7 @@ filter is drawn and written rebuilt from its filter elements and their filter at
 text, descriptions or other attributes. An image in a filter is drawn only when its bytes are a PNG, JPEG, GIF or WebP
 within the pixel limit. A filter region in user space given in percentages is measured against the object's box (x
 and y from its top-left corner), and one in em or ex or left out takes the default region of that box (10% beyond
-each side); these are VectorCraft's own rules. Scale Strokes & Effects scales
+each side); these are crocwork Vector's own rules. Scale Strokes & Effects scales
 `scale`. SVG export writes the filter as a `<filter>` element when it is the object's last effect, its only pixel
 effect and `scale` is 1 (with a region measured against the object's box, its only raster effect), with the object in a
 group that places the filter's user space and such a region written in user units. The filter is written in SVG 1.1
@@ -5115,7 +5115,7 @@ anchor there unless one lies within `tol` (3 by default), and moves that point b
 [Adjust path segments](https://helpx.adobe.com/illustrator/desktop/draw-shapes-and-paths/modify-paths/adjust-path-segments.html)
 has the Reshape tool stretch part of a path from the dragged point without losing the path's general form, with every
 highlighted focal point pulling the path. Which anchors stay, how far the stretch reaches and the share of the drag each
-point takes are VectorCraft's own rule. When `focal` is given (an empty list included), the grabbed point and the
+point takes are crocwork Vector's own rule. When `focal` is given (an empty list included), the grabbed point and the
 anchors that `focal` lists as `[subpath, anchor]` pairs are focal points and move by the whole drag; a pair that names no anchor of the path is refused ("`focal` names [0, 7], which is
 not an anchor of the path"). Anchors that are not direct-selected stay in place (on a path selected whole, or not
 selected, every anchor is selected), and so do the two ends of an open path unless they are focal points. A selected
@@ -5137,7 +5137,7 @@ bounding box follow with the smooth falloff. The Reshape tool always sends `foca
 
 With the Reshape tool, a click on an anchor of a selected path makes it the focal point, and a click on a segment adds
 an anchor there (one undo step) that becomes the focal point. Shift-click adds an anchor or a point on a segment to the
-focal points. The rest of the tool's behavior is VectorCraft's own rule: Shift-click on a focal point removes it, and
+focal points. The rest of the tool's behavior is crocwork Vector's own rule: Shift-click on a focal point removes it, and
 the focal points belong to one path, so a click on another selected path starts again there. Each focal point shows a
 filled anchor square in a larger hollow one. A drag from a focal point moves all of them; a drag from another point
 moves that point alone as the focal point, with or without Shift (Shift keeps the drag's angle). After a drag the
@@ -5325,7 +5325,7 @@ copies would number more than 10,000 or take more than 20,000,000 bytes of docum
 effect is written as outlines.
 
 ```json
-{"name":"run_command","arguments":{"command":"document.exportPdf","params":{"path":"/tmp/press.pdf","output":{"conversion":"preserveNumbers","destination":"VectorCraft Generic CMYK (SWOP-like)","profiles":"destination","outputIntent":"VectorCraft Generic CMYK (SWOP-like)","trapped":true},"advanced":{"outlineText":false}}}}
+{"name":"run_command","arguments":{"command":"document.exportPdf","params":{"path":"/tmp/press.pdf","output":{"conversion":"preserveNumbers","destination":"crocwork Vector Generic CMYK (SWOP-like)","profiles":"destination","outputIntent":"crocwork Vector Generic CMYK (SWOP-like)","trapped":true},"advanced":{"outlineText":false}}}}
 ```
 
 ## Scale Strokes & Effects
@@ -5363,7 +5363,7 @@ the object's center, as measured before the warp. This covers the objects inside
 group, each at its own center, and the art of a linked opacity mask; an unlinked mask's art keeps its angle. A warp
 that mirrors the object keeps the angle nearer the old one, and an object whose x axis the warp collapses keeps its
 angle. `object.resetBoundingBox` squares the boxes to the page again. Corners that equal the corners of the box being
-warped (`from`, or the selection's bounds) change nothing and add no undo step. This angle rule is VectorCraft's own.
+warped (`from`, or the selection's bounds) change nothing and add no undo step. This angle rule is crocwork Vector's own.
 
 ```json
 {"name":"run_command","arguments":{"command":"object.distort","params":{"from":[-100,0,0,100],"angle":90,"corners":[[0,100],[0,0],[120,-20],[100,100]]}}}
@@ -5421,7 +5421,7 @@ It returns `{ids}`, the objects whose property changed. While the property is on
   Release Compound Path gives each released path the property of the compound path. A path pasted into a compound
   path, alone or from a pasted compound path, drops its own property and snaps with the compound path.
 
-Turning the property on snaps the objects at once; turning it off keeps their geometry. These rules are VectorCraft's
+Turning the property on snaps the objects at once; turning it off keeps their geometry. These rules are crocwork Vector's
 own: only paths and compound paths can be aligned, and type, images, groups, guides and other objects are an error
 that leaves the document as it was. The change is one undo step, and when every object already has the value nothing
 changes and no undo step is made. The property is saved in the native file (`pixel_aligned` in `document.node`), and
@@ -5441,7 +5441,7 @@ do (described on the help page,
 `document.setup` with no params reports it. While it is on, every path and compound path drawn in the document (the
 shape, line, arc, spiral, Pen, Curvature, Pencil, Paintbrush, Blob Brush and `addon.shapes.*` commands, and the paths
 in a new rectangular grid, polar grid or flare) takes the pixel-aligned property and is snapped in the undo step that
-makes it. These rules are VectorCraft's own: type, images, groups and guides do not take it; art already in the document stays as it is when the setting changes; objects that Paste, Duplicate, Place and
+makes it. These rules are crocwork Vector's own: type, images, groups and guides do not take it; art already in the document stays as it is when the setting changes; objects that Paste, Duplicate, Place and
 import bring in keep their own property; and `object.setPixelAligned` turns one object's property off without changing
 the document's setting. `file.new {alignNewObjectsToPixelGrid}` sets it for the new document. The Mobile and Web presets
 start with it on and the other built-in presets with it off; saved presets and Recent entries keep the value they were
@@ -5642,7 +5642,7 @@ and a "Set:" line with the set's name, followed by a Tools section and a Menu Co
 rows Edit › Keyboard Shortcuts lists, in its order and with names as it shows them: one line per row, with the name, a
 tab and the shortcuts as the dialog shows them on the current platform. A row with no shortcut ends after the tab.
 Without `path` a save dialog asks for the file. A `path` that is not a string, or a file that cannot be written,
-returns an error, and nothing is written. The layout is VectorCraft's own. The reference app's [Export keyboard
+returns an error, and nothing is written. The layout is crocwork Vector's own. The reference app's [Export keyboard
 shortcuts list as a text document](https://helpx.adobe.com/illustrator/desktop/get-started/preferences-and-settings/export-keyboard-shortcuts-list.html)
 page describes saving the list from the Keyboard Shortcuts dialog as a text file, and does not describe its layout.
 
@@ -5682,11 +5682,11 @@ destination and overridden Save/Export paths use the chosen stem with the output
 set name under Data Set Name falls back to the document stem plus its three-digit ordinal. Batch writes `/`, `\`,
 `:`, `<`, `>`, `"`, `|`, `?`, `*` and control characters in the data set's name as `-`, and adds the next free `-2`,
 `-3` suffix to a stem already used in the batch (compared without case). An output already in a destination folder
-gets the next free suffix only when the batch may read and write that folder before it starts. A save in VectorCraft,
+gets the next free suffix only when the batch may read and write that folder before it starts. A save in crocwork Vector,
 template, AI or AIT format counts artboard file names when the document has any artboard; a per-artboard export
 counts them when the document has several artboards.
-Under Data Set Name, VectorCraft makes Windows device names safe (`CON` becomes `CON-`). This is
-VectorCraft's naming behavior. Caps: 500
+Under Data Set Name, crocwork Vector makes Windows device names safe (`CON` becomes `CON-`). This is
+crocwork Vector's naming behavior. Caps: 500
 files or data sets, 8 folder levels, 256 steps. `action.batch` refuses `includeSubdirs`, `overrideOpen`,
 `overrideSave`, `overrideExport` or `stopOnError` given as anything but true or false, such as `"false"`, with
 `` `stopOnError` must be true or false ``, and `source`, `folder`, `destination`, `destinationFolder`,
@@ -5785,7 +5785,7 @@ bounding box and its handles, the Transform panel's, Control bar's and Propertie
 `object.setBounds`, the Scale, Rotate and Reflect tools' reference point, and Swap Objects, Replace with Top Object,
 Set Size of Each and Sort Objects measure point type, horizontal or vertical, by the ink of its glyphs: its glyph
 outlines and its underline and strikethrough bars. This applies to each point type object that is selected as an object
-(not inside a selected group), in a selection with other objects too. The option is VectorCraft's own and is off by
+(not inside a selected group), in a selection with other objects too. The option is crocwork Vector's own and is off by
 default.
 
 A width or height typed with the option on scales the type until its ink has that size. The type stays live type: its
@@ -5920,7 +5920,7 @@ From the Selection, Direct Selection, Group Selection, Magic Wand, Lasso or Pers
 drawing tool chosen last in the window, or the Pencil tool when none has been chosen yet; from any other tool it
 chooses the Selection tool, and the tool left becomes the drawing tool unless it is the Hand, Rotate View, Zoom or Print
 Tiling tool. It returns `{tool}` and adds no undo step. Pencil as the first drawing tool and the list of selection tools
-are VectorCraft's own rules. A tap in Presentation Mode runs nothing. Under VectorCraft's own rule, a tap on the canvas
+are crocwork Vector's own rules. A tap in Presentation Mode runs nothing. Under crocwork Vector's own rule, a tap on the canvas
 while a modal dialog is open runs nothing, and fingers already down when it opens make no tap when they lift, during
 the dialog or after it closes.
 
@@ -6006,7 +6006,7 @@ help page,
 <https://helpx.adobe.com/illustrator/desktop/measure-and-align/grids-and-guides/draw-pixel-perfect-art.html>):
 `view.snapToPixel.options {drawing?, moving?,
 scaling?}` (or `prefs.get`/`prefs.set` with key `pixelSnap`, a partial object) reads and sets which edits View › Snap to
-Pixel lands on whole pixels. All three are on by default, which is VectorCraft's own default. `drawing` covers the
+Pixel lands on whole pixels. All three are on by default, which is crocwork Vector's own default. `drawing` covers the
 points the drawing tools place, the rulers' origin and measured points; `moving` covers the selection, its anchors and
 segments, artboards and ruler guides moved by dragging, and the Rotate, Reflect and Shear tools' drags; `scaling`
 covers the edges a bounding-box, Free Transform, artboard or slice handle drags, and the Scale tool's drag. An edit
@@ -6094,7 +6094,7 @@ Pen's second anchor at (150, 431), in line with the square's centre.
   in the in-window menu bar) draws each family's sample in dark type on a white area in every interface brightness. In
   a menu row the white area leaves 2 pt above and below it, where a highlighted row's color shows; the names and the
   rest of the menu keep the interface's colors. It has an effect only while `fontPreview` is on, and Preferences dims
-  its checkbox while previews are off. It is VectorCraft's own option. `prefs.set` refuses a value that is not a
+  its checkbox while previews are off. It is crocwork Vector's own option. `prefs.set` refuses a value that is not a
   boolean.
 - `hyphenationExceptions` (empty by default): Preferences › Hyphenation › Exceptions. A comma-separated list of words,
   matched without regard to case: a word with no hyphens is never hyphenated (`typography`), and a word with hyphens
@@ -6255,7 +6255,7 @@ is an error, and nothing changes. Preferences the file leaves out keep their val
 document's units as they are, records no undo step, and is saved with the other preferences. An open Preferences
 dialog shows the imported values. `prefs.import` is refused as a `command.batch` step. The dialog's Export Preferences… and Import Preferences… buttons run the two
 commands with a save or open dialog; the web build downloads the exported file and has no Import Preferences… button.
-Exporting and importing preferences is an optional VectorCraft feature.
+Exporting and importing preferences is an optional crocwork Vector feature.
 
 ```json
 {"name":"run_command","arguments":{"command":"prefs.import","params":{"data":"{\"format\":\"vectorcraft-preferences\",\"version\":1,\"prefs\":{\"uiAccent\":\"green\"}}"}}}
@@ -6377,7 +6377,7 @@ that is on shows only while the selection or the tool calls for it. With an imag
 is kept with the preferences and with the workspace; a workspace or preferences saved without them show every group,
 and a group id the bar does not have is dropped when they are read. Another `group`, or none, fails with "`group` must
 be one of …", and a `visible` that is not true or false fails with "`visible` must be true or false"; either leaves
-every group as it is. The groups and their contents are VectorCraft's own.
+every group as it is. The groups and their contents are crocwork Vector's own.
 
 ```json
 {"name":"run_command","arguments":{"command":"file.new","params":{"preset":"A4","orientation":"landscape","artboards":4,"artboardLayout":{"columns":2},"bleed":9}}}
@@ -6402,7 +6402,7 @@ profile of the preset they were made from. `file.new {profile: "Print"}` picks a
 `profile: null` starts with the defaults. A document made without a preset starts with the defaults.
 
 The profiles are `.vectorcraft` files named after their category in the `New Document Profiles` folder next to the
-preferences (VectorCraft's own place and form). A category without a file has the shipped profile, which holds the
+preferences (crocwork Vector's own place and form). A category without a file has the shipped profile, which holds the
 defaults. Runs without preferences (`VECTORCRAFT_NO_PREFS`) and the web build have no folder, so every document starts
 with the defaults.
 
@@ -6418,7 +6418,7 @@ with the defaults.
   otherwise by its file name.
 
 The profile is read on every `file.new`, so a replayed journal or a recorded action uses the profile as it is when it
-runs, as `document.open` reads its file when it runs. A file larger than 64 MiB (VectorCraft's own limit) is not read.
+runs, as `document.open` reads its file when it runs. A file larger than 64 MiB (crocwork Vector's own limit) is not read.
 When the file cannot be read, is too large or is not a native document, or the request's read roots leave out the
 folder (whether or not the file exists), the document starts with the defaults and
 `file.new`'s result carries `profileError: {profile, reason}`; the desktop app shows the reason in the status bar. The
@@ -6434,7 +6434,7 @@ lists the names.
 `file.place` puts another file's art into the active document as one undo step without touching the clipboard:
 a raster image at 100% of its physical size (the resolution its file declares, else 72 ppi; linked to its `path`
 unless `link: false`; a Photoshop document as its merged image), an SVG as one group (fitted by its art's bounds; with `crop: "crop"` given, framed and clipped by its viewBox, #788), a PDF/.ai page as one clipped group, with the images, symbols, patterns
-and swatches it uses. A VectorCraft document read from `path` is a placed document: one locked object showing its
+and swatches it uses. A crocwork Vector document read from `path` is a placed document: one locked object showing its
 artboard `page` (or, with `crop: "bounding"`, its art's bounds), linked to the file and read again when it changes
 (see Linked images), and vectors in every output; with `link: false` (or from `dataBase64`) it is an editable copy
 of its art, as one clipped group. A PDF, `.ai` or `.ait` page read from `path` (with neither `password` nor
@@ -6468,7 +6468,7 @@ even-odd fill rule stays as it is). The link shows as modified when a plate file
 or is gone, as it does when the DCS file changes, and the app's link watch acts on a changed plate file as on a
 changed DCS file. `links.relink {copy: true}` fails for a DCS file that reads plate files of its own, and copies
 nothing. Opening a document reads a DCS file and its plates again even with the `lowResProxyEps` preference, which
-keeps the saved preview of other linked EPS files. These rules are VectorCraft's own: the screen, composite print and exports show the image as its plates
+keeps the saved preview of other linked EPS files. These rules are crocwork Vector's own: the screen, composite print and exports show the image as its plates
 mixed into CMYK (each ink amount times the ink's CMYK values, plates combined as `1 − (1 − a)(1 − b)`); Separations
 Preview and `file.print` separations show each plate on its own ink, and a spot plate prints as the document's swatch
 of its ink (else its CMYK values) with `spotsToProcess`. Separations Preview shows a reduced image's plates as the
@@ -6633,7 +6633,7 @@ records no undo step → `{renamed: [index…]}`. With no params, a menu click o
 
 Switch Orientation: `artboard.switchOrientation {index? | indices?, scaleArt?, patterns?, lockedAndHidden?}` swaps the width and height of each
 artboard in one undo step, by default those the Artboard tool has selected, else its active one. Each top-left corner
-stays put, as with the Properties panel's Portrait and Landscape buttons. This rule for several artboards is VectorCraft's
+stays put, as with the Properties panel's Portrait and Landscape buttons. This rule for several artboards is crocwork Vector's
 own. A square artboard and a locked one stay as they are, and the call fails with `the artboard is locked` when every
 artboard it names is locked. When no artboard changes, the command records no undo step → `{switched: [index…]}`.
 `scaleArt` scales the art with each artboard and defaults to the Artboard tool's Scale Artwork with Artboard option.
@@ -6661,7 +6661,7 @@ them, stays where it is. With `to: "artboard"` and `spacing`, `artboard.distribu
 `spacing` points apart, outward from that artboard in their order, and `artboard.distributeSpacing` leaves a gap of
 `spacing` points between neighbors; two artboards are enough, a negative `spacing` overlaps them, and an `artboard`
 that is not one of the artboards distributed fails with `no such artboard`. Without `to: "artboard"`, `spacing` is not
-used. These rules for `to`, `artboard` and `spacing` are VectorCraft's own.
+used. These rules for `to`, `artboard` and `spacing` are crocwork Vector's own.
 
 When a call with `to: "artboard"` names no `artboard`, its journal entry records the active artboard it used as
 `activeArtboard`. A replay of the journal aligns to that artboard, and a recorded action leaves the value out and
@@ -6670,7 +6670,7 @@ aligns to the artboard that is active when it plays. An `artboard` the call name
 `moveArt` moves the art fully inside each artboard with it and defaults to the Artboard tool's Move Artwork with
 Artboard option. `patterns` and `lockedAndHidden` work as they do on `artboard.move`. An artboard's own guides move
 with it. A locked artboard stays where it is: it still counts in the bounds and keeps its place in the order, and a
-call fails with `the artboard is locked` when every artboard it names is locked. That rule is VectorCraft's own. Each
+call fails with `the artboard is locked` when every artboard it names is locked. That rule is crocwork Vector's own. Each
 command is one undo step, and records none when no artboard moves (fewer artboards than it needs included). A direction,
 `to`, `axis`, `artboard`, `spacing` or switch with a value outside the ones listed is an error, and nothing changes.
 A `spacing` that would move an artboard past the edge of the canvas fails with
@@ -6777,7 +6777,7 @@ guides (`guide.add {artboard}`) in the label's color instead of the guide color 
 canvas guides, guides of an artboard without a label and guides whose artboard is gone keep the preference's color, and
 selected guides are still drawn in the selection color. The value is a layer color's name, spelled exactly as Layer
 Options lists it (`"Light Blue"`, `"Red"`, …), or `#rrggbb`; null clears it, and new artboards and older files have none.
-The label is VectorCraft's own (no public documentation describes one): it is screen-only, so exports and print leave
+The label is crocwork Vector's own (no public documentation describes one): it is screen-only, so exports and print leave
 it out, the paper and the artboard's background color stay as they are, and a locked artboard's label can change.
 Anything else (a preset's index, another letter case, `#rrggbbaa`) is refused with "`guideLabel` is null, a layer
 color's name or #rrggbb", and a list with a bad value anywhere changes nothing. Duplicates and copies keep it, the
@@ -6789,7 +6789,7 @@ Artboard Options' Global checkboxes are application preferences, not artboard pr
 (Fade Region Outside Artboard) and `artboardUpdateWhileDragging` (Update While Dragging), both on by default
 (`prefs.set {values: {fadeRegionOutsideArtboard: false}}`; also Edit › Preferences › General › Artboard Options). With
 the first on, the canvas draws everything outside the artboards darker while the Artboard tool is active, the pasteboard
-and the art on it: each color channel at 60% of its value, VectorCraft's own amount. With the second off, that area
+and the art on it: each color channel at 60% of its value, crocwork Vector's own amount. With the second off, that area
 draws as usual while the Artboard tool moves or resizes an artboard and darker again when the drag ends. When crossing
 artboards would leave more than 4,096 separate rectangles in view, only the area outside the box around all the
 artboards draws darker. Presentation Mode, exports and print do not change. The user guide describes both checkboxes under Artboard options
@@ -6985,7 +6985,7 @@ Placed documents (a `.vectorcraft` file, or a PDF or `.ai` page, placed linked)
 work the same way: the document keeps the file's bytes and a preview (JPEG or PNG, 1 px per point, at most 1024 px
 a side), and a save writes the preview (Include Linked Files: the file); output reads the file again, or uses the
 preview with a warning when it is gone or changed.
-`links.list` and `links.info` give them `document: true`, the file's `format` (`VectorCraft`, `PDF`,
+`links.list` and `links.info` give them `document: true`, the file's `format` (`crocwork Vector`, `PDF`,
 `PDF-compatible .ai`) and the artboard's or page's `pageWidth` and `pageHeight` (pt). A relinked PDF shows the same
 page and box of the new file. File › Package copies a placed PDF or `.ai` file as it is. For a `.ai` file read from
 its editing data, Package also copies the files its art places into the same folder. That file finds them by name,
@@ -7050,7 +7050,7 @@ other in a loop.
 
 ## PDF presets
 
-`pdf.preset.list` lists the built-in presets (`VectorCraft Default`, which preserves editing, then High Quality Print,
+`pdf.preset.list` lists the built-in presets (`crocwork Vector Default`, which preserves editing, then High Quality Print,
 Press Quality, Smallest File Size and the PDF/X presets, `builtIn: true`; `supported` says the writer produces the
 preset's standard) and the saved ones, each with its `description` and `settings`. `pdf.preset.save {name?,
 newName?, description?, preset?, …document.exportPdf options}` creates or changes a saved preset (a change starts from
@@ -7096,7 +7096,7 @@ Cut publish the formats to the system clipboard, and a Paste outside text editin
 copied (SVG, then PDF, then text, then a bitmap; SVG markup in text counts as SVG). A background thread makes the
 formats and they are published when they are ready. While that thread has a save, an export, a print or a recovery
 copy to finish, Copy and Cut make and publish them at once. When another Copy or Cut, or a copy of text in
-VectorCraft, comes first, they are dropped. Pasting what VectorCraft copied keeps the lossless internal clipboard,
+crocwork Vector, comes first, they are dropped. Pasting what crocwork Vector copied keeps the lossless internal clipboard,
 also before its formats are published. While a text field or the Type tool has the keyboard, the app waits for
 them. Windows carries every format both ways and pastes a bitmap from PNG, else
 from the device-independent bitmap screenshots copy (`CF_DIBV5`, then `CF_DIB`; alpha kept, opaque when it is zero
@@ -7135,7 +7135,7 @@ alone; an open path's fill outline is closed, as the fill is), strokes lines wit
 to PNG or JPEG files (`rasterFormat`) written next to the drawing (`linked` in the result). `includeImages: false`
 leaves placed images out, with no image entity, no linked file and no decoding of their pixels, and `includeHatches:
 false` writes each filled area as its outlines alone, without its solid hatch (both default to `true`; these two
-options are VectorCraft's own). Either one, when it leaves something out, adds one note to `warnings`. Coordinates are y up
+options are crocwork Vector's own). Either one, when it leaves something out, adds one note to `warnings`. Coordinates are y up
 from the bottom-left corner of the first artboard (or `artboard`), in drawing units: `scale` units per `unit` (default
 1 mm = 1 unit, which sets `$INSUNITS`); `scaleLineweights` scales the lineweights with them. `colors` is `8`, `16` or
 `256` indexed colours, or `true` (default; true colour with the nearest index, DXF 2004 and later). `preserve:
@@ -7207,7 +7207,7 @@ With automation read roots, a file outside them has no `path` or `found` in `lin
 An image placed from a DCS file has the `format` `DCS`. `links.list {dcsTransparency: true}` (the panel menu's Show
 DCS Transparency Interactions, off by default) adds `dcsTransparency: true` to the rows of such images that
 [are transparent or overlap transparent objects](https://helpx.adobe.com/illustrator/desktop/add-and-import-files/import-other-file-types/eps-and-dcs-file-import-in-illustrator.html),
-and the panel shows a warning mark on them. VectorCraft's rule for it: the image, or a group or layer holding it, has
+and the panel shows a warning mark on them. crocwork Vector's rule for it: the image, or a group or layer holding it, has
 an opacity below 100%, a blend mode other than Normal, an opacity mask or an effect, or its bounds overlap the
 bounds of another visible object that has one of those or a gradient with a transparent stop (in a fill, a stroke or
 a character's fill or stroke); a DCS image with transparency of its own counts as such an object. Bounds are cut to the
@@ -7521,7 +7521,7 @@ again. Several apps running at once (agents' instances included) never see each 
 and an area being restored or discarded is held, so two apps launched together never both take it.
 
 `file.recovery.list` → `{copies: [{file, title, path, format, saved, open, running}], location}` (`open`: the copy of a
-document open here; `running`: kept by another VectorCraft that is running). `file.recovery.restore {file?}` opens
+document open here; `running`: kept by another crocwork Vector that is running). `file.recovery.restore {file?}` opens
 copies left behind (default: all) as `"<name> [Recovered]"`: modified, and Save asks where to save them (suggesting
 their original file); the copy moves into this app's area. `file.recovery.discard {file?}` deletes them. Without a
 folder or browser storage the commands are disabled and say how to set one.
@@ -7555,7 +7555,7 @@ or in `options` (`file.formatOptions {format}` lists them with their values):
   active artboard of the `.ai` file it was opened from), else the first. A `.ai` file read from its editing copy
   opens on that artboard, and so does a `.ai` file restored from the native document it carries.
 
-File → Save As asks for these in the save options dialog (VectorCraft Options) after the save panel, and Save a Copy
+File → Save As asks for these in the save options dialog (crocwork Vector Options) after the save panel, and Save a Copy
 does too for a `.ai` file; Save, Save a Copy to a native file and Save as Template reuse the options as last saved (or Use Compression).
 
 ```json
@@ -7579,7 +7579,7 @@ and is missing from the picture" once for all such images.
 
 `document.open` and `file.place` read `.emf` and `.wmf` (placeable or not) into one artboard, the picture's frame, and
 one layer: paths with their fills and strokes (pens become strokes with caps, joins and dashes), clipping groups,
-images and point type in the font the file names. Records VectorCraft doesn't read (EMF+ drawing among them) are
+images and point type in the font the file names. Records crocwork Vector doesn't read (EMF+ drawing among them) are
 skipped with one warning. `clipboard.importEmf {dataBase64, center?}` loads an EMF or WMF picture into the clipboard
 for `edit.paste`; the app pastes `image/emf` from the system clipboard ahead of text and bitmaps when the platform's
 clipboard service offers it (the Windows desktop service doesn't read metafiles yet).
@@ -7593,7 +7593,7 @@ clipboard service offers it (the Windows desktop service doesn't read metafiles 
 ## PICT import
 
 `document.open` and `file.place` read QuickDraw pictures, versions 1 and 2 (`.pct`, `.pic`, and `.pict`, which is
-VectorCraft's own name for them), into one artboard, the picture's frame in points, and one layer. A file holds 512 bytes
+crocwork Vector's own name for them), into one artboard, the picture's frame in points, and one layer. A file holds 512 bytes
 of application data before the picture; a picture without them reads too. A version 2 picture also opens by its content
 under any name. Opcodes and their data lengths follow Apple's
 [Opcodes in Pictures](https://dev.os9.ca/techpubs/mac/QuickDraw/QuickDraw-461.html) and
@@ -7612,7 +7612,7 @@ under any name. Opcodes and their data lengths follow Apple's
 `file.place` places the picture as one group clipped to its frame. What isn't read comes back in `warnings`, once each:
 inverted shapes, transfer modes other than a copy (drawn as a copy), QuickTime images in formats other than JPEG, and
 regions or images past the reader's limits. A picture cut short keeps what came before it with a warning, and one that
-draws nothing VectorCraft reads opens empty with a warning. A file that holds no picture is refused with
+draws nothing crocwork Vector reads opens empty with a warning. A file that holds no picture is refused with
 "not a PICT file". PICT can't be written: `document.export` to it is refused with "PICT files can be opened but not
 written".
 
@@ -7635,7 +7635,7 @@ and width (`PW`, `WU`; 0.35 mm by default), with the line type (`LT`, `UL`) as a
 paths, and edged ones (`EA`, `ER`, `EW`, `EP`) become stroked paths. Encoded polylines (`PE`) are read, and printer
 escape sequences and PJL lines around the instructions are skipped.
 
-Two rules are VectorCraft's own: before the first `SP` the pen is pen 1, and the hard-clip limits are 11 × 8.5 in
+Two rules are crocwork Vector's own: before the first `SP` the pen is pen 1, and the hard-clip limits are 11 × 8.5 in
 from the origin, so P2 lies there when the file sets no scaling points.
 `SP0` draws nothing. Labels, the symbols of symbol mode (`SM`) and raster images are not drawn, the input window
 (`IW`) does not clip the art, the art of later pages is drawn over the first page, and hatched and patterned fills are
@@ -7681,13 +7681,13 @@ crossing it or leaving it through a corner is not, and copies of one outline are
 `sortPaths` the paths otherwise keep paint order; with it, the next path is the nearest of those free to draw.
 Curves become straight moves no further than `curveTolerance` points from the curve (default 0.1, from 0.01 to 10).
 These defaults, the 255-pen limit and the rules for pen numbers, colors and the order of paths above are
-VectorCraft's own.
+crocwork Vector's own.
 
 `hpglVersion: "hpgl"` (the default) writes `IN;`, then for each pen `PU;SP<n>;` and each path `PUx,y;PDx,y,…;`, and
 ends with `PU;SP0;`. `"hpgl2"` also writes the palette (`NP` and a `PC` color for each pen) and draws each pen's
 paths as one encoded polyline (`PE`, base 64), which takes fewer bytes than the same moves as text. An `"hpgl"` plot
 with a coordinate outside −32,768 to 32,767 units (about 82 cm from the origin, the range of 16-bit numbers) is written
-as it is, with a warning that older devices may not read it; this check is VectorCraft's own. `warnings` names
+as it is, with a warning that older devices may not read it; this check is crocwork Vector's own. `warnings` names
 type drawn as outlines, inline graphics in type (left out), placed images, opacity masks, raster effects, stroke
 looks that are not drawn, art past the plotter's range, HP-GL coordinates past 16-bit numbers, colors past 255 pens,
 and the limits on points, clipping work, symbols, live art, nesting depth and sorting. Sorting and finding which paths lie inside which share one
@@ -7804,7 +7804,7 @@ With `zip`, the files go into one ZIP named after the document with `-3D` added 
 `3D Assets.zip` when the document's title gives no file name.
 An object whose face has a hole that crosses the face's outline or another hole is refused, by `assets.add3D` and
 `assets.export3D` alike, rather than exported with the hole filled. So is an object whose meshes would hold more than
-2,000,000 triangles together, VectorCraft's own limit.
+2,000,000 triangles together, crocwork Vector's own limit.
 `assets.export` leaves 3D assets out and refuses one named in its `assets`. On the 3D export page
 (<https://helpx.adobe.com/illustrator/desktop/special-effects-styles/create-3d-graphics/export-3d-vector-artwork.html>)
 the 3D asset's Format is picked in Asset Export, with USDA first; the file layouts follow the glTF 2.0 specification
@@ -7870,7 +7870,7 @@ adjustment layers, layers with a knockout option, and layers that hold transpare
 the layers below them. `document.open` applies neither adjustments nor knockouts, and it merges a layer by its blend
 mode alone, as the rules below say.
 
-The rest are VectorCraft's own rules:
+The rest are crocwork Vector's own rules:
 
 - Each layer becomes a layer of the document holding its pixels as an image, with the layer's name, visibility,
   opacity and blend mode.
@@ -7920,7 +7920,7 @@ orientation their header gives, decoded with jxl-oxide and stored as PNG. 16-bit
 bits, and alpha is kept. Colors are converted to sRGB in XYB-encoded images and when the header names the color space
 or the embedded ICC profile describes one the decoder knows; other images with an embedded ICC profile keep their
 samples as stored. CMYK files are refused, and an image past the pixel allowance is refused from its header, before
-its pixels are decoded. `file.place {path}` links the file like any image. VectorCraft doesn't write JPEG XL.
+its pixels are decoded. `file.place {path}` links the file like any image. crocwork Vector doesn't write JPEG XL.
 
 ```json
 {"name":"export","arguments":{"path":"/tmp/poster.psd","options":{"ppi":300,"maxEditability":true}}}
@@ -7968,7 +7968,7 @@ refused with the list of presets.
 
 `document.open` and `file.place` read `.eps`, `.epsf` and `.ps` files, and PostScript by any name (an `.ai` saved
 without PDF compatibility opens as artwork; an `.ait` one as a new untitled document). A `.ps` file reports the format
-`ps`, which `document.export` doesn't write (`file.print` writes PostScript). An EPS file VectorCraft wrote restores the
+`ps`, which `document.export` doesn't write (`file.print` writes PostScript). An EPS file crocwork Vector wrote restores the
 document it carries (`restored: true`, as Preserve Editing does for PDF and SVG); when that document can't be read the
 PostScript is read instead and the first warning says why.
 
@@ -8018,7 +8018,7 @@ its standard: what it still breaks (transparency, RGB in PDF/X-1a, a font not em
 writing a file that only claims the standard.
 
 ```json
-{"name":"run_command","arguments":{"command":"document.exportPdf","params":{"path":"/tmp/press.pdf","preset":"PDF/X-1a:2001","output":{"outputIntent":"VectorCraft Generic CMYK (SWOP-like)","outputCondition":"Coated","trapped":false}}}}
+{"name":"run_command","arguments":{"command":"document.exportPdf","params":{"path":"/tmp/press.pdf","preset":"PDF/X-1a:2001","output":{"outputIntent":"crocwork Vector Generic CMYK (SWOP-like)","outputCondition":"Coated","trapped":false}}}}
 ```
 
 ## Print tiling
@@ -8062,7 +8062,7 @@ colours keep their numbers with `preserveNumbers`), so a CMYK profile writes dev
 CMYK one. Settings saved before these options load with their defaults.
 
 ```json
-{"name":"run_command","arguments":{"command":"file.print","params":{"path":"/tmp/proof.pdf","settings":{"advanced":{"overprints":"simulate","flattenerPreset":"High Resolution"},"color":{"profile":"VectorCraft Generic CMYK (SWOP-like)","intent":"perceptual"}}}}}
+{"name":"run_command","arguments":{"command":"file.print","params":{"path":"/tmp/proof.pdf","settings":{"advanced":{"overprints":"simulate","flattenerPreset":"High Resolution"},"color":{"profile":"crocwork Vector Generic CMYK (SWOP-like)","intent":"perceptual"}}}}}
 ```
 
 ### Rotated bounding boxes
@@ -8232,7 +8232,7 @@ selected area type, and turning it on makes point type area type with Block on (
 Options › Block is the same setting, and the Properties panel's Paragraph section has a Dynamic Text checkbox, which
 shows Word Gap and Line Gap while it is on. The [Dynamic Text overview](https://helpx.adobe.com/photoshop/desktop/text-typography/work-with-dynamic-text/dynamic-text-overview.html)
 describes Block as text that scales to fill a rectangular box, with settings for the spacing between words and between
-lines. The rest are VectorCraft's own rules:
+lines. The rest are crocwork Vector's own rules:
 
 - Each line as typed (each paragraph, and each forced line break, Shift+Enter, in one) is one line; lines are not
   broken again. Each line is set to the frame's width, less the inset, the gutters between columns and the paragraph's
@@ -8260,7 +8260,7 @@ lines. The rest are VectorCraft's own rules:
 
 Turning it on also takes point type, in the same undo step (the Contextual Task Bar offers it beside Convert To Area
 Type). [Adjust formatting and resize text](https://helpx.adobe.com/photoshop/desktop/text-typography/work-with-dynamic-text/adjust-formatting-and-resize-text-with-dynamic-text.html)
-applies Dynamic Text, Block among its shapes, to existing text. VectorCraft's own rules for point type:
+applies Dynamic Text, Block among its shapes, to existing text. crocwork Vector's own rules for point type:
 
 - It becomes area type with Block on and the default Area Type Options, keeping only its gaps: options it kept from
   an earlier frame (columns, inset, vertical alignment, first baseline) do not carry over. Along its lines, the frame
@@ -8421,7 +8421,7 @@ the words that differ, which deletes and adds them and saves once, all or none (
 and Cancel changes nothing.
 
 ```json
-{"name":"run_command","arguments":{"command":"text.spelling.addWord","params":{"word":"VectorCraft"}}}
+{"name":"run_command","arguments":{"command":"text.spelling.addWord","params":{"word":"crocwork Vector"}}}
 {"name":"run_command","arguments":{"command":"text.spelling.ignoreAll","params":{"word":"Zqvwkx"}}}
 ```
 
@@ -8486,7 +8486,7 @@ sets the Paragraph panel's Mojikumi Set (shown with the East Asian options) of t
 `ids`, or the paragraphs a `start` / `end` range touches): how full-width Japanese punctuation is spaced. The menu lists
 the five predefined sets the help page names, then Line-end Punctuation Half Width
 (https://helpx.adobe.com/illustrator/desktop/design-with-text/edit-format-text/use-mojikumi-for-japanese-text-composition.html).
-The spacing of each set below is VectorCraft's own rule. An opening bracket's empty half em is before it; a closing
+The spacing of each set below is crocwork Vector's own rule. An opening bracket's empty half em is before it; a closing
 bracket's, a comma's and a full stop's is after it; a middle dot (・) has a quarter em on each side.
 
 - **None** sets every character at its full advance.
@@ -8558,7 +8558,7 @@ Panel sets it back to Push Out Only. One undo step.
 on or off for the paragraphs of the selected type (or `ids`, or the paragraphs a `start` / `end` range touches). On, a
 line never breaks inside an inseparable pair: two em dashes (U+2014), two horizontal ellipses (U+2026), two two-dot
 leaders (U+2025), or the upper half of a vertical kana repeat mark (U+3033 or U+3034) followed by its lower half
-(U+3035), the pairs W3C JLREQ lists for its class cl-08 (https://www.w3.org/TR/jlreq/#cl-08), which are VectorCraft's
+(U+3035), the pairs W3C JLREQ lists for its class cl-08 (https://www.w3.org/TR/jlreq/#cl-08), which are crocwork Vector's
 set. A chain of em dashes stays together as well. A pair is two neighboring characters, whatever their fonts and
 styles; a forced line break between them ends the line as before. Both composers, vertical type, Kinsoku Shori Type,
 hyphenation and No Break follow it, and a pair wider than the line stays whole on it. Justification adds no space inside
@@ -8648,7 +8648,7 @@ line and is not broken across lines: a block longer than its line stays whole an
 text does. `warichuAlign` sets each line along the block: `"left"`, `"center"` or `"right"` (top, center or bottom in
 vertical type), `"justifyLeft"`, `"justifyCenter"` or `"justifyRight"` (every line but the last spread to the block's
 length, the last set left, centered or right) or `"justifyAll"`. `"auto"`, the default, sets the lines as
-`"justifyLeft"` does. These rules, the ranges and the defaults are VectorCraft's own; the public page
+`"justifyLeft"` does. These rules, the ranges and the defaults are crocwork Vector's own; the public page
 <https://helpx.adobe.com/illustrator/using/formatting-asian-characters.html> describes the Lines, Line Gap, Scale and
 Alignment settings. Type on a path sets warichu characters at their own size along the path. The canvas and every
 export draw the stacked lines; SVG, PDF and the `.ai` writers write type with warichu as outlines, as they do ruby.
@@ -8695,13 +8695,13 @@ A composite font sets each class of character in a font of its own
 `type.compositeFonts.set {fonts: [{name, parts}]}` replaces the active document's composite fonts as one undo step,
 and adds no step when nothing changes. `parts` holds `kanji` (the base font), `kana`, `punctuation`, `symbols`, `roman`
 and `numerals`, each `{font, style?, size?, baseline?, hScale?, vScale?, scaleAtCenter?}`; a part left out copies the
-`kanji` part. Which characters fall in each class is VectorCraft's own rule: Kanji takes ideographs, full-width
+`kanji` part. Which characters fall in each class is crocwork Vector's own rule: Kanji takes ideographs, full-width
 letters and digits and every character no other class takes; Kana takes hiragana and katakana of both widths;
 Punctuation takes East Asian and full-width punctuation, quotes and dashes; Symbols takes arrows, math, shapes and
 other symbols; Roman takes half-width letters, their punctuation and spaces; Numerals takes the digits 0 to 9.
 
 `size` (10 to 400, 100 by default) and `baseline` (-100 to 100, 0 by default; positive raises) are percentages of the
-type's size, VectorCraft's own ranges. `hScale` and `vScale` (10 to 400, 100 by default) scale Kana, Roman and
+type's size, crocwork Vector's own ranges. `hScale` and `vScale` (10 to 400, 100 by default) scale Kana, Roman and
 Numerals only, and `scaleAtCenter` (Kana only) scales kana from the center of the em box instead of the baseline. A
 value out of range, a scale on another class, an unknown class or key, a name that is empty, longer than 255
 characters, shared by two fonts (in any case) or the name of an installed font, and a part set in a composite font are
@@ -8975,7 +8975,7 @@ Anti-aliasing Method, which decides how the edges of the characters are drawn as
 (Export As PNG, JPEG and the other raster formats, Export for Screens, Save for Web) and when Object › Rasterize or
 Effect › Rasterize draws the type. The method belongs to the whole type object, and each frame of a thread keeps its
 own method: a `start`/`end` range sets the whole frame, and threading frames or opening a file keeps each frame's
-method. VectorCraft defines what each method does, on the pixels of the picture being drawn (the canvas at its zoom,
+method. crocwork Vector defines what each method does, on the pixels of the picture being drawn (the canvas at its zoom,
 an export at its resolution):
 
 - `sharp`, the default, draws each edge pixel with the share of it the type covers, as before.
@@ -8991,7 +8991,7 @@ stroke or a blend mode other than Normal, when it overprints while Overprint Pre
 shows a substitution highlight.
 With Preferences › General › Anti-aliased Artwork off, the canvas draws all its art with hard edges, type included, and
 so does an export whose own Anti-aliasing option is None. SVG, PDF and EPS export draw the type unchanged. The native
-document such a file carries (an EPS VectorCraft wrote, or an SVG or PDF saved with Preserve Editing) keeps each frame's
+document such a file carries (an EPS crocwork Vector wrote, or an SVG or PDF saved with Preserve Editing) keeps each frame's
 method, and opening the file restores it.
 A graph label given a method keeps it for every label of its kind (value axis numbers, category labels or legend
 labels) when the graph is drawn again; the graph saves it as `valuesAntiAlias`, `categoriesAntiAlias` or
@@ -9248,7 +9248,7 @@ begins or ends, dragging the centre bracket slides the type along its path and, 
 `type.pathCenter.top {ids?|id?}` and `type.pathCenter.bottom {ids?|id?}` (Type › Type on a Path › Center on Top and
 Center on Bottom, and the Contextual Task Bar for type on a closed path) slide the selected type on a closed path along
 it so that the middle of the span between its brackets lands on the path's topmost or bottommost point. This is
-VectorCraft's own behavior. The path is measured as the object is drawn, after its transform, so a rotated, scaled or
+crocwork Vector's own behavior. The path is measured as the object is drawn, after its transform, so a rotated, scaled or
 skewed circle centers on its drawn top. On a level stretch, such as a rectangle's top edge, the middle of the stretch
 is used; with several separate topmost points, the middle of the shortest part of the path that holds them all is
 used. The span keeps its length, and type that runs once round stays once round. The first paragraph's alignment
@@ -9273,7 +9273,7 @@ setting. With Dynamic Text on, the text spans the stretch between its start and 
 the text, growing or shrinking to fill it, and it fits again after each edit to the text and each move of a bracket
 ([Dynamic Text overview](https://helpx.adobe.com/photoshop/desktop/text-typography/work-with-dynamic-text/dynamic-text-overview.html),
 [start and end points](https://helpx.adobe.com/photoshop/desktop/text-typography/work-with-dynamic-text/reposition-start-and-end-points.html)).
-The rest of this entry is VectorCraft's own rules. The layout scales every character's size, leading, baseline shift
+The rest of this entry is crocwork Vector's own rules. The layout scales every character's size, leading, baseline shift
 and tate-chu-yoko offsets by one factor, so runs keep their proportions; Type on a Path Options › Spacing is not
 scaled. The first character's size, in document points, moves in steps of 0.1 pt within 0.1 to 1,296 pt; text that
 still runs past the end bracket at 0.1 pt overflows. Reshaping or scaling the path fits the text again. The stored
@@ -9299,7 +9299,7 @@ of the preset's shape and turns Dynamic Text on, so the text is sized to fill it
 path, Arch on an upward-curving path and Bow on a downward-curving one; `position` sets where the text sits against
 the path (above, center or below) and `flip` turns its direction
 ([Dynamic Text overview](https://helpx.adobe.com/photoshop/desktop/text-typography/work-with-dynamic-text/dynamic-text-overview.html)).
-The shapes and the rest of this entry are VectorCraft's own rules. The circle is as wide as the text, and the text
+The shapes and the rest of this entry are crocwork Vector's own rules. The circle is as wide as the text, and the text
 runs clockwise round all of it from its bottom. Arch and Bow are a 120° arc of a circle whose chord is as wide as the
 text, bulging up or down, and the text runs along it from left to right. The width is, for point type, the length on the
 page of the longer side of the text's bounds, and for type on a path the longer side of its path's bounds on the
@@ -9363,7 +9363,7 @@ the layers, opacity masks, symbols, graph designs, pattern tiles and the art of 
 uses, in panel order and never the Normal style, and the panel highlights them; `charStyle.delete` and
 `paraStyle.delete` take `{names}` to delete several styles in one undo step. `charStyle.load` and `paraStyle.load`
 (Load Character Styles… and Load Paragraph Styles… in the panel menus, where `ui.loadCharStyles` and
-`ui.loadParaStyles` pick the file) copy the styles of that kind from another document VectorCraft opens (`path`, `data`
+`ui.loadParaStyles` pick the file) copy the styles of that kind from another document crocwork Vector opens (`path`, `data`
 or `dataBase64`), and `textStyle.loadAll` (Load All Styles…, `ui.loadAllStyles`) copies both kinds, each in one undo
 step. The swatches and patterns the styles paint with, the symbols and brushes those patterns use, and the styles of
 either kind that type in those patterns and symbols is set in, come along as Paste brings those of pasted type; a global or spot color whose name the document gives another color
@@ -9554,7 +9554,7 @@ id `plugin.<id>`: `effect.apply`, `effect.setParams` and `effect.expandAppearanc
 and `paintOutput: true`) draws the pieces it returns with paints of their own, and `effect.expandAppearance` writes them
 as ordinary paths with those paints; a result it refuses is drawn as if the effect weren't there, and `plugin.info`'s
 `lastError` names the plug-in and the refused field. While the app draws a document on screen, the live-effect plug-ins
-of its first view share a 2,000 ms budget (VectorCraft's own value), and each run also keeps to its own 5,000 ms limit:
+of its first view share a 2,000 ms budget (crocwork Vector's own value), and each run also keeps to its own 5,000 ms limit:
 once the budget is spent no run starts, and a result that comes back after it is not used. A stage left out for want
 of time, or one that times out, fails or has no plug-in, draws its input art unchanged and is deferred; the status bar
 then says how many (`Opened with 3 plug-in effects deferred. Effect › Refresh Deferred Effects runs them.`). Later
@@ -9624,7 +9624,7 @@ log lines: `notifications/cancelled` makes its `vc_cancelled` return 1, and its 
 under its id. With a desktop app connected, `plugin.dialog` runs such a filter (one without a `commandAllowlist`) in the
 background when it runs at once or OK runs it with Preview off, and returns `{background: true, status}`;
 `plugin.cancelRuns` stops it. One that lists `settings` or `cache` keeps settings or a cache of its own in the `Plug-ins` folder
-(VectorCraft's own caps: 256 settings and 1 MiB, 512 MiB of cache): `plugin.list` and `plugin.info` give the cache's
+(crocwork Vector's own caps: 256 settings and 1 MiB, 512 MiB of cache): `plugin.list` and `plugin.info` give the cache's
 size as `cacheBytes`, `plugin.clearCache {id?}` empties the cache of one plug-in or of all of them and returns
 `{cleared: [id], bytesFreed}`, replacing a plug-in keeps both, and `plugin.remove` deletes both (also for an id that
 isn't installed but still has them). Files it can't delete stay in the plug-in's folder renamed with `.removed`, where
@@ -9650,7 +9650,7 @@ command, and a run that traps or runs out of its instruction budget returns an e
 name and the command's label and leaves the document and the undo history as they were. For `plugin.run` and plug-in
 commands, `ids` left out or null means the selection, and an `ids` that is not a list of object ids is an error.
 
-Safe Mode starts VectorCraft without plug-ins: `vectorcraft --safe-mode`, `vectorcraft-cli --safe-mode <subcommand>`, or
+Safe Mode starts crocwork Vector without plug-ins: `vectorcraft --safe-mode`, `vectorcraft-cli --safe-mode <subcommand>`, or
 the choice the desktop app offers when the last launch stopped while a plug-in was loading (Disable and Continue, Start
 Normally, Start in Safe Mode). It names that plug-in without saying it caused the stop. Until the user picks Disable and
 Continue or Start Normally, the next launch asks again, also after a `--safe-mode` launch, which asks nothing.
@@ -9726,10 +9726,10 @@ the fonts CoreText's font manager lists outside them, such as those apps and fon
 folders; Linux and BSD: `/usr/share/fonts`,
 `/usr/local/share/fonts`, `~/.fonts` and the XDG data folders' `fonts`, `~/.local/share/fonts` among them, in a
 Flatpak sandbox the host's fonts, and the folders fontconfig's configuration lists (`<dir>` in `/etc/fonts/fonts.conf`
-and the files it includes: where packages add theirs, such as TeX fonts under `/usr/share/texmf/fonts`)). Faces without outlines VectorCraft draws (no `glyf`, `CFF`, `CFF2` or `VARC` table, such
+and the files it includes: where packages add theirs, such as TeX fonts under `/usr/share/texmf/fonts`)). Faces without outlines crocwork Vector draws (no `glyf`, `CFF`, `CFF2` or `VARC` table, such
 as bitmap-only fonts) are left out. The scan also reads the folder the `fontsFolder` preference names (Preferences › Type ›
-Additional Fonts Folder) with its subfolders and, in the desktop app and `vectorcraft-cli`, VectorCraft's own `Fonts` folder
-next to the preferences: `~/Library/Application Support/VectorCraft/Fonts` on macOS, `%APPDATA%\VectorCraft\Fonts` on
+Additional Fonts Folder) with its subfolders and, in the desktop app and `vectorcraft-cli`, crocwork Vector's own `Fonts` folder
+next to the preferences: `~/Library/Application Support/crocwork Vector/Fonts` on macOS, `%APPDATA%\crocwork Vector\Fonts` on
 Windows, and `$XDG_CONFIG_HOME/vectorcraft/Fonts` or `~/.config/vectorcraft/Fonts` on Linux and BSD. `text.addFontFiles`
 copies fonts into that folder. The installed fonts are cataloged once per session (in the background when the app starts, else on the first lookup
 by family name), so opening, placing, pasting and importing files find them whatever ran before. `text.fontList`
@@ -9783,7 +9783,7 @@ folders whose contents are in the cloud, and it follows no links; a picked folde
 that goes through a link is searched at its target. Programs installed in other folders, such as a folder on another
 drive, are searched as any other folder is.
 
-`text.addFontFiles {files}` copies files that the session's last search found into VectorCraft's `Fonts` folder, then
+`text.addFontFiles {files}` copies files that the session's last search found into crocwork Vector's `Fonts` folder, then
 scans the fonts again, and type set in them redraws. It copies only regular `.ttf`, `.otf`, `.ttc`, `.otc`, `.woff`
 and `.woff2` files and suitcase fonts (with their resource fork), at most 256 MB a file and 1 GB in all, and lists any
 other file in `skipped`. It never replaces a file: the names `Name.otf`, `Name 2.otf` up to `Name 99.otf` are tried in
@@ -9981,7 +9981,7 @@ saves a curve in pieces) leaves how the side shares out the content as it was. C
 still move, since one at the outline's nearest point snaps onto an anchor within 0.5% of its segment's parameter. A
 side only partly made of one curve keeps the polygon shares. An envelope opened from an `.ai` file
 keeps the corners the file saves, and they stay on the same anchors when the envelope is moved, rotated or
-reflected. These are VectorCraft's own rules, and existing top-object envelopes redraw by them.
+reflected. These are crocwork Vector's own rules, and existing top-object envelopes redraw by them.
 A warp bends the content's bounds as one Bézier patch. The style sets the patch's control points from the bend and
 the size of the bounds (Arc's top and bottom edges, for example, are cubic curves close to arcs around one center), then
 the horizontal distortion scales each column of control points about its middle, and the vertical distortion scales
@@ -9994,7 +9994,7 @@ and editing an envelope keeps its version. `version` (0 or 1) on `object.envelop
 `params.version` is 0, the built-in graphic styles' Warps have 1, and Effect › Warp edits keep each Warp's own version.
 These commands refuse any other value with `` `version` must be 0 or 1 ``; `1.0` counts as 1. An `.ai` file holds a
 warp's settings and not its version, so a `version` 0 warp saved to `.ai` and opened again draws with `version` 1.
-These patches are VectorCraft's own rules; the styles and the ranges of Bend and the distortions are those of the Warp
+These patches are crocwork Vector's own rules; the styles and the ranges of Bend and the distortions are those of the Warp
 options (https://helpx.adobe.com/illustrator/desktop/manage-objects/reshape-transform-objects/distort-and-transform-effects-in-illustrator.html).
 `object.envelope.info` reads the selected envelope's settings (`type`, the warp's or mesh's values, `fidelity` and
 the options, `editing`), or with no envelope selected the options new envelopes get. With an envelope selected,
@@ -10028,7 +10028,7 @@ path. Inline graphics in the type count by their boxes. Rotated type and type in
 their outlines as they are drawn. `object.envelope.makeWithMesh`, `object.envelope.makeWithTopObject` and
 `object.envelope.resetWithMesh` with `maintainShape: false` use those bounds. Type that draws nothing keeps its
 laid-out box, and so does type inside any other object, such as a blend, a repeat or a symbol instance. This is
-VectorCraft's own rule, and envelopes of type in saved files redraw by it.
+crocwork Vector's own rule, and envelopes of type in saved files redraw by it.
 Everything inside bends with the envelope: images as a raster mesh warp (cut into pieces by Fidelity, each a clipped
 image under its own affine map; SVG shares the pixels between the pieces), symbol instances as their symbol's art,
 and with Distort Appearance the strokes of paths (as their filled outlines) and geometry effects; with it, Distort
@@ -10037,7 +10037,7 @@ and those on its own appearance) don't bend, with Distort Appearance or without:
 outlines at their own weight, as `.ai` files draw type in an envelope, so a squeezed or stretched envelope keeps them
 as wide as they are, also in an envelope inside an envelope (#6644). Their geometry effects and an opacity mask on
 the type still bend, and Expand gives the bent outlines with the strokes on them, which Object › Expand or Outline
-Stroke outlines later. Before #6644, VectorCraft bent type's strokes too, so envelopes of stroked type made earlier
+Stroke outlines later. Before #6644, crocwork Vector bent type's strokes too, so envelopes of stroked type made earlier
 now draw their strokes at their own weight. A transformed envelope keeps its warp in its own
 frame (`kind.frame` in `document.inspect`; rotating a warp envelope turns the warp with it), and move and scale keep
 it square to the page.
@@ -10162,7 +10162,7 @@ shows, and so do the click-to-size dialogs (`perspective.draw` with `at`: the cl
 `object.blend.make` blends the selected objects (or `ids`) into a live blend. Spacing and orientation default to
 what `object.blend.options` set with no blend selected (`object.blend.info` reads them: `target: "defaults"`),
 else Smooth Color and Align to Page. Smooth Color counts the steps between each pair of keys on its own, from the
-keys' colors and visible bounds rather than along the spine. The counts below are VectorCraft's own values. The
+keys' colors and visible bounds rather than along the spine. The counts below are crocwork Vector's own values. The
 colors compared are each key's solid fill and stroke, the fills and strokes of two text objects' runs at the same fraction of their characters, and
 those of two groups' members paired in order. When they differ, the count is 255 times the largest change of one
 channel as a fraction of its range, a half step rounding down, from 1 to 254. An RGB channel's range is 256 values,
@@ -10387,7 +10387,7 @@ scale, or an inline graphic taller than the text) is composed with Every-line in
 columns and text wrap included. In a frame that is not a rectangle, or with text wrap, each line it tries is measured
 where the lines above it put it, across the line's own height, so a taller line that reaches where the frame is
 narrower, or beside a wrap object, gets the room there. Such a paragraph falls back to Single-line when the frame has
-no room for all of it, or when the search for its breaks passes VectorCraft's own limits (1,000,000 lines tried and
+no room for all of it, or when the search for its breaks passes crocwork Vector's own limits (1,000,000 lines tried and
 2,000,000 baseline steps for one paragraph, 2,000,000 lines and 4,000,000 steps for all the paragraphs of a frame).
 The UI command `type.lineComposer` (Cmd+Alt+Shift+C, in remote mode `press_key {key: "C", mods: {cmd: true, alt: true,
 shift: true}}` or `invoke_menu`) sets `singleLine` when every paragraph of the selected type (or every paragraph the
@@ -10415,7 +10415,7 @@ envelope or a gradient mesh cancels it: the point goes back and no undo step is 
 
 A warp envelope's points can be edited the same way, with the same commands. Its points are those of its surface
 sampled on 4×4 patches, with handles along it; where 4×4 patches draw more than 0.1% of the warp's diagonal away from
-the warp, on 8×8 or 16×16 patches (these sizes and the 0.1% are VectorCraft's own values). The canvas shows those
+the warp, on 8×8 or 16×16 patches (these sizes and the 0.1% are crocwork Vector's own values). The canvas shows those
 points on a selected warp. The first point or handle moved, or the first line added or deleted, makes the warp a mesh
 envelope on that grid and applies the edit, as one undo step: Undo, or Escape during the drag, gives back the warp
 with its style and bend. From then on the Control bar shows the mesh's rows and columns, Reset with Mesh with Maintain
@@ -10468,9 +10468,9 @@ entry, listed with its `name`, its `section` (the names of the blocks around it)
 (`key`, `modifiers`, `context`, `represent`) and its `line`. `codes` counts the entries that use each key and modifier
 code, and `unread` lists the tokens the reader skipped, with their lines. The reader stops at 4 MiB, 16 open blocks,
 20,000 entries and 8 MiB of names over the entries and their sections, cuts names at 1,024 bytes, and sets `truncated` when it reaches one of these limits. An XML shortcut
-file fails with "This shortcut file is in a form VectorCraft can't read."
+file fails with "This shortcut file is in a form crocwork Vector can't read."
 
-The import matches record what the names and codes in such files stand for in VectorCraft. They are kept with the
+The import matches record what the names and codes in such files stand for in crocwork Vector. They are kept with the
 preferences, and resetting the preferences keeps them. `importMatches.set {matches: [{kind, name, target, label?}]}`
 records them: kind `name` maps an entry name to a command id, `tool:<id>` or `panel:<id>`, and kinds `key` and
 `modifiers` map a code, written in decimal, to a key or to modifiers as Edit › Keyboard Shortcuts writes them (`K`,
@@ -10481,7 +10481,7 @@ the saved `key` or `mods` to each code.
 
 In the desktop app, Edit › Keyboard Shortcuts › Import… and File › Open show such a file in Import Shortcut Set
 (`ui.shortcutImportDialog {path? | dataBase64?, name?}` over the control channel). The dialog proposes targets from
-the entry names and decodes the codes that VectorCraft's default shortcuts agree on.
+the entry names and decodes the codes that crocwork Vector's default shortcuts agree on.
 
 ```json
 {"name":"run_command","arguments":{"command":"shortcutSet.read","params":{"path":"/Users/me/Studio.kys"}}}
@@ -10505,7 +10505,7 @@ number is an error.
 
 `ui.actionSet.load` (the Actions panel menu's Load Actions…) reads such a file too, from `path`, a picked file or
 `data`, and adds its set after the other sets with all its actions. The set's name is the file's `/name`, else the
-file's name, else `Actions`. A step with a label and no recorded values comes in as the VectorCraft command with that
+file's name, else `Actions`. A step with a label and no recorded values comes in as the crocwork Vector command with that
 label, in English or in the interface language, in any case and without a final `…`, when exactly one menu command has
 that label and that command is directly in a top menu, can be recorded in actions, is what its menu bar item runs with
 no values and opens no dialog (Group, Ungroup). A submenu's items, file and document commands, Paste, Undo, Redo and
@@ -10800,7 +10800,7 @@ Commands:
   segments, when more than 200,000 segments of other paths lie in its box, when the number of paths `rect` or `points`
   reaches times the number of paths that take part is more than 50,000,000, when the paths it trims make more than about
   60,000,000 pairs of segments to compare in all, when the curves are too tangled to find where they cross, or when
-  checking `points` against the paths would take more than 60,000,000 comparisons. These rules are VectorCraft's own.
+  checking `points` against the paths would take more than 60,000,000 comparisons. These rules are crocwork Vector's own.
   → `{ids, removed}`: the paths left of those trimmed, and the stretches removed.
 - `addon.pathtools.shape.create {center, kind?, width?, height?, rotation?, count?, a?, b?, radius?}` draws a parametric
   shape with the current paint, selected. `kind`: `rectangle`, `ellipse`, `polygon` (default), `star`, `ring`, `arrow`,
@@ -10958,7 +10958,7 @@ Bridges…, Weed Box and Lines… and Banner Hems and Grommets….
 `addon.cutting.bridges` cuts bridges out of the selected art so that a stencil cut from it holds together. An island is
 an area the art encloses, such as the inside of an O, A or 8 or a hole in a shape; cut out of a sheet, it would fall
 away. A bridge is a strip of the sheet left uncut across the art, which keeps the island attached
-([stencil islands and bridges](https://en.wikipedia.org/wiki/Stencil)). The rules below are VectorCraft's own.
+([stencil islands and bridges](https://en.wikipedia.org/wiki/Stencil)). The rules below are crocwork Vector's own.
 
 - The art is measured by the area its outlines enclose, whatever their paint: paths and compound paths with their fill
   rule (open paths closed as a fill closes them), groups by their members, and type by its glyph outlines. Hidden
@@ -11007,7 +11007,7 @@ Crossing) and Keep Original.
 `addon.cutting.weed {margin?, box?, direction?, count?, spacing?, gap?, weight?, swatch?}` adds a weed box around the
 selected art and weeding lines across the box, so the waste vinyl around the art lifts off in pieces
 ([what a weeding border is](https://help.arlon.com/what-is-a-weeding-border)). The ranges, defaults and rules below are
-VectorCraft's own. The weed box is a rectangle `margin` points (0 to 100000, default 9) outside the art's bounds;
+crocwork Vector's own. The weed box is a rectangle `margin` points (0 to 100000, default 9) outside the art's bounds;
 `box: false` leaves it out. The weeding lines run `"horizontal"`, `"vertical"` or `"both"` ways (default `"both"`) from
 one side of the box to the other and divide it evenly: `count` lines each way (a whole number from 0 to 1000, default 1),
 or with `spacing` points instead (more than 0 and at most 100000), as few lines as keep them at most that far apart. A
@@ -11046,7 +11046,7 @@ dialog with Preview; a Spacing above 0 is used instead of the Count.
 `addon.cutting.banner {hem?, grommets?, spacing?, grommetInset?, diameter?, top?, right?, bottom?, left?, weight?,
 swatch?, allArtboards?}` marks where a printed banner is hemmed, its edge folded back and sewn
 ([hem](https://en.wikipedia.org/wiki/Hem)), and where grommets, rings set into the material to hang it, are punched
-([grommet](https://en.wikipedia.org/wiki/Grommet)). The ranges, defaults and rules below are VectorCraft's own. The banner
+([grommet](https://en.wikipedia.org/wiki/Grommet)). The ranges, defaults and rules below are crocwork Vector's own. The banner
 is the bounds of the selected art, or each artboard when `allArtboards` is true (the default when nothing is selected).
 `top`, `right`, `bottom` and `left` (each true by default) choose the sides that get marks. On each chosen side a hem
 line runs the whole length of the edge, `hem` points inside it (0 to 100000, default 72; 0 leaves the hem lines out).
@@ -11357,7 +11357,7 @@ there is no step. → `{symbols: [name…], ids: [instance id…], skipped: [{la
 
 Image Tools is a built-in add-on for placed images: its commands are `addon.image.removeBackground`,
 `addon.image.colorMask`, `addon.image.removeColorMask` and `addon.image.applyColorMask`, and in the desktop app it
-lives in Object › Plug-ins › Image Tools. It is a VectorCraft addition.
+lives in Object › Plug-ins › Image Tools. It is a crocwork Vector addition.
 
 ### Remove Background
 
@@ -11378,7 +11378,7 @@ lowering the alpha of their own pixels. The work runs in the app, and no service
   `match: "channels"`, it is a percentage of 255 steps on the one of red, green and blue that differs most, so a
   tolerance of `t / 255 × 100` clears the colors within `t` 8-bit steps on every channel. `softness` (0 to 100,
   default 10) is the band past the tolerance over which pixels fade from cleared to kept. These ranges and defaults
-  are VectorCraft's own.
+  are crocwork Vector's own.
 - A value outside 0 to 100, a `background` other than `edges`, `corners` or `colors`, a `match` other than `distance`
   or `channels`, a `contiguous` that is not true or false, or a `colors` that lists no color, more than 16, or one that
   is not a color or has an alpha part is refused, and the document stays as it was.
@@ -11490,7 +11490,7 @@ default values, and the seed starts new whenever the document has changed.
 
 `addon.type.releasePath` splits each type on a path (`text.createInPath` with `mode: "onPath"`) into point type that
 holds the same text and the plain path it was set on (#5532). The reference app has no command for this, so it is a
-VectorCraft addition and changes no parity score.
+crocwork Vector addition and changes no parity score.
 
 - **The path** keeps its exact shape (open or closed, every anchor and handle, the object's transform) and goes in the
   type's layer at its place in the stacking order. Type paths carry no paint of their own (making type on a path drops

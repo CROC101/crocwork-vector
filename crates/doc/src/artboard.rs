@@ -132,7 +132,7 @@ impl super::Document {
     }
 }
 
-/// The space between an artboard and one added or duplicated beside it (VectorCraft's own value,
+/// The space between an artboard and one added or duplicated beside it (crocwork Vector's own value,
 /// the space New Artboard and Duplicate Artboards leave right of the last artboard).
 pub const ARTBOARD_GAP: f64 = 20.0;
 

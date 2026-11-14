@@ -885,7 +885,7 @@ fn delete(s: &mut Session, p: &Value) -> Result<Value> {
     Ok(json!({ "deleted": saved.remove(i).name }))
 }
 
-/// The largest New Document profile file `file.new` reads, bytes (VectorCraft's own limit); a
+/// The largest New Document profile file `file.new` reads, bytes (crocwork Vector's own limit); a
 /// larger one is reported and the document starts with the defaults.
 pub const MAX_PROFILE_BYTES: u64 = 64 << 20;
 
@@ -941,7 +941,7 @@ impl Session {
     /// Profile `name`'s document, its file's path and a warning for each color profile the file
     /// carries that can't be used: `None` when it has no file (the shipped profile, the defaults),
     /// the reason when the request being served may not read it, or its file can't be read, is
-    /// larger than [`MAX_PROFILE_BYTES`] or isn't a native document VectorCraft reads.
+    /// larger than [`MAX_PROFILE_BYTES`] or isn't a native document crocwork Vector reads.
     fn read_profile(&self, name: &str) -> std::result::Result<Option<ReadProfile>, String> {
         let Some(path) = self.profile_path(name) else { return Ok(None) };
         let file = path.to_string_lossy().to_string();

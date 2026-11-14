@@ -4,7 +4,7 @@
 //! ([helpx: maintain proportions while scaling symbols](https://helpx.adobe.com/illustrator/desktop/manage-objects/traces-mockups-symbols/maintain-proportions-while-scaling-symbols.html)).
 //! New guides sit a quarter of the symbol's width and height in from each edge.
 //!
-//! VectorCraft's own rules: the corners keep their size, the top and bottom edges stretch only in
+//! crocwork Vector's own rules: the corners keep their size, the top and bottom edges stretch only in
 //! width, the left and right edges only in height, and the center in both. When the instance is
 //! smaller than its two outer cells on an axis, both shrink in proportion and the center is empty.
 //! The cells are sized along the symbol's own axes, and the instance's rotation, shear, reflection
@@ -12,7 +12,7 @@
 //!
 //! A guide may lie outside the art, and the instance still scales, by the slices the art falls in
 //! ([the help page](https://help.adobe.com/archive/en/illustrator/cs6/illustrator_reference.pdf),
-//! Use 9-slice scaling section). VectorCraft's own rules for that: a guide past an edge of the art
+//! Use 9-slice scaling section). crocwork Vector's own rules for that: a guide past an edge of the art
 //! cuts the art at that edge, so the outer cell on its side holds no art; with both guides of an
 //! axis past opposite edges the art scales as a whole along it; with both past the same edge the
 //! art lies in the outer cell at the other edge and keeps its size, from that edge of the instance,
@@ -60,7 +60,7 @@ impl Default for SymbolNineSlice {
 }
 
 /// The farthest a guide may lie from its edge, as a fraction of the symbol's width or height, in
-/// either direction (VectorCraft's own rule).
+/// either direction (crocwork Vector's own rule).
 pub const MAX_GUIDE_FRACTION: f64 = 16.0;
 
 impl SymbolNineSlice {
@@ -100,7 +100,7 @@ impl NineSliceGuide {
 }
 
 /// The narrowest center band a guide dragged toward the opposite guide leaves, as a fraction of
-/// the art's width or height (VectorCraft's own rule).
+/// the art's width or height (crocwork Vector's own rule).
 pub const MIN_CENTER_BAND: f64 = 0.001;
 
 /// The 9-slice guides of the symbol edited in symbol editing mode, over its art on the editing
@@ -296,7 +296,7 @@ impl AxisMap {
 /// How an instance of a symbol with 9-slice guides places its art: a map from symbol space to
 /// document space that is affine within each of the nine cells and continuous across the guides.
 /// The guides cut the art along the symbol's own axes; the instance's rotation, shear, reflection
-/// and position apply after the cells are sized (VectorCraft's own rule).
+/// and position apply after the cells are sized (crocwork Vector's own rule).
 #[derive(Clone, Copy, Debug, PartialEq)]
 pub struct NineSliceMap {
     /// Symbol space → the art at its natural size (an axis-aligned scale).
@@ -444,7 +444,7 @@ impl NineSliceMap {
     }
 
     /// Symbol art `art` (in symbol space) placed in document space, its instances measured with
-    /// the symbols of `doc`. VectorCraft's own rules:
+    /// the symbols of `doc`. crocwork Vector's own rules:
     ///
     /// - An object whose geometric box lies in one cell is placed by that cell's map, so an
     ///   object in a corner keeps its size and stays as it is (live shapes, type and images

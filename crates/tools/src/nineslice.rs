@@ -8,7 +8,7 @@
 //! A guide may be dragged past the art's edges, and the instance still scales by the slices its
 //! art falls in.
 //!
-//! VectorCraft's own rules: a guide stays within 16 times the art's width or height of its edge
+//! crocwork Vector's own rules: a guide stays within 16 times the art's width or height of its edge
 //! and stops short of the opposite guide; a guide outside the art is drawn and taken along the
 //! art's height or width beside it; the drag does not snap and its modifiers change nothing; a
 //! guide within reach takes the press before the art and the bounding box, and of two guides

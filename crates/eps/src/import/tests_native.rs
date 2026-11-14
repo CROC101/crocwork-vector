@@ -1173,11 +1173,11 @@ fn unknown_operator_between_objects_falls_back() {
 fn unread_object_without_page_art_names_what_is_unread() {
     let art = native(&layer("Mixed", true, &os1_group(&format!("{}\nZZ", square(50, 10)))));
     let e = crate::ai_alone(&private(&art)).unwrap_err();
-    assert_eq!(e, "it has operators VectorCraft doesn't know (`ZZ`), which VectorCraft doesn't read from it yet");
+    assert_eq!(e, "it has operators crocwork Vector doesn't know (`ZZ`), which crocwork Vector doesn't read from it yet");
     let pattern = os1_group(&format!("(Absent) 0 0 1 1 0 0 0 0 0 [1 0 0 1 0 0] p\n{}", square_path(70, 10)));
     let art = native(&layer("Mixed", true, &format!("{}\n{pattern}", os1_group(&format!("{}\nZZ", square(50, 10))))));
     let e = crate::ai_alone(&private(&art)).unwrap_err();
-    assert_eq!(e, "it has operators VectorCraft doesn't know (`ZZ`) and pattern fills, which VectorCraft doesn't read from it yet");
+    assert_eq!(e, "it has operators crocwork Vector doesn't know (`ZZ`) and pattern fills, which crocwork Vector doesn't read from it yet");
 }
 
 #[test]
@@ -5469,7 +5469,7 @@ fn to_art(p: kurbo::Point) -> (f64, f64) {
     (p.x, 100.0 - p.y)
 }
 
-/// What the live envelope `envelope` (on the page axes) draws, as VectorCraft draws it: the
+/// What the live envelope `envelope` (on the page axes) draws, as crocwork Vector draws it: the
 /// format's paths (each subpath filled on its own, in the color its type is drawn in) and the
 /// page's PostScript for them.
 fn drawn_envelope(envelope: &Node) -> (String, String) {
@@ -6311,7 +6311,7 @@ fn drawn_stroked_envelope(envelope: &Node) -> (String, String) {
 
 /// An envelope of type with a character stroke, Distort Appearance on, whose drawn art strokes the
 /// bent glyph outlines at the stroke's own weight (as `.ai` files draw the strokes of type in an
-/// envelope, however much the grid squeezes or stretches it) opens live: VectorCraft draws the
+/// envelope, however much the grid squeezes or stretches it) opens live: crocwork Vector draws the
 /// stroke that way too (#6644).
 #[test]
 fn an_envelope_of_stroked_type_whose_drawn_art_strokes_the_bent_outlines_at_the_weight_opens_live() {

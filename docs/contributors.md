@@ -20,9 +20,9 @@ the AI models named in `Co-Authored-By` trailers.
   first or last commit date. The name toggle cycles **Username → Display name → Real name**; a
   missing name falls back to `@username`. Alphabetical sorting is case-insensitive and ignores the `@`.
 
-## In VectorCraft
+## In crocwork Vector
 
-- The About window is `crates/ui-egui/src/dialogs/about.rs` (Help ▸ About VectorCraft). The labels are
+- The About window is `crates/ui-egui/src/dialogs/about.rs` (Help ▸ About crocwork Vector). The labels are
   translated like the rest of the UI (`tl!`, `crates/ui-egui/src/i18n`); names and numbers are data.
 
 ## Credit yourself

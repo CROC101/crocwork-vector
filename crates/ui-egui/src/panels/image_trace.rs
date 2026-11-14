@@ -273,7 +273,7 @@ fn preset_label(name: &str) -> &str {
 /// The buttons above the Image Trace panel's Preset dropdown, in panel order: each one's name and the
 /// built-in preset a click chooses. The help page lists these options before Preset
 /// (<https://helpx.adobe.com/illustrator/desktop/manage-objects/traces-mockups-symbols/image-trace-panel-options.html>);
-/// which preset each one chooses is VectorCraft's own.
+/// which preset each one chooses is crocwork Vector's own.
 fn preset_buttons() -> [(&'static str, &'static str); 6] {
     [
         (preset_label("Auto Color"), "Auto Color"),

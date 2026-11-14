@@ -5,14 +5,14 @@
 //!
 //! Fields: `__action` (the save command it finishes), `__pick` (file name and format
 //! editable), `path`, `format`, and one field per option (agents set them with `ui.dialog.set`).
-//! Native and `.ai` files show their save options (VectorCraft Options after Save As): each
+//! Native and `.ai` files show their save options (crocwork Vector Options after Save As): each
 //! artboard to a separate file, with `all` (true: every artboard) or `range`, Include Linked Files,
 //! Embed ICC Profiles, Create PDF-Compatible File and Use Compression. EPS shows Use Artboards
 //! (`useArtboards`, off by default: the bounding box fits the visible art) with the same `all` or
 //! `range` under it, then the options Export's EPS Options shows: Preview, Overprints, Flattener
 //! preset and PostScript are menus that write the option's value (`previewFormat: "tiffColor"`,
 //! `overprints: "preserve"`, `flattenerPreset: "medium"` or a saved preset's name, `level: 3`).
-//! A native file's Version is a menu of the versions VectorCraft writes
+//! A native file's Version is a menu of the versions crocwork Vector writes
 //! (`version`, named by the releases that read each). A
 //! `.ai` file's Version comes first: PDF-compatible, or legacy version 7 (`aiVersion: "7"`, a file
 //! per artboard), which takes only Transparent Images (`transparentImages`), Hidden Objects
@@ -149,7 +149,7 @@ fn written_label(o: &FormatOption) -> Option<String> {
 
 /// The values of an option that takes one of a fixed set, each with the name its menu shows, and
 /// `at`, the entry the option's value picks as the save reads it (none when the save would reject
-/// the value). The first `builtins` names are VectorCraft's own (translated where they are shown);
+/// the value). The first `builtins` names are crocwork Vector's own (translated where they are shown);
 /// the others are names the user gave (saved flattener presets), shown as they are.
 struct Choices {
     values: Vec<Value>,
@@ -551,11 +551,11 @@ fn choose(d: &mut Dialog, o: &FormatOption, c: &Choices, i: usize) {
     }
 }
 
-/// The native versions VectorCraft writes, newest first, each with the first release that reads
+/// The native versions crocwork Vector writes, newest first, each with the first release that reads
 /// it (the format version each release tag writes: 2 in 0.1, 3 from 0.2, 4 from 0.8).
 const NATIVE_VERSIONS: [(u32, &str); 4] = [(4, "0.8"), (3, "0.2"), (2, "0.1"), (1, "0.1")];
 
-/// A native file's Version (#4931): a menu of the versions VectorCraft writes, named by the
+/// A native file's Version (#4931): a menu of the versions crocwork Vector writes, named by the
 /// releases that read them, so a version it can't write can't be chosen. A version without
 /// compression turns Use Compression off.
 fn native_version(ui: &mut egui::Ui, d: &mut Dialog, o: &FormatOption) {
@@ -563,7 +563,7 @@ fn native_version(ui: &mut egui::Ui, d: &mut Dialog, o: &FormatOption) {
     ui.label(egui::RichText::new(tl!("Version:")).color(t.text_dim)).on_hover_text(o.description);
     let names: Vec<String> = NATIVE_VERSIONS
         .iter()
-        .map(|(n, release)| crate::i18n::fmt(tl!("VectorCraft {release} and later (version {n})"), &[("release", release), ("n", &n.to_string())]))
+        .map(|(n, release)| crate::i18n::fmt(tl!("crocwork Vector {release} and later (version {n})"), &[("release", release), ("n", &n.to_string())]))
         .collect();
     let names: Vec<&str> = names.iter().map(String::as_str).collect();
     let at = NATIVE_VERSIONS.iter().position(|(n, _)| *n == native_version_of(d)).unwrap_or(0);

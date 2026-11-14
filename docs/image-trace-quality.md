@@ -35,7 +35,7 @@ are:
 At most six are kept, largest region first. They are fixed while the other colours are refitted around
 them, mixed-colour merging leaves them alone, and Noise removal keeps their regions of 4 pixels or more
 (smaller specks of them still go). This follows the idea of salient-colour preservation in palette
-reduction (Fukuda et al. 2019, doi:10.1117/12.2521607); the rule and its numbers are VectorCraft's own.
+reduction (Fukuda et al. 2019, doi:10.1117/12.2521607); the rule and its numbers are crocwork Vector's own.
 Full Tone, Limited and the continuous-tone route of Automatic are unchanged.
 
 Tests (code-drawn): `automatic_keeps_a_rare_distinct_stem_or_patch` (2, 3, 5 and 8 flat colours and a
@@ -161,7 +161,7 @@ sides of the crack) and `subpixel::tests` (the rule, and one decision for a whol
 within 2 px of it, so the middle of an edge blurred over more than about 4 px kept the palette's
 in-between tones and traced as rings of thin paths around the edge. In Color with a Limited palette of
 at most 16 colors and in Grayscale with at most 16 grays, `cut_edge::settled_wide` now does the work, by
-VectorCraft's own rule (RGB distances, 0 to 255 a channel; Grayscale reads each pixel as its gray). A
+crocwork Vector's own rule (RGB distances, 0 to 255 a channel; Grayscale reads each pixel as its gray). A
 blend pixel with no own pixel of its color within 4 px pairs the 8 own colors within 8 px that are nearest
 to its color. It takes the nearer side of the pair it is best a blend of when that pair explains it twice
 as well as its own color, or when it lies between the two and off the line between them by less than 0.15
@@ -192,7 +192,7 @@ and the outline kept a corner at every step. `subpixel::outline` now reads a run
 1 to 8 px (`STAIR_MAX`), each turning one way where it starts and the other where it ends, with no
 junction on it, as a staircase when the run's own cracks pass `subpixel::low_contrast`. A run is cut at
 any step whose own cracks show half of the step between the two colors or more. The 8 px limit and the
-one-half cut are VectorCraft's own values. The run's edges are then steps, as one-pixel steps already
+one-half cut are crocwork Vector's own values. The run's edges are then steps, as one-pixel steps already
 were: the outline has no corner where two of them meet, and each gives one point, its middle, moved by the
 mean of its cracks' shifts. Where a run meets an edge that is not a step, the corner between them stays,
 so a straight edge longer than 8 px next to a staircase stays straight. A straight edge of 8 px or less

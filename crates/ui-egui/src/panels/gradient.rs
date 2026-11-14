@@ -386,7 +386,7 @@ const METHOD_MENU_MIN: f32 = 104.0;
 const METHOD_MENU_PAD: f32 = 40.0;
 
 /// The Method row (Illustrator 30): how a linear or radial gradient mixes the colours between its
-/// stops, Classic or Perceptual. Hue Clockwise and Hue Counterclockwise, VectorCraft's own
+/// stops, Classic or Perceptual. Hue Clockwise and Hue Counterclockwise, crocwork Vector's own
 /// methods, mix them around the hue wheel one way or the other.
 fn method_row(app: &mut VectorcraftApp, ui: &mut Ui, g: &GradientPaint, is_grad: bool) {
     let methods = [

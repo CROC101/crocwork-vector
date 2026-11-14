@@ -114,13 +114,13 @@ pub(super) fn show_preview(ui: &mut egui::Ui, tex: Option<&egui::TextureHandle>,
 
 /// Open `bytes` (or place them with the `file.place` params `place`) through the dialog when the
 /// file is a PDF (or `.ai`/`.ait`) with several pages or a password; false when there's nothing to
-/// ask (the caller goes on), including, when opening, a file that carries its VectorCraft document
+/// ask (the caller goes on), including, when opening, a file that carries its crocwork Vector document
 /// and a `.ai`/`.ait` with its editing data.
 pub fn offer(app: &mut VectorcraftApp, name: &str, bytes: &[u8], path: Option<String>, place: Option<&Value>) -> bool {
     let Some(format) = fileio::detect(name, bytes).map(|f| f.id).filter(|id| matches!(*id, "pdf" | "ai" | "ait")) else {
         return false;
     };
-    // A file carrying its VectorCraft document (a saved .ai, or a PDF saved with Preserve Editing)
+    // A file carrying its crocwork Vector document (a saved .ai, or a PDF saved with Preserve Editing)
     // opens as that document, every artboard and layer: there are no pages to pick. So does a .ai
     // or .ait with its editing data, which holds them all (#6135); a PDF with editing data still
     // asks, as its pages are what it is. Placing still asks, since a place takes one page.

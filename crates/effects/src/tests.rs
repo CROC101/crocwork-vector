@@ -598,7 +598,7 @@ fn effects_after_a_warp_reshape_an_images_frame_and_not_its_pieces() {
     }
 }
 
-/// A warp with no version (VectorCraft's earlier map) bends an image's pixels with that map, as it
+/// A warp with no version (crocwork Vector's earlier map) bends an image's pixels with that map, as it
 /// bends the frame.
 #[test]
 fn an_images_pixels_take_the_map_their_warps_version_names() {

@@ -1,4 +1,4 @@
-//! The Learn panel's tutorials, VectorCraft's own short lessons, grouped by skill. The text is
+//! The Learn panel's tutorials, crocwork Vector's own short lessons, grouped by skill. The text is
 //! English data: the panel shows it as written in every interface language.
 
 /// One step of a tutorial: what to do, and the tool it chooses or the command it runs, if any.
@@ -61,7 +61,7 @@ const fn command(text: &'static str, id: &'static str) -> Step {
 pub const SKILLS: &[Skill] = &[
     Skill {
         id: "essentials",
-        title: "Best of VectorCraft",
+        title: "Best of crocwork Vector",
         tutorials: &[
             Tutorial {
                 id: "draw-and-color",

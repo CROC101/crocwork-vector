@@ -17,7 +17,7 @@
 //!
 //! What isn't read (inverted shapes, transfer modes other than a copy, other QuickTime formats)
 //! comes back as one warning each. Apple's table gives every opcode's length, so opcodes that draw
-//! nothing VectorCraft reads are skipped; a picture cut short keeps what came before.
+//! nothing crocwork Vector reads are skipped; a picture cut short keeps what came before.
 
 use std::collections::HashMap;
 use std::io::Cursor;
@@ -64,7 +64,7 @@ const MODES: &str = "art drawn in transfer modes other than a copy is drawn as a
 const FRAMED_REGIONS: &str = "framed regions are outlined rectangle by rectangle";
 const BIG_REGIONS: &str = "regions larger than one picture may hold were left out";
 const CODECS: &str = "QuickTime images in formats other than JPEG were left out";
-const NOTHING: &str = "the picture draws nothing VectorCraft reads";
+const NOTHING: &str = "the picture draws nothing crocwork Vector reads";
 
 /// Big-endian reads from a slice, never past its end.
 struct Be<'a> {
